@@ -11,18 +11,18 @@ export const Card: React.FC<CardProps> = ({ title, subtitle, image_src }) => {
     return (
         <a href="#" className="block">
             <img
-                alt={title}
+                alt=""
                 src={image_src}
-                className="h-56 w-full rounded-se-3xl rounded-es-3xl object-cover sm:h-64 lg:h-72"
+                className="h-64 w-full object-cover sm:h-80 lg:h-96"
             />
 
-            <div className="mt-4 sm:flex sm:items-center sm:justify-center sm:gap-4">
-                <strong className="font-medium">{title}</strong>
+            <h3 className="mt-4 text-lg font-bold text-gray-900 sm:text-xl">{title}</h3>
 
-                <span className="hidden sm:block sm:h-px sm:w-8 sm:bg-yellow-500"></span>
-
-                <p className="mt-0.5 opacity-70 sm:mt-0">{subtitle}</p>
-            </div>
+            <p className="mt-2 max-w-sm text-gray-700">
+                {subtitle}
+            </p>
         </a>
     );
 }
+
+
