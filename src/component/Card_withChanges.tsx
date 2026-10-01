@@ -27,17 +27,18 @@ export const Card_withChanges: React.FC<Card_withChanges_Props> = ({ title, href
             href={href}
             aria-label={title}
             className={`
-                flex px-12 py-6 gap-6 border-3 rounded-md
+                flex px-12 py-6 gap-6 border-3 rounded-xl
                 transition-all duration-300
-                text-2xl font-semibold
+                text-2xl font-semibold font-mono
                 hover:shadow-lg hover:-translate-y-0.5 hover:translate-x-0.5
-                group
+                group relative
                 ${get_colourClasses(variant)}
             `}
         >
 
             <span>{title}</span>
             <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            <div className="size-3 bg-black rounded-full absolute -right-1 -top-1 animate-pulse"></div>
         </a>
     );
 }
