@@ -5,7 +5,7 @@ import {Card} from './Card';
 const meta = {
     title: "Example-2-Component/[2.b]-Card-with-Image-Upload",
     component: Card,
-    autodocs: true,
+    tags: ['!autodocs'],
     parameters: {
         layout: 'centered',
     },

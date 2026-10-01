@@ -4,6 +4,7 @@ import {Card_withInteraction} from './Card_withInteraction';
 const meta = {
     title: "Example-4-Interaction/[4.a] Card with Interaction",
     component: Card_withInteraction,
+    tags: ['!autodocs'],
     parameters: {
         layout: 'centered',
     },
