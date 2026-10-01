@@ -25,7 +25,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const Focus_using_tab: Story = {
     play: async ({ canvas, userEvent  }) => {
-        const hoverTarget = canvas.getByRole('hoverable-card');
+        const hoverTarget = canvas.getByRole('button');
         await userEvent.tab();
     },
 };

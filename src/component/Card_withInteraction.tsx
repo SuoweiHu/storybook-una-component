@@ -3,7 +3,7 @@ import '../css/tw-global.css';
 
 export const Card_withInteraction: React.FC = () => {
     return (
-        <a href="#" className="group relative block h-64 sm:h-80 lg:h-96" role="hoverable-card">
+        <a href="#" className="group relative block h-64 sm:h-80 lg:h-96" role="button">
             <span className="absolute inset-0 border-2 border-dashed border-black"></span>
 
             <div
