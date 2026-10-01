@@ -8,7 +8,8 @@
     "dev": "storybook dev -p 6006",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test-storybook": "vitest --project=storybook"
+    "test-storybook": "vitest --project=storybook",
+    "chromatic": "npx chromatic --project-token=chpt_52ccd42b6bf813d"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
@@ -28,6 +29,7 @@
     "@vitejs/plugin-react": "^6.1.1",
     "@vitest/browser-playwright": "latest",
     "@vitest/coverage-v8": "latest",
+    "chromatic": "^18.10.1",
     "oxlint": "^1.81.0",
     "playwright": "latest",
     "storybook": "^10.6.1",
