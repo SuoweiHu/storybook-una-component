@@ -51,3 +51,19 @@ export const WithAppropriatePassword: Story = {
         }, 500);
     },
 };
+export const WithEnteredThenDeletedPassword: Story = {
+    play: async ({ args, canvas, step, userEvent  }) => {
+        await step("Enter username (step-1)", async()=>{
+            const input_user = canvas.getByLabelText('Username');
+            userEvent.type(input_user, 'LOREM IPSUM USER');
+        });
+        setTimeout(async()=>{
+            await step("Enter password (step-2) ", async()=>{
+                const input_password = canvas.getByLabelText('Password');
+                await userEvent.type(input_password, 'GoodPassword123');
+                userEvent.clear(input_password);
+            });
+        }, 500);
+    },
+};
+
