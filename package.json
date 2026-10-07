@@ -9,7 +9,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test-storybook": "vitest --project=storybook",
-    "chromatic": "npx chromatic --project-token=chpt_52ccd42b6bf813d"
+    "chromatic": "npx chromatic --project-token=chpt_53458595a88d1ff"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
