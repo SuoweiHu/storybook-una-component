@@ -1,10 +1,64 @@
 import React, { useId, useState } from 'react';
+import { tv } from 'tailwind-variants';
 import '../css/tw-global.css';
 
 type AccordionItem = {
     title: string;
     content: React.ReactNode;
 };
+
+const accordion = tv({
+    slots: {
+        root: 'flex w-full flex-col gap-6',
+        button: 'flex min-h-25 w-full cursor-pointer items-center justify-between gap-6 border-2 px-7 py-7 text-left text-3xl/10 font-semibold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-4',
+        icon: 'shrink-0',
+        iconLine: 'origin-center transition-transform duration-300 ease-in-out transform-fill motion-reduce:transition-none',
+        panel: 'overflow-hidden transition-all duration-500 ease-in-out motion-reduce:transition-none',
+        content: 'px-7.5 pt-8 pb-2 text-base/6.5 font-normal',
+    },
+    variants: {
+        // 'light' sits on white or cream backgrounds, 'dark' on black, 'grey' on grey.
+        theme: {
+            light: {
+                button: 'focus-visible:outline-black',
+                content: 'text-black',
+                icon: 'text-anu-primary-800',
+            },
+            dark: {
+                button: 'focus-visible:outline-white',
+                content: 'text-white',
+                icon: 'text-anu-primary-800',
+            },
+            grey: {
+                button: 'focus-visible:outline-black',
+                content: 'text-black',
+                icon: 'text-anu-primary-900',
+            },
+        },
+        isOpen: {
+            true: {
+                iconLine: 'scale-y-0',
+                panel: 'visible max-h-screen opacity-100',
+            },
+            false: {
+                iconLine: 'scale-y-100',
+                panel: 'invisible max-h-0 opacity-0',
+            },
+        },
+    },
+    compoundVariants: [
+        { theme: 'light', isOpen: false, class: { button: 'border-black bg-white text-black' } },
+        { theme: 'light', isOpen: true, class: { button: 'border-black bg-black text-white' } },
+        { theme: 'dark', isOpen: false, class: { button: 'border-white bg-black text-white' } },
+        { theme: 'dark', isOpen: true, class: { button: 'border-white bg-white text-black' } },
+        { theme: 'grey', isOpen: false, class: { button: 'border-black bg-anu-grey-100 text-black' } },
+        { theme: 'grey', isOpen: true, class: { button: 'border-black bg-black text-white' } },
+    ],
+    defaultVariants: {
+        theme: 'light',
+        isOpen: false,
+    },
+});
 
 type AccordionProps = {
     items: AccordionItem[];
@@ -16,31 +70,7 @@ type AccordionProps = {
     allowMultiple?: boolean;
 };
 
-const accordionStyles = {
-    light: {
-        closed: 'border-black bg-white text-black',
-        open: 'border-black bg-black text-white',
-        content: 'text-black',
-        icon: 'text-anu-primary-800',
-        focus: 'focus-visible:outline-black',
-    },
-    dark: {
-        closed: 'border-white bg-black text-white',
-        open: 'border-white bg-white text-black',
-        content: 'text-white',
-        icon: 'text-anu-primary-800',
-        focus: 'focus-visible:outline-white',
-    },
-    grey: {
-        closed: 'border-black bg-anu-grey-100 text-black',
-        open: 'border-black bg-black text-white',
-        content: 'text-black',
-        icon: 'text-anu-primary-900',
-        focus: 'focus-visible:outline-black',
-    },
-} as const;
-
-const get_accordionIcon = (isOpen: boolean, className: string) => (
+const get_accordionIcon = (styles: ReturnType<typeof accordion>) => (
     <svg
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
@@ -50,15 +80,9 @@ const get_accordionIcon = (isOpen: boolean, className: string) => (
         fill="none"
         stroke="currentColor"
         strokeWidth="3"
-        className={`shrink-0 ${className}`}
+        className={styles.icon()}
     >
-        <line
-            x1="11.58"
-            y1="0"
-            x2="11.58"
-            y2="21"
-            className={`origin-center transition-transform duration-300 ease-in-out transform-fill motion-reduce:transition-none ${isOpen ? 'scale-y-0' : 'scale-y-100'}`}
-        />
+        <line x1="11.58" y1="0" x2="11.58" y2="21" className={styles.iconLine()} />
         <line x1="21" y1="10.74" x2="0" y2="10.74" />
     </svg>
 );
@@ -70,7 +94,6 @@ export const Accordion: React.FC<AccordionProps> = ({
     allowMultiple = false,
 }) => {
     const id = useId();
-    const styles = accordionStyles[theme];
     const [openItems, setOpenItems] = useState<number[]>(
         allowMultiple ? defaultOpen : defaultOpen.slice(0, 1)
     );
@@ -85,9 +108,10 @@ export const Accordion: React.FC<AccordionProps> = ({
     };
 
     return (
-        <div className="flex w-full flex-col gap-6">
+        <div className={accordion().root()}>
             {items.map((item, index) => {
                 const isOpen = openItems.includes(index);
+                const styles = accordion({ theme, isOpen });
                 const buttonId = `${id}-button-${index}`;
                 const panelId = `${id}-panel-${index}`;
 
@@ -100,22 +124,15 @@ export const Accordion: React.FC<AccordionProps> = ({
                                 aria-expanded={isOpen}
                                 aria-controls={panelId}
                                 onClick={() => toggleItem(index)}
-                                className={`flex min-h-25 w-full cursor-pointer items-center justify-between gap-6 border-2 px-7 py-7 text-left text-3xl/10 font-semibold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-4 ${styles.focus} ${isOpen ? styles.open : styles.closed}`}
+                                className={styles.button()}
                             >
                                 <span>{item.title}</span>
-                                {get_accordionIcon(isOpen, styles.icon)}
+                                {get_accordionIcon(styles)}
                             </button>
                         </h3>
 
-                        <div
-                            role="region"
-                            id={panelId}
-                            aria-labelledby={buttonId}
-                            className={`overflow-hidden transition-all duration-500 ease-in-out motion-reduce:transition-none ${isOpen ? 'visible max-h-screen opacity-100' : 'invisible max-h-0 opacity-0'}`}
-                        >
-                            <div className={`px-7.5 pt-8 pb-2 text-base/6.5 font-normal ${styles.content}`}>
-                                {item.content}
-                            </div>
+                        <div role="region" id={panelId} aria-labelledby={buttonId} className={styles.panel()}>
+                            <div className={styles.content()}>{item.content}</div>
                         </div>
                     </div>
                 );
