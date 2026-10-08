@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperClass } from 'swiper';
 import { A11y, Autoplay, Keyboard } from 'swiper/modules';
 // Swiper's core layout (slide track and transforms); all visual styling below is Tailwind.
+import { cva } from 'class-variance-authority';
 import 'swiper/css';
 import '../css/tw-global.css';
 
@@ -27,31 +28,87 @@ type CarouselProps = {
     showAutoplayButton?: boolean;
 };
 
-const get_chevron = (direction: 'left' | 'right' | 'up' | 'down') => {
-    const rotation = {
-        right: '',
-        down: 'rotate-90',
-        left: 'rotate-180',
-        up: '-rotate-90',
-    }[direction];
-    return (
-        <svg
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="8"
-            height="15"
-            viewBox="0 0 7.51 14.73"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.08"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className={`shrink-0 ${rotation}`}
-        >
-            <path d="M0.54 0.54L6.97 7.36L0.54 14.19" />
-        </svg>
-    );
-};
+const chevron = cva('shrink-0', {
+    variants: {
+        direction: {
+            right: '',
+            down: 'rotate-90',
+            left: 'rotate-180',
+            up: '-rotate-90',
+        },
+    },
+});
+
+const get_chevron = (direction: 'left' | 'right' | 'up' | 'down') => (
+    <svg
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        width="8"
+        height="15"
+        viewBox="0 0 7.51 14.73"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.08"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className={chevron({ direction })}
+    >
+        <path d="M0.54 0.54L6.97 7.36L0.54 14.19" />
+    </svg>
+);
+
+const carousel = cva('flex w-full gap-3', {
+    variants: {
+        controls: {
+            bottom: 'flex-col',
+            side: 'flex-row',
+        },
+    },
+});
+
+const carouselIndicator = cva('flex gap-2', {
+    variants: {
+        controls: {
+            bottom: 'items-center',
+            side: 'flex-col items-center',
+        },
+    },
+});
+
+// The active dot stretches along the direction the slides travel.
+const carouselDot = cva(
+    'cursor-pointer rounded-1000 transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-anu-primary-800',
+    {
+        variants: {
+            controls: {
+                bottom: '',
+                side: '',
+            },
+            isActive: {
+                true: 'bg-anu-primary-700',
+                false: 'size-2.5 bg-anu-grey-200',
+            },
+        },
+        compoundVariants: [
+            { controls: 'bottom', isActive: true, className: 'h-2.5 w-7.5' },
+            { controls: 'side', isActive: true, className: 'h-7.5 w-2.5' },
+        ],
+    }
+);
+
+const carouselStepButton = cva(
+    'flex cursor-pointer items-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-anu-primary-800 disabled:cursor-default disabled:text-anu-grey-600',
+    {
+        variants: {
+            controls: {
+                // Text links under the slides.
+                bottom: 'gap-2 text-anu-primary-1000',
+                // Round icon buttons beside the slides.
+                side: 'size-8 justify-center rounded-full border border-anu-primary-800 text-anu-primary-800 disabled:border-anu-grey-500 disabled:bg-anu-grey-100',
+            },
+        },
+    }
+);
 
 const get_autoplayIcon = (isRunning: boolean) => (
     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
@@ -96,7 +153,7 @@ export const Carousel: React.FC<CarouselProps> = ({
     const isLast = activeIndex === slides.length - 1;
 
     const indicator = (
-        <div className={`flex gap-2 ${isSide ? 'flex-col items-center' : 'items-center'}`}>
+        <div className={carouselIndicator({ controls })}>
             {slides.map((slide, index) => (
                 <button
                     key={index}
@@ -104,18 +161,14 @@ export const Carousel: React.FC<CarouselProps> = ({
                     aria-label={`Go to slide ${index + 1}: ${slide.alt}`}
                     aria-current={index === activeIndex}
                     onClick={() => swiper?.slideTo(index)}
-                    className={`cursor-pointer rounded-1000 transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-anu-primary-800 ${
-                        index === activeIndex
-                            ? `bg-anu-primary-700 ${isSide ? 'h-7.5 w-2.5' : 'h-2.5 w-7.5'}`
-                            : 'size-2.5 bg-anu-grey-200'
-                    }`}
+                    className={carouselDot({ controls, isActive: index === activeIndex })}
                 />
             ))}
         </div>
     );
 
     return (
-        <section aria-roledescription="carousel" aria-label={label} className={`flex w-full gap-3 ${isSide ? 'flex-row' : 'flex-col'}`}>
+        <section aria-roledescription="carousel" aria-label={label} className={carousel({ controls })}>
             <div className="relative aspect-video w-full min-w-0 flex-1">
                 <Swiper
                     modules={[A11y, Autoplay, Keyboard]}
@@ -162,7 +215,7 @@ export const Carousel: React.FC<CarouselProps> = ({
                                 aria-label={button.label}
                                 disabled={button.disabled}
                                 onClick={button.onClick}
-                                className="flex size-8 cursor-pointer items-center justify-center rounded-full border border-anu-primary-800 text-anu-primary-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-anu-primary-800 disabled:cursor-default disabled:border-anu-grey-500 disabled:bg-anu-grey-100 disabled:text-anu-grey-600"
+                                className={carouselStepButton({ controls })}
                             >
                                 {get_chevron(button.direction)}
                             </button>
@@ -178,7 +231,7 @@ export const Carousel: React.FC<CarouselProps> = ({
                             type="button"
                             disabled={isFirst}
                             onClick={() => swiper?.slidePrev()}
-                            className="flex cursor-pointer items-center gap-2 text-anu-primary-1000 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-anu-primary-800 disabled:cursor-default disabled:text-anu-grey-600"
+                            className={carouselStepButton({ controls })}
                         >
                             {get_chevron('left')}
                             <span className="underline underline-offset-4">Previous</span>
@@ -187,7 +240,7 @@ export const Carousel: React.FC<CarouselProps> = ({
                             type="button"
                             disabled={isLast}
                             onClick={() => swiper?.slideNext()}
-                            className="flex cursor-pointer items-center gap-2 text-anu-primary-1000 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-anu-primary-800 disabled:cursor-default disabled:text-anu-grey-600"
+                            className={carouselStepButton({ controls })}
                         >
                             <span className="underline underline-offset-4">Next</span>
                             {get_chevron('right')}
