@@ -1,0 +1,3 @@
+# Run the Storybook component tests (play functions + a11y) before pushing.
+# --run stops Vitest from starting in watch mode. Skip once with: git push --no-verify
+npm run test-storybook -- --run
