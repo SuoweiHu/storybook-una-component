@@ -1,6 +1,8 @@
 name: Storybook Tests
 
-on: [push]
+# Disabled on push: Storybook tests now run locally in the husky pre-push hook (.husky/pre-push).
+# Still runnable by hand from the Actions tab.
+on: workflow_dispatch
 
 jobs:
   test:
