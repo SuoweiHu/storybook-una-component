@@ -1,0 +1,28 @@
+import { Meta, Title, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import * as IconStories from './Icon.stories';
+
+<Meta of={IconStories} />
+
+<Title />
+
+ANU brand icons from `src/anu-icons`, served through one component. Pick the artwork with `name` and the colour with `variant`.
+
+- **Social**: `facebook`, `instagram`, `linkedin`, `phone`, `tiktok`, `twitter`, `wechat`, `youku`, `youtube`
+- **Small use**: `sui-001` to `sui-140`
+- **Hero**: the set code plus the icon number, e.g. `hi003-01` or `hi001-2-001`. Hero icons are larger illustrations, so give them a bigger `size`.
+
+```tsx
+import { Icon } from './Icon';
+
+<Icon name="linkedin" variant="gold" size={32} label="ANU on LinkedIn" />
+<Icon name="sui-042" />
+<Icon name="hi003-01" size={96} />
+```
+
+Icons are decorative by default (`alt=""`, `aria-hidden`). Pass `label` when the icon carries meaning on its own, such as an icon-only link.
+
+<Canvas of={IconStories.Default} />
+
+<Controls of={IconStories.Default} />
+
+See the [Icon gallery](?path=/docs/icon-gallery--docs) for every available icon.
