@@ -1,4 +1,5 @@
 import React from 'react';
+import { cva } from 'class-variance-authority';
 import '../css/tw-global.css';
 
 import { getIconUrl, type IconName, type IconVariant } from './icons';
@@ -16,6 +17,8 @@ type IconProps = {
     className?: string;
 };
 
+const iconStyles = cva('inline-block shrink-0 object-contain');
+
 export const Icon: React.FC<IconProps> = ({ name, variant = 'black', size = 24, label, className = '' }) => {
     const src = getIconUrl(name, variant);
     if (!src) return null;
@@ -27,7 +30,7 @@ export const Icon: React.FC<IconProps> = ({ name, variant = 'black', size = 24, 
             aria-hidden={label ? undefined : true}
             width={size}
             height={size}
-            className={`inline-block shrink-0 object-contain ${className}`}
+            className={iconStyles({ className })}
             style={{ width: size, height: size }}
         />
     );

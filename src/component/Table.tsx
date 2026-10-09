@@ -1,4 +1,5 @@
 import React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
 import '../css/tw-global.css';
 
 type TableLink = {
@@ -30,40 +31,134 @@ type TableProps = {
     // Describes the table for screen readers; visually hidden.
     caption?: string;
     // The background the table sits on.
-    background?: 'white' | 'tint' | 'grey' | 'black';
-    variant?: 'default' | 'striped';
+    background?: TableBackground;
+    variant?: NonNullable<VariantProps<typeof tableRow>['variant']>;
     // Borders around every cell. Use this whenever cells are merged.
     bordered?: boolean;
 };
 
-const lightOnColour = {
-    text: 'text-black',
-    header: 'bg-white border-anu-primary-700',
-    rowHeader: 'bg-white',
-    stripes: 'odd:bg-white even:bg-anu-grey-200',
-    link: 'text-blue-700',
-};
-
-const tableStyles = {
-    white: {
-        text: 'text-black',
-        header: 'bg-anu-grey-100 border-anu-primary-700',
-        rowHeader: 'bg-anu-grey-100',
-        stripes: 'even:bg-anu-grey-200',
-        link: 'text-blue-700',
+const tableRoot = cva('w-full border-collapse text-left text-base/6.5 font-normal', {
+    variants: {
+        background: {
+            white: 'text-black',
+            tint: 'text-black',
+            grey: 'text-black',
+            black: 'text-white',
+        },
+        bordered: {
+            true: 'border border-anu-grey-400',
+            false: '',
+        },
     },
-    tint: lightOnColour,
-    grey: lightOnColour,
-    black: {
-        text: 'text-white',
-        header: 'bg-anu-grey-700 border-anu-primary-650',
-        rowHeader: 'bg-anu-grey-700',
-        stripes: 'odd:bg-anu-grey-650 even:bg-anu-grey-700',
-        link: 'text-blue-300',
+    defaultVariants: {
+        background: 'white',
+        bordered: false,
     },
-} as const;
+});
 
-const get_cellContent = (cell: TableCellData, linkStyle: string) => {
+const tableHeaderRow = cva('border-b-3', {
+    variants: {
+        background: {
+            white: 'bg-anu-grey-100 border-anu-primary-700',
+            tint: 'bg-white border-anu-primary-700',
+            grey: 'bg-white border-anu-primary-700',
+            black: 'bg-anu-grey-700 border-anu-primary-650',
+        },
+    },
+    defaultVariants: {
+        background: 'white',
+    },
+});
+
+const tableRow = cva('', {
+    variants: {
+        background: {
+            white: '',
+            tint: '',
+            grey: '',
+            black: '',
+        },
+        variant: {
+            default: 'border-b border-anu-grey-400',
+            striped: 'last:border-b last:border-anu-grey-400',
+        },
+    },
+    compoundVariants: [
+        { variant: 'striped', background: 'white', class: 'even:bg-anu-grey-200' },
+        { variant: 'striped', background: ['tint', 'grey'], class: 'odd:bg-white even:bg-anu-grey-200' },
+        { variant: 'striped', background: 'black', class: 'odd:bg-anu-grey-650 even:bg-anu-grey-700' },
+    ],
+    defaultVariants: {
+        background: 'white',
+        variant: 'default',
+    },
+});
+
+const tableRowHeader = cva('px-4 py-2 align-middle text-lg/6.75 font-semibold', {
+    variants: {
+        background: {
+            white: '',
+            tint: '',
+            grey: '',
+            black: '',
+        },
+        striped: {
+            true: '',
+            false: '',
+        },
+        bordered: {
+            true: 'border border-anu-grey-400',
+            false: '',
+        },
+    },
+    compoundVariants: [
+        { striped: false, background: 'white', class: 'bg-anu-grey-100' },
+        { striped: false, background: ['tint', 'grey'], class: 'bg-white' },
+        { striped: false, background: 'black', class: 'bg-anu-grey-700' },
+    ],
+    defaultVariants: {
+        background: 'white',
+        striped: false,
+        bordered: false,
+    },
+});
+
+const tableCell = cva('', {
+    variants: {
+        // 'corner' is the empty cell above the row headers.
+        type: {
+            corner: '',
+            column: 'p-4 align-top text-lg/6.75 font-semibold',
+            body: 'px-4 py-2 align-middle',
+        },
+        bordered: {
+            true: 'border border-anu-grey-400',
+            false: '',
+        },
+    },
+    defaultVariants: {
+        type: 'body',
+        bordered: false,
+    },
+});
+
+const tableLink = cva('underline-offset-2 hover:underline', {
+    variants: {
+        background: {
+            white: 'text-blue-700',
+            tint: 'text-blue-700',
+            grey: 'text-blue-700',
+            black: 'text-blue-300',
+        },
+    },
+    defaultVariants: {
+        background: 'white',
+    },
+});
+
+type TableBackground = NonNullable<VariantProps<typeof tableRoot>['background']>;
+
+const get_cellContent = (cell: TableCellData, background: TableBackground) => {
     if (typeof cell === 'string') {
         return cell;
     }
@@ -76,7 +171,7 @@ const get_cellContent = (cell: TableCellData, linkStyle: string) => {
             )}
             {cell.subtext && <span>{cell.subtext}</span>}
             {cell.links?.map((link) => (
-                <a key={link.href} href={link.href} className={`${linkStyle} underline-offset-2 hover:underline`}>
+                <a key={link.href} href={link.href} className={tableLink({ background })}>
                     {link.label}
                 </a>
             ))}
@@ -92,28 +187,23 @@ export const Table: React.FC<TableProps> = ({
     variant = 'default',
     bordered = false,
 }) => {
-    const styles = tableStyles[background];
     const hasRowHeaders = rows.some((row) => row.header !== undefined);
     const isStriped = variant === 'striped';
-    const cellBorder = bordered ? 'border border-anu-grey-400' : '';
-    const rowStyle = isStriped
-        ? `${styles.stripes} last:border-b last:border-anu-grey-400`
-        : 'border-b border-anu-grey-400';
 
     return (
         <div className="w-full overflow-x-auto">
-            <table className={`w-full border-collapse text-left text-base/6.5 font-normal ${styles.text} ${bordered ? 'border border-anu-grey-400' : ''}`}>
+            <table className={tableRoot({ background, bordered })}>
                 {caption && <caption className="sr-only">{caption}</caption>}
 
                 {columns.length > 0 && (
                     <thead>
-                        <tr className={`border-b-3 ${styles.header}`}>
-                            {hasRowHeaders && <td className={cellBorder} />}
+                        <tr className={tableHeaderRow({ background })}>
+                            {hasRowHeaders && <td className={tableCell({ type: 'corner', bordered })} />}
                             {columns.map((column) => (
                                 <th
                                     key={column}
                                     scope="col"
-                                    className={`p-4 align-top text-lg/6.75 font-semibold ${cellBorder}`}
+                                    className={tableCell({ type: 'column', bordered })}
                                 >
                                     {column}
                                 </th>
@@ -124,11 +214,11 @@ export const Table: React.FC<TableProps> = ({
 
                 <tbody>
                     {rows.map((row, rowIndex) => (
-                        <tr key={rowIndex} className={rowStyle}>
+                        <tr key={rowIndex} className={tableRow({ background, variant })}>
                             {row.header !== undefined && (
                                 <th
                                     scope="row"
-                                    className={`px-4 py-2 align-middle text-lg/6.75 font-semibold ${isStriped ? '' : styles.rowHeader} ${cellBorder}`}
+                                    className={tableRowHeader({ background, striped: isStriped, bordered })}
                                 >
                                     {row.header}
                                 </th>
@@ -138,9 +228,9 @@ export const Table: React.FC<TableProps> = ({
                                     key={cellIndex}
                                     colSpan={typeof cell === 'string' ? undefined : cell.colSpan}
                                     rowSpan={typeof cell === 'string' ? undefined : cell.rowSpan}
-                                    className={`px-4 py-2 align-middle ${cellBorder}`}
+                                    className={tableCell({ type: 'body', bordered })}
                                 >
-                                    {get_cellContent(cell, styles.link)}
+                                    {get_cellContent(cell, background)}
                                 </td>
                             ))}
                         </tr>
