@@ -1,0 +1,44 @@
+import { Meta, IconGallery, IconItem } from '@storybook/addon-docs/blocks';
+import { Icon } from './Icon';
+import { heroIconNames, heroIconSets, iconVariants, socialIconNames, utilityIconNames } from './icons';
+
+<Meta title="Icon/Gallery" />
+
+export const whiteSwatch = { display: 'inline-flex', padding: 6, borderRadius: 4, background: '#1d1d1b' };
+
+# Icon gallery
+
+Every icon in every variant (white icons are shown on a dark swatch): {socialIconNames.length + utilityIconNames.length + heroIconNames.length} icons × {iconVariants.length} variants. See [Icon docs](?path=/docs/icon--docs) for usage.
+
+{iconVariants.map((variant) => (
+  <div key={variant}>
+    <h3>Social – {variant}</h3>
+    <IconGallery>
+      {socialIconNames.map((name) => (
+        <IconItem key={name} name={name}>
+          <span style={variant === 'white' ? whiteSwatch : undefined}><Icon name={name} variant={variant} size={32} /></span>
+        </IconItem>
+      ))}
+    </IconGallery>
+    <h3>Small use – {variant}</h3>
+    <IconGallery>
+      {utilityIconNames.map((name) => (
+        <IconItem key={name} name={name}>
+          <span style={variant === 'white' ? whiteSwatch : undefined}><Icon name={name} variant={variant} size={32} /></span>
+        </IconItem>
+      ))}
+    </IconGallery>
+    {heroIconSets.map((set) => (
+      <div key={set.id}>
+        <h3>Hero {set.id.toUpperCase()} ({set.topics}) – {variant}</h3>
+        <IconGallery>
+          {set.names.map((name) => (
+            <IconItem key={name} name={name}>
+              <span style={variant === 'white' ? whiteSwatch : undefined}><Icon name={name} variant={variant} size={48} /></span>
+            </IconItem>
+          ))}
+        </IconGallery>
+      </div>
+    ))}
+  </div>
+))}
