@@ -20,6 +20,8 @@ const meta = {
     slides,
     label: 'Student stories',
     controls: 'bottom',
+    effect: 'slide',
+    speed: 300,
     autoplay: false,
     autoplayDelay: 5000,
     showAutoplayButton: true,
@@ -40,6 +42,31 @@ export const BottomControls: Story = {};
 
 export const SideControls: Story = {
   args: { controls: 'side' },
+};
+
+export const FadeEffect: Story = {
+  args: { effect: 'fade' },
+  play: async ({ canvas, canvasElement, userEvent }) => {
+    const bullet = (index: number) => canvas.getByRole('button', { name: new RegExp(`^Go to slide ${index}:`) });
+
+    await expect(canvasElement.querySelector('.swiper')).toHaveClass('swiper-fade');
+    await userEvent.click(canvas.getByRole('button', { name: 'Next' }));
+    await waitFor(() => expect(bullet(2)).toHaveAttribute('aria-current', 'true'));
+  },
+};
+
+export const SlowTransition: Story = {
+  args: { effect: 'fade', speed: 1500 },
+  play: async ({ canvas, canvasElement, userEvent }) => {
+    await userEvent.click(canvas.getByRole('button', { name: 'Next' }));
+    // Fade animates each slide, so the incoming slide carries the transition duration.
+    const incoming = canvasElement.querySelectorAll<HTMLElement>('.swiper-slide')[1];
+    await waitFor(() => expect(incoming.style.transitionDuration).toBe('1500ms'));
+  },
+};
+
+export const FadeEffectWithSideControls: Story = {
+  args: { effect: 'fade', controls: 'side' },
 };
 
 export const SingleSlide: Story = {
