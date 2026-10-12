@@ -20,7 +20,7 @@ type AccordionProps = {
 type AccordionTheme = NonNullable<AccordionProps['theme']>;
 
 const accordionTrigger = cva(
-    'flex min-h-25 w-full cursor-pointer items-center justify-between gap-6 border-2 px-7 py-7 text-left text-3xl/10 font-semibold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-4',
+    'flex min-h-25 w-full cursor-pointer items-center justify-between gap-6 border-2 p-7 text-left text-3xl/10 font-semibold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-4',
     {
         variants: {
             theme: {

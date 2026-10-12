@@ -59,10 +59,10 @@ const tableRoot = cva('w-full border-collapse text-left text-base/6.5 font-norma
 const tableHeaderRow = cva('border-b-3', {
     variants: {
         background: {
-            white: 'bg-anu-grey-100 border-anu-primary-700',
-            tint: 'bg-white border-anu-primary-700',
-            grey: 'bg-white border-anu-primary-700',
-            black: 'bg-anu-grey-700 border-anu-primary-650',
+            white: 'border-anu-primary-700 bg-anu-grey-100',
+            tint: 'border-anu-primary-700 bg-white',
+            grey: 'border-anu-primary-700 bg-white',
+            black: 'border-anu-primary-650 bg-anu-grey-700',
         },
     },
     defaultVariants: {
