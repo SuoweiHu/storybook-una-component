@@ -10,38 +10,43 @@
   "rules": {
     "react/rules-of-hooks": "error",
     "react/only-export-components": ["warn", { "allowConstantExport": true }],
+    "react/prefer-function-component":"error",
 
-    "tailwindcss/no-conflicting-classes": "error",
-    "tailwindcss/no-contradicting-variants": "warn",
-    "tailwindcss/no-dark-without-light": "warn",
-    "tailwindcss/no-duplicate-classes": "warn",
-    "tailwindcss/no-dynamic-classes": "error",
-    "tailwindcss/no-unknown-classes": "error",
+    //# ── Tailwind: correctness (classes that are actually broken) ──
+    "tailwindcss/no-conflicting-classes": "error",               //# Two classes setting the same CSS property, so only one wins (p-2 p-4)
+    "tailwindcss/no-contradicting-variants": "warn",             //# Variant that does nothing because the base class already applies everywhere (flex md:flex)
+    "tailwindcss/no-dark-without-light": "warn",                 //# dark: class with no base (light-mode) class alongside it (dark:bg-black alone)
+    "tailwindcss/no-duplicate-classes": "warn",                  //# Same class written twice (p-4 p-4)
+    "tailwindcss/no-dynamic-classes": "error",                   //# Class names built at runtime; Tailwind can't see them so no CSS is generated (`bg-${color}-500`)
+    "tailwindcss/no-unknown-classes": ["error", { "ignorePrefixes": ["swiper"] }], //# Classes that don't exist in the design system: typos, undefined theme values (Swiper's own hook classes are allowed)
 
-    "tailwindcss/enforce-canonical": "warn",
-    "tailwindcss/enforce-negative-arbitrary-values": "warn",
-    "tailwindcss/no-deprecated-classes": "error",
-    "tailwindcss/no-unnecessary-arbitrary-value": "warn",
+    //# ── Tailwind: modernization (current v4 syntax) ──
+    "tailwindcss/enforce-canonical": "warn",                     //# Rewrite classes to their official v4 spelling
+    "tailwindcss/enforce-negative-arbitrary-values": "warn",     //# Minus sign goes inside the brackets (-top-[5px] → top-[-5px])
+    "tailwindcss/no-deprecated-classes": "error",                //# Classes removed or renamed in v4 (flex-grow → grow)
+    "tailwindcss/no-unnecessary-arbitrary-value": "error",       //# Arbitrary value where a named class gives the same CSS (p-[16px] → p-4)
+    "tailwindcss/prefer-scale-token": "off",                     //# Hardcoded value that equals a scale step or theme token
+    "tailwindcss/prefer-theme-tokens": "error",                  //# Named theme utility instead of a raw CSS variable (bg-(--color-brand) → bg-brand)
 
-    "tailwindcss/consistent-variant-order": "warn",
-    "tailwindcss/enforce-consistent-important-position": "warn",
-    "tailwindcss/enforce-consistent-variable-syntax": "warn",
-    "tailwindcss/enforce-shorthand": "warn",
-    "tailwindcss/enforce-sort-order": "warn",
-    "tailwindcss/no-unnecessary-whitespace": "warn",
+    //# ── Tailwind: consistency (same style everywhere, mostly autofixable) ──
+    "tailwindcss/consistent-variant-order": "warn",              //# Stacked variants always in the same order (md:hover: not hover:md:)
+    "tailwindcss/enforce-consistent-important-position": "warn", //# Important modifier in one position: suffix p-4! rather than prefix !p-4
+    "tailwindcss/enforce-consistent-line-wrapping": "off",       //# Class strings longer than the configured line width or classes-per-line budget
+    "tailwindcss/enforce-consistent-variable-syntax": "warn",    //# One CSS variable syntax (bg-(--x) rather than bg-[var(--x)])
+    "tailwindcss/enforce-logical": "off",                        //# Direction-aware classes for right-to-left support (ml-4 → ms-4); pick this OR enforce-physical
+    "tailwindcss/enforce-physical": "off",                       //# Left/right classes for LTR-only projects (ms-4 → ml-4); pick this OR enforce-logical
+    "tailwindcss/enforce-shorthand": "warn",                     //# Merge matching axes into the shorthand (px-4 py-4 → p-4)
+    "tailwindcss/enforce-sort-order": "warn",                    //# Sort classes in Tailwind's official order
+    "tailwindcss/no-unnecessary-whitespace": "warn",             //# Extra spaces inside class strings
 
-    "tailwindcss/no-arbitrary-value": "error",
-    "tailwindcss/no-hardcoded-colors": "error",
-    "tailwindcss/no-restricted-classes": [
-      "error",
-      {
-        "patterns": [
-          {
-            "pattern": "(^|:)!|!$",
-            "message": "the important modifier (!) is forbidden; fix the specificity or class order instead."
-          }
-        ]
-      }
-    ]
+    //# ── Tailwind: design-system guardrails ──
+    "tailwindcss/max-class-count": "off",                        //# Cap on classes per element; a long list usually means it should be a component
+    "tailwindcss/no-arbitrary-value": "error",                   //# Any arbitrary bracket value (w-[37px]); only defined design values allowed
+    "tailwindcss/no-borrowed-component-styles": "off",           //# (Experimental) plain element that copies a design-system component's classes instead of using it
+    "tailwindcss/no-hardcoded-colors": "error",                  //# Hardcoded color values (bg-[#ff0000])
+    "tailwindcss/no-default-palette": "off",                     //# Tailwind's built-in palette (bg-blue-500) when the project defines its own colors
+
+    //# ── Tailwind: prevent !important utility class from being used (e.g. !px-2, bg-red-200!) ──
+    "tailwindcss/no-restricted-classes": ["error",{ "patterns": [{ "pattern": "(^|:)!|!$", "message": "the important modifier (!) is forbidden; fix the specificity or class order instead."}]}]
   }
 }
