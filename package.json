@@ -38,6 +38,7 @@
     "chromatic": "^18.10.1",
     "husky": "^9.1.7",
     "oxlint": "^1.81.0",
+    "oxlint-tailwindcss": "^1.16.0",
     "playwright": "latest",
     "storybook": "^10.6.1",
     "typescript": "~6.0.2",

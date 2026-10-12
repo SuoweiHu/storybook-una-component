@@ -20,6 +20,7 @@ Every component has Storybook stories covering its variants and states. Those st
 - [Storybook](#storybook)
 - [Testing](#testing)
 - [Linting and type checking](#linting-and-type-checking)
+  - [Tailwind class linting (oxlint-tailwindcss)](#tailwind-class-linting-oxlint-tailwindcss)
 - [Git hooks (Husky)](#git-hooks-husky)
 - [Commit messages (commitlint)](#commit-messages-commitlint)
 - [Visual regression testing (Chromatic)](#visual-regression-testing-chromatic)
@@ -45,8 +46,8 @@ Every component has Storybook stories covering its variants and states. Those st
 | Testing | [Vitest](https://vitest.dev) browser mode + [Playwright](https://playwright.dev) (Chromium) | 4.1 / 1.63 | Runs every story as a test in a headless browser |
 | Accessibility | [axe-core](https://github.com/dequelabs/axe-core) via `@storybook/addon-a11y` | — | WCAG 2.0/2.1 A and AA checks on every story |
 | Coverage | `@vitest/coverage-v8` | 4.1 | Code coverage for the story tests |
-| Linting | [oxlint](https://oxc.rs/docs/guide/usage/linter) | 1.8x | Fast Rust-based linter (React, TypeScript, oxc rules) |
-| Git hooks | [Husky](https://typicode.github.io/husky) | 9 | Runs commitlint and the story tests from git hooks |
+| Linting | [oxlint](https://oxc.rs/docs/guide/usage/linter) + [oxlint-tailwindcss](https://oxlint-tailwindcss.pages.dev) | 1.8x / 1.16 | Fast Rust-based linter (React, TypeScript, oxc rules), plus Tailwind class checks against the ANU theme |
+| Git hooks | [Husky](https://typicode.github.io/husky) | 9 | Runs the linter, commitlint and the story tests from git hooks |
 | Commit convention | [commitlint](https://commitlint.js.org) + `config-conventional` | 21 | Enforces [Conventional Commits](https://www.conventionalcommits.org) |
 | Visual testing | [Chromatic](https://www.chromatic.com) | 18 | Publishes Storybook and runs visual regression snapshots |
 | CI | GitHub Actions | — | Chromatic on push; Storybook tests on demand |
@@ -94,7 +95,7 @@ npx playwright install chromium
 | `npm run dev` | `storybook dev -p 6006` | Alias of `storybook` |
 | `npm run build-storybook` | `storybook build` | Builds a static Storybook into `storybook-static/` |
 | `npm run test-storybook` | `vitest --project=storybook` | Runs every story as a browser test (watch mode; add `-- --run` for a single run) |
-| `npm run lint` | `oxlint` | Lints the project with oxlint |
+| `npm run lint` | `oxlint` | Lints the project with oxlint, including the Tailwind class rules (also runs in the pre-commit hook) |
 | `npm run chromatic` | `npx chromatic --project-token=…` | Publishes Storybook to Chromatic and runs visual tests (see [Chromatic](#visual-regression-testing-chromatic) about the token) |
 | `prepare` | `husky` | Installs git hooks; runs automatically after `npm install` |
 
@@ -110,11 +111,16 @@ npx tsc --noEmit -p tsconfig.app.json
 
 ```
 .
-├── .claude/launch.json        # Dev-server config for Claude Code's preview tools
+├── .agents/skills/oxlint-tailwindcss/
+│   └── SKILL.md               # Agent skill for oxlint-tailwindcss (see AI tooling)
+├── .claude/
+│   ├── launch.json            # Dev-server config for Claude Code's preview tools
+│   └── skills/                # Symlink to the skill in .agents/skills/
 ├── .github/workflows/
 │   ├── chromatic.yml          # Chromatic on every push
 │   └── test-storybook.yml     # Storybook tests (manual trigger only)
 ├── .husky/
+│   ├── pre-commit             # Runs oxlint before each commit
 │   ├── commit-msg             # Runs commitlint on each commit message
 │   └── pre-push               # Runs the Storybook tests before each push
 ├── .storybook/
@@ -135,11 +141,12 @@ npx tsc --noEmit -p tsconfig.app.json
 │       ├── tw-global.css      # Tailwind entry: layers, theme, preflight, utilities
 │       └── tw-theme.css       # ANU design tokens (colours, shadows, radii)
 ├── .mcp.json                  # Storybook MCP server for AI assistants
-├── .oxlintrc.json             # oxlint configuration
+├── .oxlintrc.json             # oxlint + oxlint-tailwindcss configuration
 ├── chromatic.config.json      # Chromatic project settings
 ├── COMPONENTS.md              # Component reference: props, usage, icon library
 ├── commitlint.config.js       # Commit message rules
 ├── package.json               # Dependencies and npm scripts
+├── skills-lock.json           # Source and hash of installed agent skills
 ├── tsconfig*.json             # TypeScript project references (app + node)
 ├── vite.config.ts             # Vite plugins + Vitest "storybook" test project
 └── vitest.shims.d.ts          # Type reference for Vitest browser mode (Playwright)
@@ -189,6 +196,8 @@ Defined in `src/css/tw-theme.css`, and usable as normal Tailwind utilities (`bg-
 | Shadows | `0`, `100`–`400` | `shadow-200` |
 | Radii | `8`, `50`, `100`, `280`, `380`, `488`, `500`, `1000` | `rounded-8` (0px, square), `rounded-280` (16px), `rounded-1000` (pill) |
 
+**Colour values are declared only in `tw-theme.css`.** Components use colours through utility classes: an ANU token, or one of Tailwind's built-in colours (`white`, `black`, `blue-700`, …). The linter rejects any colour value written into a class name, such as `bg-[#123456]` or `text-[rgb(0,0,0)]` (see [Linting](#linting-and-type-checking)). To use a new colour, add a token to `tw-theme.css` first.
+
 Spacing uses Tailwind's default scale (`--spacing: 0.25rem`, so `p-4` = 16px). The comment inside `tw-theme.css` that says the default is 8px is out of date. Only the commented-out block below it sets `--spacing`. The lower half of `tw-theme.css` holds a commented-out light/dark semantic palette generated with [tweakcn](https://tweakcn.com/editor/theme), kept for reference and not active.
 
 ### Class Variance Authority (CVA)
@@ -199,7 +208,7 @@ Every component describes its variant styles with [CVA](https://cva.style) inste
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const accordionTrigger = cva(
-    'flex w-full items-center justify-between border-2 px-7 py-7 …', // base classes
+    'flex w-full items-center justify-between border-2 p-7 …', // base classes
     {
         variants: {
             theme: {
@@ -329,8 +338,29 @@ You can also run tests from the Storybook UI with the test widget in the sidebar
 - `react/only-export-components`: **warn** (constant exports allowed)
 
 ```bash
-npm run lint
+npm run lint         # also runs in the pre-commit hook
+npx oxlint --fix     # apply autofixes (run again until nothing changes)
 ```
+
+### Tailwind class linting (oxlint-tailwindcss)
+
+[oxlint-tailwindcss](https://oxlint-tailwindcss.pages.dev) is loaded as an oxlint JS plugin (`jsPlugins` in `.oxlintrc.json`). It reads the real Tailwind build from `settings.tailwindcss.entryPoint` (`src/css/tw-global.css`), so it knows every ANU token and utility. It checks class names in `className`, and in `cva()`, `cn()` and `clsx()` calls.
+
+The plugin's recommended rules are on, plus two stricter ones:
+
+| Rule | Level | What it catches |
+|---|---|---|
+| `no-unknown-classes` | error | Classes that don't exist in the theme (typos, missing tokens) |
+| `no-conflicting-classes` | error | Two classes setting the same property, e.g. `p-4 p-6` |
+| `no-dynamic-classes` | error | Classes built at runtime (`` `bg-${color}-500` ``), which Tailwind can't see |
+| `no-deprecated-classes` | error | Tailwind v3 class names removed or renamed in v4 |
+| `no-arbitrary-value` | **error** (stricter) | Any arbitrary value, e.g. `w-[13px]`. Use a theme value or add a token to `tw-theme.css` |
+| `no-hardcoded-colors` | **error** (stricter) | Colour values in class names, e.g. `bg-[#123456]` |
+| `enforce-sort-order`, `enforce-shorthand`, `enforce-canonical`, … | warn | Class order and shorter or canonical names. All autofixable |
+
+Errors fail `npm run lint` and block the commit; warnings don't. For a one-off exception, put `// oxlint-disable-next-line tailwindcss/<rule>` on the line above.
+
+**Limits:** oxlint only reads JS/TS files. Colour values written directly into CSS files other than `tw-theme.css`, into `.mdx` files, or into inline `style` props are **not** checked.
 
 **TypeScript** is split into project references:
 
@@ -351,6 +381,7 @@ npx tsc --noEmit -p tsconfig.app.json
 
 | Hook | Runs | Purpose |
 |---|---|---|
+| `pre-commit` | `npm run lint` | Runs oxlint (including the Tailwind rules); any lint error blocks the commit |
 | `commit-msg` | `npx --no -- commitlint --edit "$1"` | Rejects commit messages that don't follow Conventional Commits |
 | `pre-push` | `npm run test-storybook -- --run` | Runs the full story test suite (interactions + a11y); a failure blocks the push |
 
@@ -445,6 +476,7 @@ The project is set up for AI coding assistants such as Claude Code:
 - **`@storybook/addon-mcp`** exposes an [MCP](https://modelcontextprotocol.io) server at `http://localhost:6006/mcp` while Storybook is running. Assistants can list component docs and props, preview stories and run story tests through it.
 - **`.mcp.json`** registers that server for MCP-aware tools in this repo.
 - **`.claude/launch.json`** tells Claude Code how to start Storybook (`npm run storybook -- --no-open` on port 6006).
+- **oxlint-tailwindcss skill** (`.agents/skills/oxlint-tailwindcss/SKILL.md`) teaches AI assistants how to set up the plugin and fix its `tailwindcss(...)` diagnostics. It was installed with `npx skills add sergioazoc/oxlint-tailwindcss --skill oxlint-tailwindcss`. Claude Code picks it up through the `.claude/skills/` symlink, and `skills-lock.json` records its source.
 
 Start Storybook (`npm run storybook`) before using these tools.
 
@@ -455,7 +487,7 @@ Start Storybook (`npm run storybook`) before using these tools.
 1. Create `src/component/MyComponent.tsx`:
    - Import `../css/tw-global.css`.
    - Define styles with `cva()` and derive prop types with `VariantProps` (see [CVA](#class-variance-authority-cva)).
-   - Use ANU tokens (`anu-primary-*`, `anu-grey-*`, …) rather than raw colours.
+   - Use ANU tokens (`anu-primary-*`, `anu-grey-*`, …) rather than raw colours. Arbitrary values and colour values in class names fail the linter (see [Tailwind class linting](#tailwind-class-linting-oxlint-tailwindcss)).
    - Use semantic HTML and correct ARIA. Every story is checked against WCAG AA.
    - Export it as a named export.
 2. Create `src/component/MyComponent.stories.tsx`:
@@ -469,6 +501,8 @@ Start Storybook (`npm run storybook`) before using these tools.
 ---
 
 ## Troubleshooting
+
+**Commit blocked by lint errors.** Run `npm run lint` to see them. Try `npx oxlint --fix` for autofixable issues. `tailwindcss(no-arbitrary-value)` and `tailwindcss(no-hardcoded-colors)` mean a value isn't in the theme: use the closest class the message suggests, or add a token to `tw-theme.css`. A `designSystemUnavailable` message means `settings.tailwindcss.entryPoint` in `.oxlintrc.json` doesn't point at a valid Tailwind CSS file.
 
 **Push blocked by failing tests.** Run `npm run test-storybook -- --run` to see which story failed. Accessibility violations are listed with the axe rule ID and the offending element.
 
