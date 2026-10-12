@@ -1,6 +1,8 @@
 name: "Chromatic"
 
-on: push
+# Disabled on push: Chromatic now run locally in the husky pre-push hook (.husky/pre-push).
+# Still runnable by hand from the Actions tab.
+on: workflow_dispatch
 
 jobs:
   chromatic:

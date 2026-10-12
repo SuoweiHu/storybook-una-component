@@ -47,10 +47,10 @@ Every component has Storybook stories covering its variants and states. Those st
 | Accessibility | [axe-core](https://github.com/dequelabs/axe-core) via `@storybook/addon-a11y` | — | WCAG 2.0/2.1 A and AA checks on every story |
 | Coverage | `@vitest/coverage-v8` | 4.1 | Code coverage for the story tests |
 | Linting | [oxlint](https://oxc.rs/docs/guide/usage/linter) + [oxlint-tailwindcss](https://oxlint-tailwindcss.pages.dev) | 1.8x / 1.16 | Fast Rust-based linter (React, TypeScript, oxc rules), plus Tailwind class checks against the ANU theme |
-| Git hooks | [Husky](https://typicode.github.io/husky) | 9 | Runs the linter, commitlint and the story tests from git hooks |
+| Git hooks | [Husky](https://typicode.github.io/husky) | 9 | Runs the linter, commitlint, the story tests and Chromatic from git hooks |
 | Commit convention | [commitlint](https://commitlint.js.org) + `config-conventional` | 21 | Enforces [Conventional Commits](https://www.conventionalcommits.org) |
 | Visual testing | [Chromatic](https://www.chromatic.com) | 18 | Publishes Storybook and runs visual regression snapshots |
-| CI | GitHub Actions | — | Chromatic on push; Storybook tests on demand |
+| CI | GitHub Actions | — | Chromatic and Storybook tests on demand (both run locally on push instead) |
 
 The project is an ES module package (`"type": "module"`), uses **npm** (`package-lock.json`) and is developed on **Node.js 24**.
 
@@ -96,7 +96,7 @@ npx playwright install chromium
 | `npm run build-storybook` | `storybook build` | Builds a static Storybook into `storybook-static/` |
 | `npm run test-storybook` | `vitest --project=storybook` | Runs every story as a browser test (watch mode; add `-- --run` for a single run) |
 | `npm run lint` | `oxlint` | Lints the project with oxlint, including the Tailwind class rules (also runs in the pre-commit hook) |
-| `npm run chromatic` | `npx chromatic --project-token=…` | Publishes Storybook to Chromatic and runs visual tests (see [Chromatic](#visual-regression-testing-chromatic) about the token) |
+| `npm run chromatic` | `npx chromatic --project-token=…` | Publishes Storybook to Chromatic and runs visual tests; also runs in the pre-push hook (see [Chromatic](#visual-regression-testing-chromatic) about the token) |
 | `prepare` | `husky` | Installs git hooks; runs automatically after `npm install` |
 
 There is no separate `typecheck` script; run TypeScript directly:
@@ -117,12 +117,12 @@ npx tsc --noEmit -p tsconfig.app.json
 │   ├── launch.json            # Dev-server config for Claude Code's preview tools
 │   └── skills/                # Symlink to the skill in .agents/skills/
 ├── .github/workflows/
-│   ├── chromatic.yml          # Chromatic on every push
+│   ├── chromatic.yml          # Chromatic (manual trigger only)
 │   └── test-storybook.yml     # Storybook tests (manual trigger only)
 ├── .husky/
 │   ├── pre-commit             # Runs oxlint before each commit
 │   ├── commit-msg             # Runs commitlint on each commit message
-│   └── pre-push               # Runs the Storybook tests before each push
+│   └── pre-push               # Runs the Storybook tests, then publishes to Chromatic, before each push
 ├── .storybook/
 │   ├── main.ts                # Story globs, addons, framework, static dirs
 │   └── preview.tsx            # Global CSS, autodocs, a11y rules, story sorting
@@ -383,7 +383,7 @@ npx tsc --noEmit -p tsconfig.app.json
 |---|---|---|
 | `pre-commit` | `npm run lint` | Runs oxlint (including the Tailwind rules); any lint error blocks the commit |
 | `commit-msg` | `npx --no -- commitlint --edit "$1"` | Rejects commit messages that don't follow Conventional Commits |
-| `pre-push` | `npm run test-storybook -- --run` | Runs the full story test suite (interactions + a11y); a failure blocks the push |
+| `pre-push` | `npm run test-storybook -- --run`, then `npm run chromatic -- --exit-zero-on-changes` | Runs the full story test suite (interactions + a11y), then publishes to Chromatic. A test failure or a Chromatic build error blocks the push; visual changes don't |
 
 To bypass a hook once, in an emergency only:
 
@@ -451,10 +451,15 @@ echo "feat(tile): add compact variant" | npx commitlint
 [Chromatic](https://www.chromatic.com) publishes Storybook and snapshots every story, flagging visual changes for review.
 
 - `chromatic.config.json` sets `onlyChanged: true` (TurboSnap: only stories affected by a change are snapshotted) and `zip: true`.
-- `npm run chromatic` publishes from your machine.
+- **Every `git push` publishes to Chromatic** from the Husky `pre-push` hook, after the Storybook tests pass. It runs `npm run chromatic -- --exit-zero-on-changes`:
+  - **Visual changes don't block the push.** Review and accept or reject them in Chromatic.
+  - **Build errors do block it**, such as a story that fails to render.
+  - It waits for the snapshots to finish, so pushes take longer.
+  - It builds your local working tree, so commit or stash unrelated changes before pushing.
+- `npm run chromatic` also publishes from your machine on demand.
+- The **Chromatic** GitHub workflow no longer runs on push. It can still be triggered by hand from the **Actions** tab, using the `CHROMATIC_PROJECT_TOKEN` repository secret.
 
 > **Note:** the `chromatic` script currently has the project token hard-coded in `package.json`. Prefer removing it from the script and setting the `CHROMATIC_PROJECT_TOKEN` environment variable instead, which the Chromatic CLI reads automatically. Rotate the token in Chromatic if the repository is public.
-- The **Chromatic** GitHub workflow runs on every push, using the `CHROMATIC_PROJECT_TOKEN` repository secret.
 
 ---
 
@@ -462,10 +467,10 @@ echo "feat(tile): add compact variant" | npx commitlint
 
 | Workflow | Trigger | What it does |
 |---|---|---|
-| `chromatic.yml` | Every push | Installs with `npm ci` on Node 24.20.0 and runs `chromaui/action` |
+| `chromatic.yml` | Manual only (`workflow_dispatch`) | Installs with `npm ci` on Node 24.20.0 and runs `chromaui/action` |
 | `test-storybook.yml` | Manual only (`workflow_dispatch`) | Runs `npm run test-storybook` on Node 22.12.0 in the official Playwright Docker image (`v1.63.0-noble`) |
 
-Automatic Storybook test runs on push are switched off because the same tests run locally in the Husky `pre-push` hook. To run them in CI, trigger the workflow from the repository's **Actions** tab.
+Both workflows are switched off on push because the same steps run locally in the Husky `pre-push` hook. To run them in CI, trigger them from the repository's **Actions** tab.
 
 ---
 
@@ -505,6 +510,8 @@ Start Storybook (`npm run storybook`) before using these tools.
 **Commit blocked by lint errors.** Run `npm run lint` to see them. Try `npx oxlint --fix` for autofixable issues. `tailwindcss(no-arbitrary-value)` and `tailwindcss(no-hardcoded-colors)` mean a value isn't in the theme: use the closest class the message suggests, or add a token to `tw-theme.css`. A `designSystemUnavailable` message means `settings.tailwindcss.entryPoint` in `.oxlintrc.json` doesn't point at a valid Tailwind CSS file.
 
 **Push blocked by failing tests.** Run `npm run test-storybook -- --run` to see which story failed. Accessibility violations are listed with the axe rule ID and the offending element.
+
+**Push blocked by Chromatic.** The Storybook build or upload failed. The hook output links to the build in Chromatic. Run `npm run build-storybook` to reproduce a build error locally. Visual changes alone never block a push.
 
 **Commit rejected by commitlint.** Rewrite the message as `type(scope): subject`, using a lowercase type and a non-empty subject. `git commit --amend` won't help here because the commit never happened; just run `git commit` again with a valid message.
 
