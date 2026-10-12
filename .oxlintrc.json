@@ -31,6 +31,17 @@
     "tailwindcss/no-unnecessary-whitespace": "warn",
 
     "tailwindcss/no-arbitrary-value": "error",
-    "tailwindcss/no-hardcoded-colors": "error"
+    "tailwindcss/no-hardcoded-colors": "error",
+    "tailwindcss/no-restricted-classes": [
+      "error",
+      {
+        "patterns": [
+          {
+            "pattern": "(^|:)!|!$",
+            "message": "the important modifier (!) is forbidden; fix the specificity or class order instead."
+          }
+        ]
+      }
+    ]
   }
 }
