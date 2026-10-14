@@ -1,4 +1,7 @@
 @theme {
+    /* Font: Public Sans (https://fonts.google.com/specimen/Public+Sans) */
+    --font-sans: "Public Sans", ui-sans-serif, system-ui, sans-serif;
+
     /* ████████████████████████████████████ */
     /* anu-primary (gold) */
     --color-anu-primary-100-a50:   #FFFBF4;
