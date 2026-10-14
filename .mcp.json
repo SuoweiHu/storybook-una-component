@@ -7,13 +7,6 @@
         "figma-mcp": {
             "url": "https://mcp.figma.com/mcp",
             "type": "http"
-        },
-        "context7": {
-            "type": "http",
-            "url": "https://mcp.context7.com/mcp",
-            "headers": {
-                "Authorization": "Bearer ctx7sk-3e58fc24-7581-4b88-9edf-e32b9dfbfb2d"
-            }
         }
     }
 }
