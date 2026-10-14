@@ -6,6 +6,12 @@
       "sourceType": "github",
       "skillPath": "skills/oxlint-tailwindcss/SKILL.md",
       "computedHash": "c6d63d22697ad5eebbbf0123459dec756b978e56407e050d0b7fcd7825e148e3"
+    },
+    "tailwind-design-system": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillPath": "plugins/frontend-mobile-development/skills/tailwind-design-system/SKILL.md",
+      "computedHash": "4e5bfe5af9b5da504752432dc45ed605af350cf1489a58419afad4123a514f89"
     }
   }
 }
