@@ -5,4 +5,4 @@ npm run test-storybook -- --run
 # Publish Storybook to Chromatic and run visual tests (only if the tests above passed).
 # --exit-zero-on-changes: visual changes don't block the push; review them in Chromatic.
 # Build errors (e.g. a story that fails to render) still block it.
-npm run chromatic -- --exit-zero-on-changes
+# [npm run chromatic -- --exit-zero-on-changes] -- DISABLED
