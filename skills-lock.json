@@ -1,6 +1,18 @@
 {
   "version": 1,
   "skills": {
+    "context7-cli": {
+      "source": "upstash/context7",
+      "sourceType": "github",
+      "skillPath": "skills/context7-cli/SKILL.md",
+      "computedHash": "cbf019e2acf084ad644330719de24ba93bfc2b801d3459212cdb4a626f98b6c0"
+    },
+    "context7-mcp": {
+      "source": "upstash/context7",
+      "sourceType": "github",
+      "skillPath": "skills/context7-mcp/SKILL.md",
+      "computedHash": "a696522f8af9566bd6c457f0feb905b1dbfec43ac3b9064a944acdb351b48f38"
+    },
     "oxlint-tailwindcss": {
       "source": "sergioazoc/oxlint-tailwindcss",
       "sourceType": "github",
