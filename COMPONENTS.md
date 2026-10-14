@@ -1,6 +1,6 @@
 # Una Components
 
-All components live in `src/component/`, are named exports, and import `../css/tw-global.css` so they are styled wherever they are rendered. Full live documentation, with controls for every prop, is in Storybook under each component's **Docs** page. For setup, styling conventions and tooling, see the [README](README.md).
+All components live in `src/component/`, are named exports, and import `../css/tw-global.css` so they are styled wherever they are rendered. All text uses Public Sans, the theme's default sans font, so components don't set a font family of their own. Full live documentation, with controls for every prop, is in Storybook under each component's **Docs** page. For setup, styling conventions and tooling, see the [README](README.md).
 
 ## Contents
 

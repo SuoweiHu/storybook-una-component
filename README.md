@@ -39,6 +39,7 @@ Every component has Storybook stories covering its variants and states. Those st
 | Language | [TypeScript](https://www.typescriptlang.org) | 6.0 | Static typing |
 | Build | [Vite](https://vite.dev) + `@vitejs/plugin-react` | 8 / 6 | Dev server and bundler used by Storybook and Vitest |
 | Styling | [Tailwind CSS](https://tailwindcss.com) + `@tailwindcss/vite` | 4.3 | Utility-first CSS, with ANU tokens defined in `@theme` |
+| Typography | [Public Sans](https://fonts.google.com/specimen/Public+Sans) via Google Fonts | Variable (100–900) | Default sans font (`--font-sans`) for every component |
 | Variants | [class-variance-authority](https://cva.style) (CVA) | 0.7 | Typed variant → class-name mapping for components |
 | Carousel engine | [Swiper](https://swiperjs.com) | 14 | Slide/fade transitions, autoplay, keyboard and a11y for `Carousel` |
 | Workshop / docs | [Storybook](https://storybook.js.org) (`@storybook/react-vite`) | 10.6 | Component explorer, autodocs, MDX docs |
@@ -138,11 +139,12 @@ npx tsc --noEmit -p tsconfig.app.json
 │   │   ├── Table.tsx     / Table.stories.tsx
 │   │   └── Tile.tsx      / Tile.stories.tsx
 │   └── css/
-│       ├── tw-global.css      # Tailwind entry: layers, theme, preflight, utilities
-│       └── tw-theme.css       # ANU design tokens (colours, shadows, radii)
+│       ├── tw-global.css      # Tailwind entry: Public Sans import, layers, theme, preflight, utilities
+│       └── tw-theme.css       # ANU design tokens (font, colours, shadows, radii)
 ├── .mcp.json                  # Storybook MCP server for AI assistants
 ├── .oxlintrc.json             # oxlint + oxlint-tailwindcss configuration
 ├── chromatic.config.json      # Chromatic project settings
+├── CLAUDE.md                  # Project rules for Claude Code (see AI tooling)
 ├── COMPONENTS.md              # Component reference: props, usage, icon library
 ├── commitlint.config.js       # Commit message rules
 ├── package.json               # Dependencies and npm scripts
@@ -175,7 +177,7 @@ Props, usage examples and the icon library are documented in **[COMPONENTS.md](C
 
 Tailwind is wired in through the Vite plugin (`@tailwindcss/vite` in `vite.config.ts`); there is no `tailwind.config.js`. Configuration lives in CSS:
 
-- **`src/css/tw-global.css`** is the entry point. It declares the cascade layers (`theme, base, components, utilities`) and imports Tailwind's theme, the ANU theme, preflight and utilities.
+- **`src/css/tw-global.css`** is the entry point. Its first line loads [Public Sans](https://fonts.google.com/specimen/Public+Sans) from Google Fonts (variable, weights 100–900, roman and italic). That `@import url(...)` has to stay above everything else, because browsers ignore `@import` after other rules. It then declares the cascade layers (`theme, base, components, utilities`) and imports Tailwind's theme, the ANU theme, preflight and utilities.
 - **`src/css/tw-theme.css`** extends Tailwind's theme with an `@theme { … }` block of ANU tokens.
 
 `Carousel` also imports Swiper's own stylesheets (`swiper/css` and `swiper/css/effect-fade`). They handle the slide track and fade stacking; all visual styling is still Tailwind.
@@ -195,6 +197,7 @@ Defined in `src/css/tw-theme.css`, and usable as normal Tailwind utilities (`bg-
 | `anu-jacaranda` (green) | 100–900 (+ `100-a50`, `650`) | `bg-anu-jacaranda-200` |
 | Shadows | `0`, `100`–`400` | `shadow-200` |
 | Radii | `8`, `50`, `100`, `280`, `380`, `488`, `500`, `1000` | `rounded-8` (0px, square), `rounded-280` (16px), `rounded-1000` (pill) |
+| Font | `--font-sans`: Public Sans, falling back to the system sans | `font-sans` (the page default via preflight, so no class is needed) |
 
 **Colour values are declared only in `tw-theme.css`.** Components use colours through utility classes: an ANU token, or one of Tailwind's built-in colours (`white`, `black`, `blue-700`, …). The linter rejects any colour value written into a class name, such as `bg-[#123456]` or `text-[rgb(0,0,0)]` (see [Linting](#linting-and-type-checking)). To use a new colour, add a token to `tw-theme.css` first.
 
@@ -478,6 +481,7 @@ Both workflows are switched off on push because the same steps run locally in th
 
 The project is set up for AI coding assistants such as Claude Code:
 
+- **`CLAUDE.md`** holds the project rules Claude Code loads in every session. It covers CVA variants, typed props, `data-*` state for the Drupal/Twig migration, no arbitrary values, mobile-first and container queries, focus states, OKLCH colours, Public Sans, Heroicons, story coverage and the checks to run before finishing (accessibility tests, lint and types, doc updates). It also requires confirming twice before any `@theme` token change.
 - **`@storybook/addon-mcp`** exposes an [MCP](https://modelcontextprotocol.io) server at `http://localhost:6006/mcp` while Storybook is running. Assistants can list component docs and props, preview stories and run story tests through it.
 - **`.mcp.json`** registers that server for MCP-aware tools in this repo.
 - **`.claude/launch.json`** tells Claude Code how to start Storybook (`npm run storybook -- --no-open` on port 6006).
