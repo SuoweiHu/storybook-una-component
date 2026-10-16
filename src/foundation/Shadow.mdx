@@ -1,0 +1,50 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundation/Shadow" />
+
+{/* Mirrors the "Shadow scale -- NEW" frame in Figma (UNA, node 5391:26566).
+    Values are Tailwind v4's default shadow scale, which tw-global.css imports via tailwindcss/theme.css.
+    Class names are written out in full so Tailwind's scanner picks them up. */}
+
+export const shadows = [
+  { token: 'shadow-none', className: 'shadow-none', value: ['no shadow'] },
+  { token: 'shadow-2xs', className: 'shadow-2xs', value: ['0 1px rgb(0 0 0 / 0.05)'] },
+  { token: 'shadow-xs', className: 'shadow-xs', value: ['0 1px 2px 0 rgb(0 0 0 / 0.05)'] },
+  { token: 'shadow-sm', className: 'shadow-sm', value: ['0 1px 3px  0px rgb(0 0 0 / 0.1)', '0 1px 2px -1px rgb(0 0 0 / 0.1)'] },
+  { token: 'shadow-md', className: 'shadow-md', value: ['0 4px 6px -1px rgb(0 0 0 / 0.1)', '0 2px 4px -2px rgb(0 0 0 / 0.1)'] },
+  { token: 'shadow-lg', className: 'shadow-lg', value: ['0 10px 15px -3px rgb(0 0 0 / 0.1)', '0  4px  6px -4px rgb(0 0 0 / 0.1)'] },
+  { token: 'shadow-xl', className: 'shadow-xl', value: ['0 20px 25px -5px rgb(0 0 0 / 0.1)', '0  8px 10px -6px rgb(0 0 0 / 0.1)'] },
+  { token: 'shadow-2xl', className: 'shadow-2xl', value: ['0 25px 50px -12px rgb(0 0 0 / 0.25)'] },
+];
+
+<Unstyled>
+  <div className="@container flex flex-col gap-4 rounded-50 bg-anu-grey-100 p-4 text-anu-grey-700 md:p-20">
+    <h1 className="text-4xl leading-12 font-bold tracking-tight">Shadow Tokens</h1>
+    <p className="text-xl font-semibold">Utilities for controlling the box shadow of an element.</p>
+    <div className="overflow-x-auto">
+      <table className="w-full border-separate border-spacing-1 text-sm @3xl:w-auto">
+        <thead>
+          <tr>
+            <th scope="col" className="border border-anu-grey-200 bg-anu-grey-0 px-4 py-2 text-left font-semibold @3xl:w-75">Token name</th>
+            <th scope="col" className="border border-anu-grey-200 bg-anu-grey-0 px-4 py-2 text-left font-semibold @3xl:w-110">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          {shadows.map((shadow) => (
+            <tr key={shadow.token}>
+              <th scope="row" className="h-32 border border-anu-grey-200 bg-anu-grey-0 p-3 text-left align-middle font-medium @md:p-4">
+                <code className="rounded-100 bg-anu-grey-100 px-2 py-1 font-sans whitespace-nowrap">{shadow.token}</code>
+              </th>
+              <td className="h-32 border border-anu-grey-200 bg-anu-grey-0 p-3 align-middle @md:p-4">
+                <div className="flex flex-col gap-4 @md:flex-row @md:items-center">
+                  <div className={`size-22 shrink-0 bg-anu-primary-200 ${shadow.className}`} />
+                  <code className="font-sans whitespace-pre-wrap @md:whitespace-pre">{shadow.value.join('\n')}</code>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</Unstyled>

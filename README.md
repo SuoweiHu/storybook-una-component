@@ -138,6 +138,8 @@ npx tsc --noEmit -p tsconfig.app.json
 │   │   ├── LinkList.tsx  / LinkList.stories.tsx
 │   │   ├── Table.tsx     / Table.stories.tsx
 │   │   └── Tile.tsx      / Tile.stories.tsx
+│   ├── foundation/            # MDX docs pages for design foundations
+│   │   └── Shadow.mdx         # Shadow scale (Storybook: Foundation/Shadow)
 │   └── css/
 │       ├── tw-global.css      # Tailwind entry: Public Sans import, layers, theme, preflight, utilities
 │       └── tw-theme.css       # ANU design tokens (font, colours, shadows, radii)
