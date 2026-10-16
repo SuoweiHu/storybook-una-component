@@ -66,36 +66,6 @@
     --color-anu-jacaranda-700:     #446155;
     --color-anu-jacaranda-800:     #2C4037;
     --color-anu-jacaranda-900:     #15211C;
-    /* ████████████████████████████████████ */
-    /* Shadow */
-    --shadow-0:     0 0px 0px rgba(37, 37, 37, 0.00);
-    --shadow-100:   0 2px 4px rgba(37, 37, 37, 0.08);
-    --shadow-200:   0 4px 8px rgba(37, 37, 37, 0.10);
-    --shadow-300:   0 8px 16px rgba(37, 37, 37, 0.12);
-    --shadow-400:   0 12px 24px rgba(37, 37, 37, 0.16);
-    /* ████████████████████████████████████ */
-    /* Border */
-    /* Border Raidus */
-    --radius-8: 0px;
-    --radius-50: 4px;
-    --radius-100: 8px;
-    --radius-280: 16px;
-    --radius-380: 24px;
-    --radius-488: 32px;
-    --radius-500: 48px;
-    --radius-1000: 999px;
-    /* Border Width */
-    /* ------------ */
-    /* By default border-<number> is equivalant to border-width: <number> px; */
-    /* (See: https://tailwindcss.com/docs/border-width) */
-    /* ------------ */
-    /* ████████████████████████████████████ */
-    /* Spacing */
-    /* ------- */
-    /* By default margin-<number> is equivalant to margin: <number>* var(--spacing) (where var(--spacing)=8px by default); */
-    /* (same for padding, gap, etc) Hence margin-4 is equivalent to margin: 32px for instance; */
-    /* ------- */
-    /* ████████████████████████████████████ */
 }
 
 

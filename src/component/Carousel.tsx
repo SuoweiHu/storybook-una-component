@@ -70,7 +70,7 @@ const indicatorGroup = cva('flex items-center gap-2', {
     },
 });
 
-const indicatorDot = cva(`cursor-pointer rounded-1000 transition-all duration-300 ${focusStyle}`, {
+const indicatorDot = cva(`cursor-pointer rounded-full transition-all duration-300 ${focusStyle}`, {
     variants: {
         controls: {
             bottom: '',

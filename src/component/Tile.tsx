@@ -18,8 +18,8 @@ const tileRoot = cva(`group relative w-full overflow-hidden ${focusStyle}`, {
         variant: {
             headline:
                 'flex min-h-40 items-center rounded-lg bg-anu-grey-100 py-5 pr-14 pl-5 transition-colors duration-200 hover:bg-anu-grey-200 motion-reduce:transition-none',
-            overlay: 'flex aspect-video items-end justify-center rounded-280 bg-black',
-            overlap: 'block aspect-video rounded-280 bg-black',
+            overlay: 'flex aspect-video items-end justify-center rounded-2xl bg-black',
+            overlap: 'block aspect-video rounded-2xl bg-black',
         },
     },
     defaultVariants: {
