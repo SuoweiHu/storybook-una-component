@@ -139,10 +139,11 @@ npx tsc --noEmit -p tsconfig.app.json
 │   │   ├── Table.tsx     / Table.stories.tsx
 │   │   └── Tile.tsx      / Tile.stories.tsx
 │   ├── foundation/            # MDX docs pages for design foundations
+│   │   ├── Border.mdx         # Border radius and width scales (Storybook: Foundation/Border)
 │   │   └── Shadow.mdx         # Shadow scale (Storybook: Foundation/Shadow)
 │   └── css/
 │       ├── tw-global.css      # Tailwind entry: Public Sans import, layers, theme, preflight, utilities
-│       └── tw-theme.css       # ANU design tokens (font, colours, shadows, radii)
+│       └── tw-theme.css       # ANU design tokens (font, colours)
 ├── .mcp.json                  # Storybook MCP server for AI assistants
 ├── .oxlintrc.json             # oxlint + oxlint-tailwindcss configuration
 ├── chromatic.config.json      # Chromatic project settings
@@ -188,7 +189,7 @@ Storybook loads `tw-global.css` globally in `.storybook/preview.tsx`, and each c
 
 ### ANU design tokens
 
-Defined in `src/css/tw-theme.css`, and usable as normal Tailwind utilities (`bg-anu-primary-700`, `text-anu-grey-600`, `rounded-280`, `shadow-200`, …):
+Defined in `src/css/tw-theme.css`, and usable as normal Tailwind utilities (`bg-anu-primary-700`, `text-anu-grey-600`, …), alongside Tailwind's default radius, border-width and shadow scales (`rounded-lg`, `border-2`, `shadow-md`):
 
 | Token group | Scale | Example utilities |
 |---|---|---|
@@ -197,13 +198,13 @@ Defined in `src/css/tw-theme.css`, and usable as normal Tailwind utilities (`bg-
 | `anu-grey` | 0–1000 (+ `100-a50`, `650`) | `bg-anu-grey-100`, `border-anu-grey-400` |
 | `anu-purple` | 100–900 (+ `100-a50`, `650`) | `text-anu-purple-700` |
 | `anu-jacaranda` (green) | 100–900 (+ `100-a50`, `650`) | `bg-anu-jacaranda-200` |
-| Shadows | `0`, `100`–`400` | `shadow-200` |
-| Radii | `8`, `50`, `100`, `280`, `380`, `488`, `500`, `1000` | `rounded-8` (0px, square), `rounded-280` (16px), `rounded-1000` (pill) |
+| Shadows | Tailwind defaults: `none`, `2xs`–`2xl` (see Foundation/Shadow in Storybook) | `shadow-md` |
+| Radii | Tailwind defaults: `none`, `xs`–`4xl`, `full` (see Foundation/Border in Storybook) | `rounded-lg` (8px), `rounded-2xl` (16px), `rounded-full` (pill) |
 | Font | `--font-sans`: Public Sans, falling back to the system sans | `font-sans` (the page default via preflight, so no class is needed) |
 
 **Colour values are declared only in `tw-theme.css`.** Components use colours through utility classes: an ANU token, or one of Tailwind's built-in colours (`white`, `black`, `blue-700`, …). The linter rejects any colour value written into a class name, such as `bg-[#123456]` or `text-[rgb(0,0,0)]` (see [Linting](#linting-and-type-checking)). To use a new colour, add a token to `tw-theme.css` first.
 
-Spacing uses Tailwind's default scale (`--spacing: 0.25rem`, so `p-4` = 16px). The comment inside `tw-theme.css` that says the default is 8px is out of date. Only the commented-out block below it sets `--spacing`. The lower half of `tw-theme.css` holds a commented-out light/dark semantic palette generated with [tweakcn](https://tweakcn.com/editor/theme), kept for reference and not active.
+Spacing uses Tailwind's default scale (`--spacing: 0.25rem`, so `p-4` = 16px). Only the commented-out block in `tw-theme.css` sets `--spacing`, so the default applies. The lower half of `tw-theme.css` holds a commented-out light/dark semantic palette generated with [tweakcn](https://tweakcn.com/editor/theme), kept for reference and not active.
 
 ### Class Variance Authority (CVA)
 
