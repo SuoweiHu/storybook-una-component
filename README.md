@@ -140,10 +140,12 @@ npx tsc --noEmit -p tsconfig.app.json
 │   │   └── Tile.tsx      / Tile.stories.tsx
 │   ├── foundation/            # MDX docs pages for design foundations
 │   │   ├── Border.mdx         # Border radius and width scales (Storybook: Foundation/Border)
-│   │   └── Shadow.mdx         # Shadow scale (Storybook: Foundation/Shadow)
+│   │   ├── Shadow.mdx         # Shadow scale (Storybook: Foundation/Shadow)
+│   │   └── SpacingAndSizing.mdx # Width, height, size, padding and margin scales (Storybook: Foundation/Spacing and Sizing)
 │   └── css/
 │       ├── tw-global.css      # Tailwind entry: Public Sans import, layers, theme, preflight, utilities
-│       └── tw-theme.css       # ANU design tokens (font, colours)
+│       ├── tw-theme.css       # ANU design tokens (font, colours)
+│       └── tw-utility.css     # Custom @utility rules (pattern-hatch)
 ├── .mcp.json                  # Storybook MCP server for AI assistants
 ├── .oxlintrc.json             # oxlint + oxlint-tailwindcss configuration
 ├── chromatic.config.json      # Chromatic project settings
@@ -180,8 +182,9 @@ Props, usage examples and the icon library are documented in **[COMPONENTS.md](C
 
 Tailwind is wired in through the Vite plugin (`@tailwindcss/vite` in `vite.config.ts`); there is no `tailwind.config.js`. Configuration lives in CSS:
 
-- **`src/css/tw-global.css`** is the entry point. Its first line loads [Public Sans](https://fonts.google.com/specimen/Public+Sans) from Google Fonts (variable, weights 100–900, roman and italic). That `@import url(...)` has to stay above everything else, because browsers ignore `@import` after other rules. It then declares the cascade layers (`theme, base, components, utilities`) and imports Tailwind's theme, the ANU theme, preflight and utilities.
+- **`src/css/tw-global.css`** is the entry point. Its first line loads [Public Sans](https://fonts.google.com/specimen/Public+Sans) from Google Fonts (variable, weights 100–900, roman and italic). That `@import url(...)` has to stay above everything else, because browsers ignore `@import` after other rules. It then declares the cascade layers (`theme, base, components, utilities`) and imports Tailwind's theme, the ANU theme, preflight, Tailwind's utilities and the custom utilities.
 - **`src/css/tw-theme.css`** extends Tailwind's theme with an `@theme { … }` block of ANU tokens.
+- **`src/css/tw-utility.css`** holds every custom `@utility`. They use the ANU tokens rather than defining colour values. So far it has one: `pattern-hatch`, a diagonal hatch on `anu-grey-100` that shows the space padding or margin takes up.
 
 `Carousel` also imports Swiper's own stylesheets (`swiper/css` and `swiper/css/effect-fade`). They handle the slide track and fade stacking; all visual styling is still Tailwind.
 
@@ -204,7 +207,7 @@ Defined in `src/css/tw-theme.css`, and usable as normal Tailwind utilities (`bg-
 
 **Colour values are declared only in `tw-theme.css`.** Components use colours through utility classes: an ANU token, or one of Tailwind's built-in colours (`white`, `black`, `blue-700`, …). The linter rejects any colour value written into a class name, such as `bg-[#123456]` or `text-[rgb(0,0,0)]` (see [Linting](#linting-and-type-checking)). To use a new colour, add a token to `tw-theme.css` first.
 
-Spacing uses Tailwind's default scale (`--spacing: 0.25rem`, so `p-4` = 16px). Only the commented-out block in `tw-theme.css` sets `--spacing`, so the default applies. The lower half of `tw-theme.css` holds a commented-out light/dark semantic palette generated with [tweakcn](https://tweakcn.com/editor/theme), kept for reference and not active.
+Spacing uses Tailwind's default scale (`--spacing: 0.25rem`, so `p-4` = 16px); see Foundation/Spacing and Sizing in Storybook. Only the commented-out block in `tw-theme.css` sets `--spacing`, so the default applies. The lower half of `tw-theme.css` holds a commented-out light/dark semantic palette generated with [tweakcn](https://tweakcn.com/editor/theme), kept for reference and not active.
 
 ### Class Variance Authority (CVA)
 

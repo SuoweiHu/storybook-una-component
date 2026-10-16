@@ -1,0 +1,181 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundation/Spacing and Sizing" />
+
+{/* Mirrors the table-width (5391:28014), table-height (5391:28101), table-size (5391:28300),
+    table-padding (5391:28398) and table-margin (5391:28609) frames in Figma (UNA).
+    Every value is Tailwind v4's default spacing scale: n * var(--spacing), with --spacing = 0.25rem (4px).
+    Class names are written out in full so Tailwind's scanner picks them up. */}
+
+export const widths = [
+  { token: 'w-0', className: 'w-0', value: '0px' },
+  { token: 'w-1', className: 'w-1', value: '4px' },
+  { token: 'w-2', className: 'w-2', value: '8px' },
+  { token: 'w-3', className: 'w-3', value: '12px' },
+  { token: 'w-4', className: 'w-4', value: '16px' },
+  { token: 'w-5', className: 'w-5', value: '20px' },
+  { token: 'w-6', className: 'w-6', value: '24px' },
+  { token: 'w-7', className: 'w-7', value: '28px' },
+  { token: 'w-8', className: 'w-8', value: '32px' },
+  { token: 'w-9', className: 'w-9', value: '36px' },
+  { token: 'w-n', className: 'w-20', value: 'n * (--spacing) = n * 4px' },
+];
+
+export const heights = [
+  { token: 'h-0', className: 'h-0', value: '0px' },
+  { token: 'h-2', className: 'h-2', value: '8px' },
+  { token: 'h-4', className: 'h-4', value: '16px' },
+  { token: 'h-5', className: 'h-5', value: '20px' },
+  { token: 'h-7', className: 'h-7', value: '28px' },
+  { token: 'h-n', className: 'h-20', value: 'n * 4px' },
+];
+
+export const sizes = [
+  { token: 'size-0', className: 'size-0', value: '0px' },
+  { token: 'size-1', className: 'size-1', value: '4px' },
+  { token: 'size-2', className: 'size-2', value: '8px' },
+  { token: 'size-3', className: 'size-3', value: '12px' },
+  { token: 'size-4', className: 'size-4', value: '16px' },
+  { token: 'size-5', className: 'size-5', value: '20px' },
+  { token: 'size-6', className: 'size-6', value: '24px' },
+  { token: 'size-7', className: 'size-7', value: '28px' },
+  { token: 'size-8', className: 'size-8', value: '32px' },
+  { token: 'size-16', className: 'size-16', value: '64px' },
+  { token: 'size-20', className: 'size-20', value: '80px' },
+  { token: 'size-n', className: 'size-28', value: 'n * 4px' },
+];
+
+export const paddings = [
+  { token: 'padding-0', className: 'p-0', value: '0px' },
+  { token: 'padding-1', className: 'p-1', value: '4px' },
+  { token: 'padding-2', className: 'p-2', value: '8px' },
+  { token: 'padding-3', className: 'p-3', value: '12px' },
+  { token: 'padding-4', className: 'p-4', value: '16px' },
+  { token: 'padding-5', className: 'p-5', value: '20px' },
+  { token: 'padding-6', className: 'p-6', value: '24px' },
+  { token: 'padding-n', className: 'p-7', value: 'n * 4px' },
+];
+
+{/* The second box drops its left margin so the gap between the boxes equals one margin, as in Figma. */}
+export const margins = [
+  { token: 'margin-0', first: 'm-0', second: 'm-0', value: '0px' },
+  { token: 'margin-1', first: 'm-1', second: 'my-1 mr-1', value: '4px' },
+  { token: 'margin-2', first: 'm-2', second: 'my-2 mr-2', value: '8px' },
+  { token: 'margin-3', first: 'm-3', second: 'my-3 mr-3', value: '12px' },
+  { token: 'margin-4', first: 'm-4', second: 'my-4 mr-4', value: '16px' },
+  { token: 'margin-5', first: 'm-5', second: 'my-5 mr-5', value: '20px' },
+  { token: 'margin-6', first: 'm-6', second: 'my-6 mr-6', value: '24px' },
+  { token: 'margin-n', first: 'm-20', second: 'my-20 mr-20', value: 'n * 4px' },
+];
+
+export const Token = ({ children }) => (
+  <code className="rounded-lg bg-anu-grey-100 px-2 py-1 font-sans whitespace-nowrap">{children}</code>
+);
+
+export const Value = ({ children }) => <code className="font-sans @md:whitespace-nowrap">{children}</code>;
+
+export const Section = ({ title, description, children }) => (
+  <section className="@container flex flex-col gap-4 rounded-sm bg-anu-grey-100 p-4 md:p-20">
+    <h2 className="text-4xl leading-12 font-bold tracking-tight">{title}</h2>
+    <p className="text-xl font-semibold">{description}</p>
+    <div className="overflow-x-auto">{children}</div>
+  </section>
+);
+
+export const TokenTable = ({ valueLabel, rows, renderSample }) => (
+  <table className="w-full border-separate border-spacing-1 text-sm @3xl:w-167">
+    <thead>
+      <tr>
+        <th scope="col" className="border border-anu-grey-200 bg-anu-grey-0 px-4 py-2 text-left font-semibold @3xl:w-41">Token name</th>
+        <th scope="col" className="border border-anu-grey-200 bg-anu-grey-0 px-4 py-2 text-left font-semibold">{valueLabel}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => (
+        <tr key={row.token}>
+          <th scope="row" className="border border-anu-grey-200 bg-anu-grey-0 p-3 text-left align-middle font-medium @md:p-4">
+            <Token>{row.token}</Token>
+          </th>
+          <td className="border border-anu-grey-200 bg-anu-grey-0 p-3 align-middle @md:p-4">
+            <div className="flex items-center gap-2">
+              {renderSample(row)}
+              <Value>{row.value}</Value>
+            </div>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+);
+
+<Unstyled>
+  <h1 className="sr-only">Spacing and Sizing</h1>
+  <div className="flex flex-col gap-6 text-anu-grey-700">
+    <Section title="Width Tokens" description="Utilities for setting the width of an element.">
+      <TokenTable
+        valueLabel="Width Values"
+        rows={widths}
+        renderSample={(row) => <div className={`h-7 shrink-0 rounded-xs bg-anu-primary-500 ${row.className}`} />}
+      />
+    </Section>
+
+    <Section title="Height Tokens" description="Utilities for setting the height of an element.">
+      <table className="border-separate border-spacing-1 text-sm">
+        <tbody>
+          <tr>
+            <th scope="row" className="border border-anu-grey-200 bg-anu-grey-0 px-4 py-2 text-left font-semibold">Name</th>
+            {heights.map((row) => (
+              <td key={row.token} className="h-21 min-w-21 border border-anu-grey-200 bg-anu-grey-0 p-4 text-center align-middle">
+                <Token>{row.token}</Token>
+              </td>
+            ))}
+          </tr>
+          <tr>
+            <th scope="row" className="border border-anu-grey-200 bg-anu-grey-0 px-4 py-2 text-left font-semibold">Height Value</th>
+            {heights.map((row) => (
+              <td key={row.token} className="h-37.5 border border-anu-grey-200 bg-anu-grey-0 p-4 align-top">
+                <div className="flex flex-col items-center gap-2">
+                  <div className={`w-8.5 shrink-0 rounded-xs bg-anu-primary-500 ${row.className}`} />
+                  <Value>{row.value}</Value>
+                </div>
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+    </Section>
+
+    <Section title="Size Tokens" description="Utilities for setting both the width and height of an element.">
+      <TokenTable
+        valueLabel="Width & Height Values"
+        rows={sizes}
+        renderSample={(row) => <div className={`shrink-0 rounded-xs bg-anu-primary-500 ${row.className}`} />}
+      />
+    </Section>
+
+    <Section title="Padding Tokens" description="Utilities for controlling an element's padding.">
+      <TokenTable
+        valueLabel="Padding Values"
+        rows={paddings}
+        renderSample={(row) => (
+          <div className={`shrink-0 pattern-hatch ${row.className}`}>
+            <div className="size-12.5 rounded-xs bg-anu-primary-500" />
+          </div>
+        )}
+      />
+    </Section>
+
+    <Section title="Margin Tokens" description="Utilities for controlling an element's margin.">
+      <TokenTable
+        valueLabel="Margin Values"
+        rows={margins}
+        renderSample={(row) => (
+          <div className="flex shrink-0 pattern-hatch">
+            <div className={`size-12.5 rounded-xs bg-anu-primary-500 ${row.first}`} />
+            <div className={`size-12.5 rounded-xs bg-anu-primary-500 ${row.second}`} />
+          </div>
+        )}
+      />
+    </Section>
+  </div>
+</Unstyled>

@@ -6,40 +6,35 @@ import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
     Values are Tailwind v4's default radius scale and border-width utilities, which tw-global.css imports via tailwindcss/theme.css.
     Class names are written out in full so Tailwind's scanner picks them up. */}
 
-export const radii = [
-  { token: 'rounded-none', className: 'rounded-none', value: '0px' },
-  { token: 'rounded-xs', className: 'rounded-xs', value: '2px' },
-  { token: 'rounded-sm', className: 'rounded-sm', value: '4px' },
-  { token: 'rounded-md', className: 'rounded-md', value: '6px' },
-  { token: 'rounded-lg', className: 'rounded-lg', value: '8px' },
-  { token: 'rounded-xl', className: 'rounded-xl', value: '12px' },
-  { token: 'rounded-2xl', className: 'rounded-2xl', value: '16px' },
-  { token: 'rounded-3xl', className: 'rounded-3xl', value: '24px' },
-  { token: 'rounded-4xl', className: 'rounded-4xl', value: '32px' },
-  { token: 'rounded-full', className: 'rounded-full', value: 'infinity * 1px' },
+export const border_radius_options = [
+    { token: 'rounded-none', className: 'rounded-none', value: '0px' },
+    { token: 'rounded-xs', className: 'rounded-xs', value: '2px' },
+    { token: 'rounded-sm', className: 'rounded-sm', value: '4px' },
+    { token: 'rounded-md', className: 'rounded-md', value: '6px' },
+    { token: 'rounded-lg', className: 'rounded-lg', value: '8px' },
+    { token: 'rounded-xl', className: 'rounded-xl', value: '12px' },
+    { token: 'rounded-2xl', className: 'rounded-2xl', value: '16px' },
+    { token: 'rounded-3xl', className: 'rounded-3xl', value: '24px' },
+    { token: 'rounded-4xl', className: 'rounded-4xl', value: '32px' },
+    { token: 'rounded-full', className: 'rounded-full', value: 'infinity * 1px' },
 ];
 
-export const widths = [
-  { tokens: ['border-0'], className: 'border-0', value: '0px' },
-  { tokens: ['border-1', 'border'], className: 'border', value: '1px' },
-  { tokens: ['border-2'], className: 'border-2', value: '2px' },
-  { tokens: ['border-3'], className: 'border-3', value: '3px' },
-  { tokens: ['border-4'], className: 'border-4', value: '4px' },
-  { tokens: ['border-5'], className: 'border-5', value: '5px' },
-  { tokens: ['border-6'], className: 'border-6', value: '6px' },
-  { tokens: ['border-7'], className: 'border-7', value: '7px' },
-  { tokens: ['border-8'], className: 'border-8', value: '8px' },
-  { tokens: ['border-9'], className: 'border-9', value: '9px' },
-  { tokens: ['border-n'], className: 'border-10', value: 'n * 1px' },
+export const border_width_options = [
+    { tokens: ['border-0'], className: 'border-0', value: '0px' },
+    { tokens: ['border-1', 'border'], className: 'border', value: '1px' },
+    { tokens: ['border-2'], className: 'border-2', value: '2px' },
+    { tokens: ['border-3'], className: 'border-3', value: '3px' },
+    { tokens: ['border-4'], className: 'border-4', value: '4px' },
+    { tokens: ['border-5'], className: 'border-5', value: '5px' },
+    { tokens: ['border-6'], className: 'border-6', value: '6px' },
+    { tokens: ['border-7'], className: 'border-7', value: '7px' },
+    { tokens: ['border-8'], className: 'border-8', value: '8px' },
+    { tokens: ['border-9'], className: 'border-9', value: '9px' },
+    { tokens: ['border-n'], className: 'border-10', value: 'n * 1px' },
 ];
-
-export const Token = ({ children }) => (
-  <code className="rounded-lg bg-anu-grey-100 px-2 py-1 font-sans whitespace-nowrap">{children}</code>
-);
 
 <Unstyled>
-  <h1 className="sr-only">Border</h1>
-  <div className="flex flex-col gap-6 text-anu-grey-700">
+    <div className="flex flex-col gap-6 text-anu-grey-700 w-full border-b-red-200">
     <section className="@container flex flex-col gap-4 rounded-sm bg-anu-grey-100 p-4 md:p-20">
       <h2 className="text-4xl leading-12 font-bold tracking-tight">Border Radius Tokens</h2>
       <p className="text-xl font-semibold">Utilities for controlling the border radius of an element.</p>
@@ -52,10 +47,10 @@ export const Token = ({ children }) => (
             </tr>
           </thead>
           <tbody>
-            {radii.map((radius) => (
+            {border_radius_options.map((radius) => (
               <tr key={radius.token}>
                 <th scope="row" className="border border-anu-grey-200 p-3 text-left align-top font-medium @md:p-4">
-                  <Token>{radius.token}</Token>
+                    <code className="rounded-lg bg-anu-grey-100 px-2 py-1 font-sans whitespace-nowrap">{radius.token}</code>
                 </th>
                 <td className="border border-anu-grey-200 p-3 align-middle @md:p-4">
                   <div className="flex flex-col gap-4 @md:flex-row @md:items-center">
@@ -69,7 +64,6 @@ export const Token = ({ children }) => (
         </table>
       </div>
     </section>
-
     <section className="@container flex flex-col gap-4 rounded-sm bg-anu-grey-100 p-4 md:p-20">
       <h2 className="text-4xl leading-12 font-bold tracking-tight">Border Width Tokens</h2>
       <p className="text-xl font-semibold">Utilities for controlling the width of an element's borders.</p>
@@ -82,14 +76,14 @@ export const Token = ({ children }) => (
             </tr>
           </thead>
           <tbody>
-            {widths.map((width) => (
+            {border_width_options.map((width) => (
               <tr key={width.value}>
                 <th scope="row" className="h-16 border border-anu-grey-200 bg-anu-grey-0 p-3 text-left align-top font-medium @md:p-4">
                   <span className="flex flex-wrap items-center gap-2">
                     {width.tokens.map((token, index) => (
                       <span key={token} className="contents">
                         {index > 0 && <span>or</span>}
-                        <Token>{token}</Token>
+                        <code className="rounded-lg bg-anu-grey-100 px-2 py-1 font-sans whitespace-nowrap">{token}</code>
                       </span>
                     ))}
                   </span>
@@ -106,5 +100,5 @@ export const Token = ({ children }) => (
         </table>
       </div>
     </section>
-  </div>
+    </div>
 </Unstyled>
