@@ -2,8 +2,21 @@ import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
 
 <Meta title="Foundation/Font" />
 
-{/* Tailwind v4's default font-size scale, imported via tailwindcss/theme.css. Every size uses Public Sans (font-sans).
+{/* Font family: --font-sans in tw-theme.css (Public Sans, loaded from Google Fonts at the top of tw-global.css).
+    Font sizes: Tailwind v4's default scale, imported via tailwindcss/theme.css.
+    Typography: mirrors the "Typography (tailwind based)" frame in Figma (UNA, node 5378:1350).
     Class names are written out in full so Tailwind's scanner picks them up. */}
+
+export const typeStyles = [
+  { name: 'Header 1', className: 'text-5xl font-semibold tracking-tight', sample: 'Headline 2x-large' },
+  { name: 'Header 2', className: 'text-4xl font-semibold tracking-tight', sample: 'Headline x-large' },
+  { name: 'Header 3', className: 'text-3xl font-semibold tracking-tight', sample: 'Headline large' },
+  { name: 'Header 4', className: 'text-2xl font-semibold tracking-tight', sample: 'Headline medium' },
+  { name: 'Header 5', className: 'text-xl font-semibold tracking-tight', sample: 'Headline small' },
+  { name: 'Body Large', className: 'text-lg font-light tracking-tight', sample: 'Body Large' },
+  { name: 'Body', className: 'text-base', sample: 'Body' },
+  { name: 'Small', className: 'text-sm', sample: 'Text small' },
+];
 
 export const fontSizes = [
   { token: 'text-xs', className: 'text-xs' },
@@ -22,9 +35,78 @@ export const fontSizes = [
 ];
 
 <Unstyled>
-  <div className="@container flex flex-col gap-4 rounded-sm bg-anu-grey-100 p-4 text-anu-grey-700 md:p-20">
-    <h1 className="text-4xl leading-12 font-bold tracking-tight">Font Size Tokens</h1>
-    <p className="text-xl font-semibold">Utilities for controlling the font size of an element. All text uses Public Sans.</p>
+  <h1 className="sr-only">Font</h1>
+  <div className="flex flex-col gap-6 text-anu-grey-700">
+  <section className="@container flex flex-col gap-4 rounded-sm bg-anu-grey-100 p-4 md:p-20">
+    <h2 className="text-4xl leading-12 font-bold tracking-tight">Font Family Tokens</h2>
+    <p className="text-xl font-semibold">
+      All text uses{' '}
+      <a href="https://fonts.google.com/specimen/Public+Sans" className="underline underline-offset-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-anu-primary-700">Public Sans</a>.
+      It is the page default, so no class is needed. Tailwind also ships <code className="font-sans">font-serif</code> and <code className="font-sans">font-mono</code>,
+      listed below for reference, but don't set any other font family on components.
+    </p>
+    <div className="overflow-x-auto">
+      <table className="w-full border-separate border-spacing-1 text-sm">
+        <thead>
+          <tr>
+            <th scope="col" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">Token name</th>
+            <th scope="col" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">Properties</th>
+            <th scope="col" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">Preview</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row" className="border border-anu-grey-200 bg-anu-white p-3 text-left align-middle font-medium @md:p-4">
+              <code className="rounded-lg bg-anu-grey-100 px-2 py-1 font-sans whitespace-nowrap">font-sans</code>
+            </th>
+            <td className="border border-anu-grey-200 bg-anu-white p-3 align-middle @md:p-4">
+              <code className="font-sans whitespace-pre">{`font-family: var(--font-sans);
+/* "Public Sans", ui-sans-serif, system-ui, sans-serif */`}</code>
+            </td>
+            <td className="border border-anu-grey-200 bg-anu-white p-3 align-middle @md:p-4">
+              <p className="text-2xl">Public Sans</p>
+              <p className="text-2xl italic">Public Sans Italic</p>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row" className="border border-anu-grey-200 bg-anu-white p-3 text-left align-middle font-medium @md:p-4">
+              <code className="rounded-lg bg-anu-grey-100 px-2 py-1 font-sans whitespace-nowrap">font-serif</code>
+            </th>
+            <td className="border border-anu-grey-200 bg-anu-white p-3 align-middle @md:p-4">
+              <code className="font-sans whitespace-pre">{`font-family: var(--font-serif);
+/* ui-serif, Georgia, Cambria, "Times New Roman",
+   Times, serif */`}</code>
+              <p className="pt-2 text-anu-grey-600">Tailwind default (system fonts, not loaded by the project). Not part of the ANU type system.</p>
+            </td>
+            <td className="border border-anu-grey-200 bg-anu-white p-3 align-middle @md:p-4">
+              <p className="font-serif text-2xl">System Serif</p>
+              <p className="font-serif text-2xl italic">System Serif Italic</p>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row" className="border border-anu-grey-200 bg-anu-white p-3 text-left align-middle font-medium @md:p-4">
+              <code className="rounded-lg bg-anu-grey-100 px-2 py-1 font-sans whitespace-nowrap">font-mono</code>
+            </th>
+            <td className="border border-anu-grey-200 bg-anu-white p-3 align-middle @md:p-4">
+              <code className="font-sans whitespace-pre">{`font-family: var(--font-mono);
+/* ui-monospace, SFMono-Regular, Menlo, Monaco,
+   Consolas, "Liberation Mono", "Courier New",
+   monospace */`}</code>
+              <p className="pt-2 text-anu-grey-600">Tailwind default (system fonts, not loaded by the project). Not part of the ANU type system.</p>
+            </td>
+            <td className="border border-anu-grey-200 bg-anu-white p-3 align-middle @md:p-4">
+              <p className="font-mono text-2xl">System Mono</p>
+              <p className="font-mono text-2xl italic">System Mono Italic</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section className="@container flex flex-col gap-4 rounded-sm bg-anu-grey-100 p-4 md:p-20">
+    <h2 className="text-4xl leading-12 font-bold tracking-tight">Font Size Tokens</h2>
+    <p className="text-xl font-semibold">Utilities for controlling the font size of an element.</p>
     <div className="overflow-x-auto">
       <table className="w-full border-separate border-spacing-1 text-sm">
         <thead>
@@ -51,5 +133,39 @@ export const fontSizes = [
         </tbody>
       </table>
     </div>
+  </section>
+
+  <section className="@container flex flex-col gap-4 rounded-sm bg-anu-grey-100 p-4 md:p-20">
+    <h2 className="text-4xl leading-12 font-bold tracking-tight">Typography</h2>
+    <p className="text-xl font-semibold">Text styles for headings and body copy, built from Tailwind utilities. Apply the classes to the matching element (<code className="font-sans">h1</code>–<code className="font-sans">h5</code>, <code className="font-sans">p</code>).</p>
+    <div className="overflow-x-auto">
+      <table className="w-full border-separate border-spacing-1 text-sm">
+        <thead>
+          <tr>
+            <th scope="col" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">Style</th>
+            <th scope="col" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">Classes</th>
+            <th scope="col" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">Preview</th>
+          </tr>
+        </thead>
+        <tbody>
+          {typeStyles.map((style) => (
+            <tr key={style.name}>
+              <th scope="row" className="border border-anu-grey-200 bg-anu-white p-3 text-left align-middle font-medium whitespace-nowrap @md:p-4">{style.name}</th>
+              <td className="border border-anu-grey-200 bg-anu-white p-3 align-middle @md:p-4">
+                <span className="flex flex-wrap gap-1">
+                  {style.className.split(' ').map((utility) => (
+                    <code key={utility} className="rounded-lg bg-anu-grey-100 px-2 py-1 font-sans whitespace-nowrap">{utility}</code>
+                  ))}
+                </span>
+              </td>
+              <td className="border border-anu-grey-200 bg-anu-white p-3 align-middle text-anu-black @md:p-4">
+                <p className={`whitespace-nowrap ${style.className}`}>{style.sample}</p>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
   </div>
 </Unstyled>

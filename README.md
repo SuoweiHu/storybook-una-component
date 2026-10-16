@@ -141,7 +141,7 @@ npx tsc --noEmit -p tsconfig.app.json
 │   ├── foundation/            # MDX docs pages for design foundations
 │   │   ├── Border.mdx         # Border radius and width scales (Storybook: Foundation/Border)
 │   │   ├── Color.mdx          # ANU colour tokens, read from tw-theme.css (Storybook: Foundation/Color)
-│   │   ├── Font.mdx           # Font-size scale (Storybook: Foundation/Font)
+│   │   ├── Font.mdx           # Font family, typography styles (Header 1–5, Body Large, Body, Small) and font-size scale (Storybook: Foundation/Font)
 │   │   ├── Shadow.mdx         # Shadow scale (Storybook: Foundation/Shadow)
 │   │   └── SpacingAndSizing.mdx # Width, height, size, padding and margin scales (Storybook: Foundation/Spacing and Sizing)
 │   └── css/
