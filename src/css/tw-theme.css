@@ -30,20 +30,6 @@
     --color-anu-secondary-700:        #BE4F00;
     --color-anu-secondary-800:        #6F2E08;
     --color-anu-secondary-900:        #3F1A05;
-    /* anu-gray */
-    --color-anu-grey-0:               #FFFFFF;
-    --color-anu-grey-100-a50:         #FBFBFB;
-    --color-anu-grey-100:             #F6F6F6;
-    --color-anu-grey-200:             #E2E2E2;
-    --color-anu-grey-300:             #eccecc;
-    --color-anu-grey-400:             #AFAFAF;
-    --color-anu-grey-500:             #8C8C8C;
-    --color-anu-grey-600:             #636363;
-    --color-anu-grey-650:             #525252;
-    --color-anu-grey-700:             #333333;
-    --color-anu-grey-800:             #252525;
-    --color-anu-grey-900:             #131313;
-    --color-anu-grey-1000:            #000000;
     /* anu-tertiary (purple)*/                   /* OR jacaranda */
     --color-anu-tertiary-100-a50:     #EDEEF450; /* OR #EEF2F050 */
     --color-anu-tertiary-100:         #EDEEF4;   /* OR #EEF2F0   */
@@ -56,6 +42,23 @@
     --color-anu-tertiary-700:         #3E436A;   /* OR #446155   */
     --color-anu-tertiary-800:         #272A45;   /* OR #2C4037   */
     --color-anu-tertiary-900:         #121424;   /* OR #15211C   */
+    /* anu-gray / anu-white / anu-black */
+    --color-anu-white:                var(--color-anu-grey-0);
+    --color-anu-grey-0:               #FFFFFF;
+    --color-anu-grey-100-a50:         #FBFBFB;
+    --color-anu-grey-100:             #F6F6F6;
+    --color-anu-grey-200:             #E2E2E2;
+    --color-anu-grey-300:             #CCCCCC;
+    --color-anu-grey-400:             #AFAFAF;
+    --color-anu-grey-500:             #8C8C8C;
+    --color-anu-grey-600:             #636363;
+    --color-anu-grey-650:             #525252;
+    --color-anu-grey-700:             #333333;
+    --color-anu-grey-800:             #252525;
+    --color-anu-grey-900:             #131313;
+    --color-anu-grey-1000:            #000000;
+    --color-anu-black:                var(--color-anu-grey-1000);
+
 
     /* ████████████████████████████████████ */
     /* Shadow */

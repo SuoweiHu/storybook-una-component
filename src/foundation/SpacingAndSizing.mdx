@@ -86,17 +86,17 @@ export const TokenTable = ({ valueLabel, rows, renderSample }) => (
   <table className="w-full border-separate border-spacing-1 text-sm @3xl:w-167">
     <thead>
       <tr>
-        <th scope="col" className="border border-anu-grey-200 bg-anu-grey-0 px-4 py-2 text-left font-semibold @3xl:w-41">Token name</th>
-        <th scope="col" className="border border-anu-grey-200 bg-anu-grey-0 px-4 py-2 text-left font-semibold">{valueLabel}</th>
+        <th scope="col" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold @3xl:w-41">Token name</th>
+        <th scope="col" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">{valueLabel}</th>
       </tr>
     </thead>
     <tbody>
       {rows.map((row) => (
         <tr key={row.token}>
-          <th scope="row" className="border border-anu-grey-200 bg-anu-grey-0 p-3 text-left align-middle font-medium @md:p-4">
+          <th scope="row" className="border border-anu-grey-200 bg-anu-white p-3 text-left align-middle font-medium @md:p-4">
             <Token>{row.token}</Token>
           </th>
-          <td className="border border-anu-grey-200 bg-anu-grey-0 p-3 align-middle @md:p-4">
+          <td className="border border-anu-grey-200 bg-anu-white p-3 align-middle @md:p-4">
             <div className="flex items-center gap-2">
               {renderSample(row)}
               <Value>{row.value}</Value>
@@ -123,17 +123,17 @@ export const TokenTable = ({ valueLabel, rows, renderSample }) => (
       <table className="border-separate border-spacing-1 text-sm">
         <tbody>
           <tr>
-            <th scope="row" className="border border-anu-grey-200 bg-anu-grey-0 px-4 py-2 text-left font-semibold">Name</th>
+            <th scope="row" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">Name</th>
             {heights.map((row) => (
-              <td key={row.token} className="h-21 min-w-21 border border-anu-grey-200 bg-anu-grey-0 p-4 text-center align-middle">
+              <td key={row.token} className="h-21 min-w-21 border border-anu-grey-200 bg-anu-white p-4 text-center align-middle">
                 <Token>{row.token}</Token>
               </td>
             ))}
           </tr>
           <tr>
-            <th scope="row" className="border border-anu-grey-200 bg-anu-grey-0 px-4 py-2 text-left font-semibold">Height Value</th>
+            <th scope="row" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">Height Value</th>
             {heights.map((row) => (
-              <td key={row.token} className="h-37.5 border border-anu-grey-200 bg-anu-grey-0 p-4 align-top">
+              <td key={row.token} className="h-37.5 border border-anu-grey-200 bg-anu-white p-4 align-top">
                 <div className="flex flex-col items-center gap-2">
                   <div className={`w-8.5 shrink-0 rounded-xs bg-anu-primary-500 ${row.className}`} />
                   <Value>{row.value}</Value>

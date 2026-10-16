@@ -25,17 +25,17 @@ export const shadows = [
       <table className="w-full border-separate border-spacing-1 text-sm @3xl:w-auto">
         <thead>
           <tr>
-            <th scope="col" className="border border-anu-grey-200 bg-anu-grey-0 px-4 py-2 text-left font-semibold @3xl:w-75">Token name</th>
-            <th scope="col" className="border border-anu-grey-200 bg-anu-grey-0 px-4 py-2 text-left font-semibold @3xl:w-110">Value</th>
+            <th scope="col" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold @3xl:w-75">Token name</th>
+            <th scope="col" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold @3xl:w-110">Value</th>
           </tr>
         </thead>
         <tbody>
           {shadows.map((shadow) => (
             <tr key={shadow.token}>
-              <th scope="row" className="h-32 border border-anu-grey-200 bg-anu-grey-0 p-3 text-left align-middle font-medium @md:p-4">
+              <th scope="row" className="h-32 border border-anu-grey-200 bg-anu-white p-3 text-left align-middle font-medium @md:p-4">
                 <code className="rounded-lg bg-anu-grey-100 px-2 py-1 font-sans whitespace-nowrap">{shadow.token}</code>
               </th>
-              <td className="h-32 border border-anu-grey-200 bg-anu-grey-0 p-3 align-middle @md:p-4">
+              <td className="h-32 border border-anu-grey-200 bg-anu-white p-3 align-middle @md:p-4">
                 <div className="flex flex-col gap-4 @md:flex-row @md:items-center">
                   <div className={`size-22 shrink-0 bg-anu-primary-200 ${shadow.className}`} />
                   <code className="font-sans whitespace-pre-wrap @md:whitespace-pre">{shadow.value.join('\n')}</code>

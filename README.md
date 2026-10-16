@@ -140,6 +140,7 @@ npx tsc --noEmit -p tsconfig.app.json
 │   │   └── Tile.tsx      / Tile.stories.tsx
 │   ├── foundation/            # MDX docs pages for design foundations
 │   │   ├── Border.mdx         # Border radius and width scales (Storybook: Foundation/Border)
+│   │   ├── Color.mdx          # ANU colour tokens, read from tw-theme.css (Storybook: Foundation/Color)
 │   │   ├── Shadow.mdx         # Shadow scale (Storybook: Foundation/Shadow)
 │   │   └── SpacingAndSizing.mdx # Width, height, size, padding and margin scales (Storybook: Foundation/Spacing and Sizing)
 │   └── css/
@@ -192,15 +193,15 @@ Storybook loads `tw-global.css` globally in `.storybook/preview.tsx`, and each c
 
 ### ANU design tokens
 
-Defined in `src/css/tw-theme.css`, and usable as normal Tailwind utilities (`bg-anu-primary-700`, `text-anu-grey-600`, …), alongside Tailwind's default radius, border-width and shadow scales (`rounded-lg`, `border-2`, `shadow-md`):
+Defined in `src/css/tw-theme.css` (every colour is shown in Foundation/Color in Storybook), and usable as normal Tailwind utilities (`bg-anu-primary-700`, `text-anu-grey-600`, …), alongside Tailwind's default radius, border-width and shadow scales (`rounded-lg`, `border-2`, `shadow-md`):
 
 | Token group | Scale | Example utilities |
 |---|---|---|
 | `anu-primary` (gold) | 100–1000 (+ `100-a50`, `650`) | `bg-anu-primary-700`, `text-anu-primary-800` |
 | `anu-secondary` | 100–900 (+ `100-a50`, `650`) | `bg-anu-secondary-600` |
 | `anu-grey` | 0–1000 (+ `100-a50`, `650`) | `bg-anu-grey-100`, `border-anu-grey-400` |
+| `anu-white`, `anu-black` | Aliases of `anu-grey-0` and `anu-grey-1000` | `bg-anu-white`, `text-anu-black` |
 | `anu-tertiary` | 100–900 (+ `100-a50`, `650`) | `text-anu-tertiary-700` |
-| `anu-jacaranda` (green) | 100–900 (+ `100-a50`, `650`) | `bg-anu-jacaranda-200` |
 | Shadows | Tailwind defaults: `none`, `2xs`–`2xl` (see Foundation/Shadow in Storybook) | `shadow-md` |
 | Radii | Tailwind defaults: `none`, `xs`–`4xl`, `full` (see Foundation/Border in Storybook) | `rounded-lg` (8px), `rounded-2xl` (16px), `rounded-full` (pill) |
 | Font | `--font-sans`: Public Sans, falling back to the system sans | `font-sans` (the page default via preflight, so no class is needed) |
