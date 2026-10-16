@@ -33,7 +33,7 @@ const genderEquityLinks = [
 ];
 
 const meta = {
-  title: 'LinkList',
+  title: 'UNA Batch-1/LinkList',
   component: LinkList,
   parameters: {
     layout: 'fullscreen',

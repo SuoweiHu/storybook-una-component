@@ -290,7 +290,7 @@ import { expect, waitFor } from 'storybook/test';
 import { Carousel } from './Carousel';
 
 const meta = {
-  title: 'Carousel',
+  title: 'UNA Batch-1/Carousel',
   component: Carousel,
   tags: ['autodocs'],
   args: { slides, label: 'Student stories' },

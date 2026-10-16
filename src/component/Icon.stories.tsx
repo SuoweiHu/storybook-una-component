@@ -4,7 +4,7 @@ import { Icon } from './Icon';
 import { iconNames, iconVariants } from './icons';
 
 const meta = {
-  title: 'Icon',
+  title: 'UNA Batch-1/Icon',
   component: Icon,
   // Docs come from Icon.mdx, which adds the full icon gallery.
   tags: ['!autodocs'],

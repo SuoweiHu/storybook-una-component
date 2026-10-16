@@ -55,7 +55,7 @@ const contactRows = [
 }));
 
 const meta = {
-  title: 'Table',
+  title: 'UNA Batch-1/Table',
   component: Table,
   parameters: {
     layout: 'fullscreen',

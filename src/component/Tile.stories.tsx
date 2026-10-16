@@ -3,7 +3,7 @@ import { expect } from 'storybook/test';
 import { Tile } from './Tile';
 
 const meta = {
-  title: 'Tile',
+  title: 'UNA Batch-1/Tile',
   component: Tile,
   parameters: {
     layout: 'padded',

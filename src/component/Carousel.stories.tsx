@@ -10,7 +10,7 @@ const slides = [
 ];
 
 const meta = {
-  title: 'Carousel',
+  title: 'UNA Batch-1/Carousel',
   component: Carousel,
   parameters: {
     layout: 'padded',

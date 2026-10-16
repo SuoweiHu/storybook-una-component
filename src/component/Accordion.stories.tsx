@@ -23,7 +23,7 @@ const items = [
 ];
 
 const meta = {
-  title: 'Accordion',
+  title: 'UNA Batch-1/Accordion',
   component: Accordion,
   parameters: {
     layout: 'fullscreen',
