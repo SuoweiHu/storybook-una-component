@@ -197,9 +197,9 @@ Defined in `src/css/tw-theme.css`, and usable as normal Tailwind utilities (`bg-
 | Token group | Scale | Example utilities |
 |---|---|---|
 | `anu-primary` (gold) | 100–1000 (+ `100-a50`, `650`) | `bg-anu-primary-700`, `text-anu-primary-800` |
-| `anu-copper` | 100–900 (+ `100-a50`, `650`) | `bg-anu-copper-600` |
+| `anu-secondary` | 100–900 (+ `100-a50`, `650`) | `bg-anu-secondary-600` |
 | `anu-grey` | 0–1000 (+ `100-a50`, `650`) | `bg-anu-grey-100`, `border-anu-grey-400` |
-| `anu-purple` | 100–900 (+ `100-a50`, `650`) | `text-anu-purple-700` |
+| `anu-tertiary` | 100–900 (+ `100-a50`, `650`) | `text-anu-tertiary-700` |
 | `anu-jacaranda` (green) | 100–900 (+ `100-a50`, `650`) | `bg-anu-jacaranda-200` |
 | Shadows | Tailwind defaults: `none`, `2xs`–`2xl` (see Foundation/Shadow in Storybook) | `shadow-md` |
 | Radii | Tailwind defaults: `none`, `xs`–`4xl`, `full` (see Foundation/Border in Storybook) | `rounded-lg` (8px), `rounded-2xl` (16px), `rounded-full` (pill) |

@@ -1,71 +1,81 @@
 @theme {
-    /* Font: Public Sans (https://fonts.google.com/specimen/Public+Sans) */
-    --font-sans: "Public Sans", ui-sans-serif, system-ui, sans-serif;
+    /* ████████████████████████████████████ */
+    /* Typography */
+    --font-sans: "Public Sans", ui-sans-serif, system-ui, sans-serif; /* Font: Public Sans (https://fonts.google.com/specimen/Public+Sans) */
 
     /* ████████████████████████████████████ */
+    /* Color */
     /* anu-primary (gold) */
-    --color-anu-primary-100-a50:   #FFFBF4;
-    --color-anu-primary-100:       #FFF7E9;
-    --color-anu-primary-200:       #FCF0D7;
-    --color-anu-primary-300:       #FAE4B8;
-    --color-anu-primary-400:       #F7D490;
-    --color-anu-primary-500:       #E8B557;
-    --color-anu-primary-600:       #E2A22D;
-    --color-anu-primary-650:       #D19010;
-    --color-anu-primary-700:       #BE830E;
-    --color-anu-primary-800:       #A36A00;
-    --color-anu-primary-900:       #945F00;
-    --color-anu-primary-1000:      #7A4D00;
-    /* anu-copper */
-    --color-anu-copper-100-a50:    #FEF3ED80;
-    --color-anu-copper-100:        #FEF3ED;
-    --color-anu-copper-200:        #FCE5D7;
-    --color-anu-copper-300:        #FAD0B8;
-    --color-anu-copper-400:        #F7B690;
-    --color-anu-copper-500:        #F3955F;
-    --color-anu-copper-600:        #EF6F25;
-    --color-anu-copper-650:        #D15610;
-    --color-anu-copper-700:        #BE4F00;
-    --color-anu-copper-800:        #6F2E08;
-    --color-anu-copper-900:        #3F1A05;
+    --color-anu-primary-100-a50:      #FFFBF4;
+    --color-anu-primary-100:          #FFF7E9;
+    --color-anu-primary-200:          #FCF0D7;
+    --color-anu-primary-300:          #FAE4B8;
+    --color-anu-primary-400:          #F7D490;
+    --color-anu-primary-500:          #E8B557;
+    --color-anu-primary-600:          #E2A22D;
+    --color-anu-primary-650:          #D19010;
+    --color-anu-primary-700:          #BE830E;
+    --color-anu-primary-800:          #A36A00;
+    --color-anu-primary-900:          #945F00;
+    --color-anu-primary-1000:         #7A4D00;
+    /* anu-secondary (copper) */
+    --color-anu-secondary-100-a50:    #FEF3ED80;
+    --color-anu-secondary-100:        #FEF3ED;
+    --color-anu-secondary-200:        #FCE5D7;
+    --color-anu-secondary-300:        #FAD0B8;
+    --color-anu-secondary-400:        #F7B690;
+    --color-anu-secondary-500:        #F3955F;
+    --color-anu-secondary-600:        #EF6F25;
+    --color-anu-secondary-650:        #D15610;
+    --color-anu-secondary-700:        #BE4F00;
+    --color-anu-secondary-800:        #6F2E08;
+    --color-anu-secondary-900:        #3F1A05;
     /* anu-gray */
-    --color-anu-grey-0:            #FFFFFF;
-    --color-anu-grey-100-a50:      #FBFBFB;
-    --color-anu-grey-100:          #F6F6F6;
-    --color-anu-grey-200:          #E2E2E2;
-    --color-anu-grey-300:          #eccecc;
-    --color-anu-grey-400:          #AFAFAF;
-    --color-anu-grey-500:          #8C8C8C;
-    --color-anu-grey-600:          #636363;
-    --color-anu-grey-650:          #525252;
-    --color-anu-grey-700:          #333333;
-    --color-anu-grey-800:          #252525;
-    --color-anu-grey-900:          #131313;
-    --color-anu-grey-1000:         #000000;
-    /* anu-purple */
-    --color-anu-purple-100-a50:    #EDEEF450;
-    --color-anu-purple-100:        #EDEEF4;
-    --color-anu-purple-200:        #DBDDE9;
-    --color-anu-purple-300:        #B8BCD3;
-    --color-anu-purple-400:        #969BBC;
-    --color-anu-purple-500:        #767CA6;
-    --color-anu-purple-600:        #666C9B;
-    --color-anu-purple-650:        #575D90;
-    --color-anu-purple-700:        #3E436A;
-    --color-anu-purple-800:        #272A45;
-    --color-anu-purple-900:        #121424;
-    /* anu-jacaranda (GREEN) */
-    --color-anu-jacaranda-100-a50: #EEF2F050;
-    --color-anu-jacaranda-100:     #EEF2F0;
-    --color-anu-jacaranda-200:     #DEE6E2;
-    --color-anu-jacaranda-300:     #CDD9D4;
-    --color-anu-jacaranda-400:     #ADC0B8;
-    --color-anu-jacaranda-500:     #8DA89C;
-    --color-anu-jacaranda-600:     #7E9C8F;
-    --color-anu-jacaranda-650:     #5F8575;
-    --color-anu-jacaranda-700:     #446155;
-    --color-anu-jacaranda-800:     #2C4037;
-    --color-anu-jacaranda-900:     #15211C;
+    --color-anu-grey-0:               #FFFFFF;
+    --color-anu-grey-100-a50:         #FBFBFB;
+    --color-anu-grey-100:             #F6F6F6;
+    --color-anu-grey-200:             #E2E2E2;
+    --color-anu-grey-300:             #eccecc;
+    --color-anu-grey-400:             #AFAFAF;
+    --color-anu-grey-500:             #8C8C8C;
+    --color-anu-grey-600:             #636363;
+    --color-anu-grey-650:             #525252;
+    --color-anu-grey-700:             #333333;
+    --color-anu-grey-800:             #252525;
+    --color-anu-grey-900:             #131313;
+    --color-anu-grey-1000:            #000000;
+    /* anu-tertiary (purple)*/                   /* OR jacaranda */
+    --color-anu-tertiary-100-a50:     #EDEEF450; /* OR #EEF2F050 */
+    --color-anu-tertiary-100:         #EDEEF4;   /* OR #EEF2F0   */
+    --color-anu-tertiary-200:         #DBDDE9;   /* OR #DEE6E2   */
+    --color-anu-tertiary-300:         #B8BCD3;   /* OR #CDD9D4   */
+    --color-anu-tertiary-400:         #969BBC;   /* OR #ADC0B8   */
+    --color-anu-tertiary-500:         #767CA6;   /* OR #8DA89C   */
+    --color-anu-tertiary-600:         #666C9B;   /* OR #7E9C8F   */
+    --color-anu-tertiary-650:         #575D90;   /* OR #5F8575   */
+    --color-anu-tertiary-700:         #3E436A;   /* OR #446155   */
+    --color-anu-tertiary-800:         #272A45;   /* OR #2C4037   */
+    --color-anu-tertiary-900:         #121424;   /* OR #15211C   */
+
+    /* ████████████████████████████████████ */
+    /* Shadow */
+    --shadow-2xs: 0 1px rgb(0 0 0 / 0.05);
+    --shadow-xs:  0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-sm:  0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md:  0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg:  0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl:  0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    /* ████████████████████████████████████ */
+    /* Border radius */
+    --radius-xs:  0.125rem;
+    --radius-sm:  0.25rem;
+    --radius-md:  0.375rem;
+    --radius-lg:  0.5rem;
+    --radius-xl:  0.75rem;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+    --radius-4xl: 2rem;
 }
 
 
