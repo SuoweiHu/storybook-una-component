@@ -271,7 +271,7 @@ Configured in `.storybook/`:
   - Loads the global Tailwind CSS
   - Enables **autodocs** for every component (`tags: ['autodocs']`)
   - Auto-detects colour/date controls
-  - Sorts stories alphabetically
+  - Sorts stories alphabetically, except the Foundation pages, which come first in a fixed order: Color, Spacing and Sizing, Border, Shadow
   - Configures the **a11y** addon (see [Testing](#testing))
 
 Addons:

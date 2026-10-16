@@ -28,6 +28,7 @@ const preview: Preview = {
         options:{
             storySort: {
                 method: 'alphabetical',
+                order: ['Foundation', ['Color', 'Spacing and Sizing', 'Border', 'Shadow'], '*'],
             }
         }
     },
