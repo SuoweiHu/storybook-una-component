@@ -1,0 +1,55 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundation/Font" />
+
+{/* Tailwind v4's default font-size scale, imported via tailwindcss/theme.css. Every size uses Public Sans (font-sans).
+    Class names are written out in full so Tailwind's scanner picks them up. */}
+
+export const fontSizes = [
+  { token: 'text-xs', className: 'text-xs' },
+  { token: 'text-sm', className: 'text-sm' },
+  { token: 'text-base', className: 'text-base' },
+  { token: 'text-lg', className: 'text-lg' },
+  { token: 'text-xl', className: 'text-xl' },
+  { token: 'text-2xl', className: 'text-2xl' },
+  { token: 'text-3xl', className: 'text-3xl' },
+  { token: 'text-4xl', className: 'text-4xl' },
+  { token: 'text-5xl', className: 'text-5xl' },
+  { token: 'text-6xl', className: 'text-6xl' },
+  { token: 'text-7xl', className: 'text-7xl' },
+  { token: 'text-8xl', className: 'text-8xl' },
+  { token: 'text-9xl', className: 'text-9xl' },
+];
+
+<Unstyled>
+  <div className="@container flex flex-col gap-4 rounded-sm bg-anu-grey-100 p-4 text-anu-grey-700 md:p-20">
+    <h1 className="text-4xl leading-12 font-bold tracking-tight">Font Size Tokens</h1>
+    <p className="text-xl font-semibold">Utilities for controlling the font size of an element. All text uses Public Sans.</p>
+    <div className="overflow-x-auto">
+      <table className="w-full border-separate border-spacing-1 text-sm">
+        <thead>
+          <tr>
+            <th scope="col" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">Token name</th>
+            <th scope="col" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">Properties</th>
+            <th scope="col" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">Preview</th>
+          </tr>
+        </thead>
+        <tbody>
+          {fontSizes.map((size) => (
+            <tr key={size.token}>
+              <th scope="row" className="border border-anu-grey-200 bg-anu-white p-3 text-left align-middle font-medium @md:p-4">
+                <code className="rounded-lg bg-anu-grey-100 px-2 py-1 font-sans whitespace-nowrap">{size.token}</code>
+              </th>
+              <td className="border border-anu-grey-200 bg-anu-white p-3 align-middle @md:p-4">
+                <code className="font-sans whitespace-pre">{`font-size: var(--${size.token});\nline-height: var(--${size.token}--line-height);`}</code>
+              </td>
+              <td className="border border-anu-grey-200 bg-anu-white p-3 align-middle @md:p-4">
+                <p className={`whitespace-nowrap ${size.className}`}>Aa</p>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</Unstyled>

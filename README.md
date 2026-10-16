@@ -141,6 +141,7 @@ npx tsc --noEmit -p tsconfig.app.json
 │   ├── foundation/            # MDX docs pages for design foundations
 │   │   ├── Border.mdx         # Border radius and width scales (Storybook: Foundation/Border)
 │   │   ├── Color.mdx          # ANU colour tokens, read from tw-theme.css (Storybook: Foundation/Color)
+│   │   ├── Font.mdx           # Font-size scale (Storybook: Foundation/Font)
 │   │   ├── Shadow.mdx         # Shadow scale (Storybook: Foundation/Shadow)
 │   │   └── SpacingAndSizing.mdx # Width, height, size, padding and margin scales (Storybook: Foundation/Spacing and Sizing)
 │   └── css/
@@ -204,7 +205,7 @@ Defined in `src/css/tw-theme.css` (every colour is shown in Foundation/Color in 
 | `anu-tertiary` | 100–900 (+ `100-a50`, `650`) | `text-anu-tertiary-700` |
 | Shadows | Tailwind defaults: `none`, `2xs`–`2xl` (see Foundation/Shadow in Storybook) | `shadow-md` |
 | Radii | Tailwind defaults: `none`, `xs`–`4xl`, `full` (see Foundation/Border in Storybook) | `rounded-lg` (8px), `rounded-2xl` (16px), `rounded-full` (pill) |
-| Font | `--font-sans`: Public Sans, falling back to the system sans | `font-sans` (the page default via preflight, so no class is needed) |
+| Font | `--font-sans`: Public Sans, falling back to the system sans. Sizes are Tailwind's default `text-xs`–`text-9xl` (see Foundation/Font in Storybook) | `font-sans` (the page default via preflight, so no class is needed), `text-lg` |
 
 **Colour values are declared only in `tw-theme.css`.** Components use colours through utility classes: an ANU token, or one of Tailwind's built-in colours (`white`, `black`, `blue-700`, …). The linter rejects any colour value written into a class name, such as `bg-[#123456]` or `text-[rgb(0,0,0)]` (see [Linting](#linting-and-type-checking)). To use a new colour, add a token to `tw-theme.css` first.
 
@@ -271,7 +272,7 @@ Configured in `.storybook/`:
   - Loads the global Tailwind CSS
   - Enables **autodocs** for every component (`tags: ['autodocs']`)
   - Auto-detects colour/date controls
-  - Sorts stories alphabetically, except the Foundation pages, which come first in a fixed order: Color, Spacing and Sizing, Border, Shadow
+  - Sorts stories alphabetically, except the Foundation pages, which come first in a fixed order: Font, Color, Spacing and Sizing, Border, Shadow
   - Configures the **a11y** addon (see [Testing](#testing))
 
 Addons:
