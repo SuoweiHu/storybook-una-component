@@ -6,3 +6,5 @@
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);
 @import "./tw-utility.css";
+/* Dark mode using data attribute [data-theme=light/dark] */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));

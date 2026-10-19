@@ -10,6 +10,7 @@ All components live in `src/component/`, are named exports, and import `../css/t
   - [Icon library](#icon-library)
 - [LinkList](#linklist)
 - [Table](#table)
+- [TailwindPlayDemo](#tailwindplaydemo)
 - [Tile](#tile)
 
 ---
@@ -117,6 +118,22 @@ A responsive data table (scrolls horizontally on small screens) supporting colum
 | `bordered` | `boolean` | `false` | Borders on every cell; use whenever cells are merged |
 
 A cell is either a string or `{ text?, subtext?, links?, colSpan?, rowSpan? }`. When `subtext` is set, `text` renders as a sub-heading.
+
+## TailwindPlayDemo
+
+A port of the default example on [Tailwind Play](https://play.tailwindcss.com): a card inside a framed grid with striped gutters, rebuilt with ANU tokens. The logo loads from `play.tailwindcss.com` by absolute URL. The frame layout and stripes come from the `grid-frame` and `pattern-stripes` utilities in `tw-utility.css`.
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `theme` | `'light' \| 'dark'` | `'light'` | Colour scheme; also swaps the logo |
+| `intro` | `string` | Play's intro text | Paragraph above the feature list |
+| `features` | `{ text: string; code?: string }[]` | Play's four features | Check-marked list; `code` is shown after the text. An empty array hides the list |
+| `outro` | `string` | Play's closing text | Paragraph below the feature list |
+| `ctaPrompt` | `string` | `'Want to dig deeper into Tailwind?'` | Line above the link |
+| `ctaLabel` | `string` | `'Read the docs'` | Link text |
+| `ctaHref` | `string` | `'https://tailwindcss.com/docs'` | Link target |
+
+Any other `<div>` attribute (`aria-*`, `data-*`, `className`, …) is passed to the root.
 
 ## Tile
 

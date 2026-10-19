@@ -137,6 +137,7 @@ npx tsc --noEmit -p tsconfig.app.json
 │   │   ├── icons.ts           # Icon registry built from src/anu-icons
 │   │   ├── LinkList.tsx  / LinkList.stories.tsx
 │   │   ├── Table.tsx     / Table.stories.tsx
+│   │   ├── TailwindPlayDemo.tsx / TailwindPlayDemo.stories.tsx
 │   │   └── Tile.tsx      / Tile.stories.tsx
 │   ├── foundation/            # MDX docs pages for design foundations
 │   │   ├── Border.mdx         # Border radius and width scales (Storybook: Foundation/Border)
@@ -147,7 +148,7 @@ npx tsc --noEmit -p tsconfig.app.json
 │   └── css/
 │       ├── tw-global.css      # Tailwind entry: Public Sans import, layers, theme, preflight, utilities
 │       ├── tw-theme.css       # ANU design tokens (font, colours)
-│       └── tw-utility.css     # Custom @utility rules (pattern-hatch)
+│       └── tw-utility.css     # Custom @utility rules (pattern-hatch, grid-frame, pattern-stripes)
 ├── .mcp.json                  # Storybook MCP server for AI assistants
 ├── .oxlintrc.json             # oxlint + oxlint-tailwindcss configuration
 ├── chromatic.config.json      # Chromatic project settings
@@ -172,6 +173,7 @@ npx tsc --noEmit -p tsconfig.app.json
 | `Icon` | ANU brand icons (social, small use, hero) in black, white and gold |
 | `LinkList` | A list of arrow links, optionally in columns, with a heading and illustration |
 | `Table` | Data table with row/column headers, striping, borders and merged cells |
+| `TailwindPlayDemo` | Port of the Tailwind Play default example, in light and dark themes |
 | `Tile` | Card-style link in headline, overlay and overlap variants |
 
 Props, usage examples and the icon library are documented in **[COMPONENTS.md](COMPONENTS.md)**. Live docs with controls for every prop are in Storybook.

@@ -12,7 +12,8 @@ const config: StorybookConfig = {
         "@storybook/addon-vitest",
         "@storybook/addon-a11y",
         "@storybook/addon-docs",
-        "@storybook/addon-mcp"
+        "@storybook/addon-mcp",
+        '@storybook/addon-themes',
     ],
     // Enable component manifest required by Storybook MCP server
     features: { componentsManifest: true },
