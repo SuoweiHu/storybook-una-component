@@ -18,26 +18,26 @@ export const shadows = [
 ];
 
 <Unstyled>
-  <div className="@container flex flex-col gap-4 rounded-sm bg-anu-grey-100 p-4 text-anu-grey-700 md:p-20">
+  <div className="@container flex flex-col gap-4 rounded-sm bg-anu-neutral-100 p-4 text-anu-neutral-700 md:p-20">
     <h1 className="text-4xl leading-12 font-bold tracking-tight">Shadow Tokens</h1>
     <p className="text-xl font-semibold">Utilities for controlling the box shadow of an element.</p>
     <div className="overflow-x-auto">
       <table className="w-full border-separate border-spacing-1 text-sm @3xl:w-auto">
         <thead>
           <tr>
-            <th scope="col" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold @3xl:w-75">Token name</th>
-            <th scope="col" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold @3xl:w-110">Value</th>
+            <th scope="col" className="border border-anu-neutral-200 bg-white px-4 py-2 text-left font-semibold @3xl:w-75">Token name</th>
+            <th scope="col" className="border border-anu-neutral-200 bg-white px-4 py-2 text-left font-semibold @3xl:w-110">Value</th>
           </tr>
         </thead>
         <tbody>
           {shadows.map((shadow) => (
             <tr key={shadow.token}>
-              <th scope="row" className="h-32 border border-anu-grey-200 bg-anu-white p-3 text-left align-middle font-medium @md:p-4">
-                <code className="rounded-lg bg-anu-grey-100 px-2 py-1 font-sans whitespace-nowrap">{shadow.token}</code>
+              <th scope="row" className="h-32 border border-anu-neutral-200 bg-white p-3 text-left align-middle font-medium @md:p-4">
+                <code className="rounded-lg bg-anu-neutral-100 px-2 py-1 font-sans whitespace-nowrap">{shadow.token}</code>
               </th>
-              <td className="h-32 border border-anu-grey-200 bg-anu-white p-3 align-middle @md:p-4">
+              <td className="h-32 border border-anu-neutral-200 bg-white p-3 align-middle @md:p-4">
                 <div className="flex flex-col gap-4 @md:flex-row @md:items-center">
-                  <div className={`size-22 shrink-0 bg-anu-primary-200 rounded-full ${shadow.className}`} />
+                  <div className={`size-22 shrink-0 bg-anu-gold-100 rounded-full ${shadow.className}`} />
                   <code className="font-sans whitespace-pre-wrap @md:whitespace-pre">{shadow.value.join('\n')}</code>
                 </div>
               </td>

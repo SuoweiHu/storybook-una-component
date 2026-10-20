@@ -4,8 +4,8 @@ import { LinkList } from './LinkList';
 
 const backgroundClasses = {
   white: 'bg-white',
-  tint: 'bg-anu-primary-100-a50',
-  grey: 'bg-anu-grey-100',
+  tint: 'bg-anu-gold-50',
+  grey: 'bg-anu-neutral-100',
   black: 'bg-black',
 } as const;
 

@@ -46,7 +46,7 @@ const tableRoot = cva('w-full border-collapse text-left text-base/6.5 font-norma
             black: 'text-white',
         },
         bordered: {
-            true: 'border border-anu-grey-400',
+            true: 'border border-anu-neutral-400',
             false: '',
         },
     },
@@ -59,10 +59,10 @@ const tableRoot = cva('w-full border-collapse text-left text-base/6.5 font-norma
 const tableHeaderRow = cva('border-b-3', {
     variants: {
         background: {
-            white: 'border-anu-primary-700 bg-anu-grey-100',
-            tint: 'border-anu-primary-700 bg-white',
-            grey: 'border-anu-primary-700 bg-white',
-            black: 'border-anu-primary-650 bg-anu-grey-700',
+            white: 'border-anu-gold-600 bg-anu-neutral-100',
+            tint: 'border-anu-gold-600 bg-white',
+            grey: 'border-anu-gold-600 bg-white',
+            black: 'border-anu-gold-600 bg-anu-neutral-700',
         },
     },
     defaultVariants: {
@@ -79,14 +79,14 @@ const tableRow = cva('', {
             black: '',
         },
         variant: {
-            default: 'border-b border-anu-grey-400',
-            striped: 'last:border-b last:border-anu-grey-400',
+            default: 'border-b border-anu-neutral-400',
+            striped: 'last:border-b last:border-anu-neutral-400',
         },
     },
     compoundVariants: [
-        { variant: 'striped', background: 'white', class: 'even:bg-anu-grey-200' },
-        { variant: 'striped', background: ['tint', 'grey'], class: 'odd:bg-white even:bg-anu-grey-200' },
-        { variant: 'striped', background: 'black', class: 'odd:bg-anu-grey-650 even:bg-anu-grey-700' },
+        { variant: 'striped', background: 'white', class: 'even:bg-anu-neutral-200' },
+        { variant: 'striped', background: ['tint', 'grey'], class: 'odd:bg-white even:bg-anu-neutral-200' },
+        { variant: 'striped', background: 'black', class: 'odd:bg-anu-neutral-600 even:bg-anu-neutral-700' },
     ],
     defaultVariants: {
         background: 'white',
@@ -107,14 +107,14 @@ const tableRowHeader = cva('px-4 py-2 align-middle text-lg/6.75 font-semibold', 
             false: '',
         },
         bordered: {
-            true: 'border border-anu-grey-400',
+            true: 'border border-anu-neutral-400',
             false: '',
         },
     },
     compoundVariants: [
-        { striped: false, background: 'white', class: 'bg-anu-grey-100' },
+        { striped: false, background: 'white', class: 'bg-anu-neutral-100' },
         { striped: false, background: ['tint', 'grey'], class: 'bg-white' },
-        { striped: false, background: 'black', class: 'bg-anu-grey-700' },
+        { striped: false, background: 'black', class: 'bg-anu-neutral-700' },
     ],
     defaultVariants: {
         background: 'white',
@@ -132,7 +132,7 @@ const tableCell = cva('', {
             body: 'px-4 py-2 align-middle',
         },
         bordered: {
-            true: 'border border-anu-grey-400',
+            true: 'border border-anu-neutral-400',
             false: '',
         },
     },

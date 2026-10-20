@@ -11,13 +11,13 @@ type TileProps = {
     image?: string;
 };
 
-const focusStyle = 'focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-anu-primary-800';
+const focusStyle = 'focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-anu-gold-700';
 
 const tileRoot = cva(`group relative w-full overflow-hidden ${focusStyle}`, {
     variants: {
         variant: {
             headline:
-                'flex min-h-40 items-center rounded-lg bg-anu-grey-100 py-5 pr-14 pl-5 transition-colors duration-200 hover:bg-anu-grey-200 motion-reduce:transition-none',
+                'flex min-h-40 items-center rounded-lg bg-anu-neutral-100 py-5 pr-14 pl-5 transition-colors duration-200 hover:bg-anu-neutral-200 motion-reduce:transition-none',
             overlay: 'flex aspect-video items-end justify-center rounded-2xl bg-black',
             overlap: 'block aspect-video rounded-2xl bg-black',
         },
@@ -55,7 +55,7 @@ export const Tile: React.FC<TileProps> = ({ title, href, variant = 'headline', i
     if (variant === 'headline') {
         return (
             <a href={href} className={tileRoot({ variant })}>
-                <span aria-hidden="true" className="absolute -top-9 -right-10 size-21 rounded-full bg-anu-primary-700" />
+                <span aria-hidden="true" className="absolute -top-9 -right-10 size-21 rounded-full bg-anu-gold-600" />
                 <span className={tileTitle({ variant })}>
                     {title}
                     {get_arrow()}

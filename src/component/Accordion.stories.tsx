@@ -56,7 +56,7 @@ export const Opened: Story = {
 
 export const Cream: Story = {
   args: { defaultOpen: [0] },
-  decorators: [(Story) => <div className="bg-anu-primary-200 p-16"><Story /></div>],
+  decorators: [(Story) => <div className="bg-anu-gold-100 p-16"><Story /></div>],
 };
 
 export const Dark: Story = {
@@ -66,7 +66,7 @@ export const Dark: Story = {
 
 export const Grey: Story = {
   args: { theme: 'grey', defaultOpen: [0] },
-  decorators: [(Story) => <div className="bg-anu-grey-100 p-16"><Story /></div>],
+  decorators: [(Story) => <div className="bg-anu-neutral-100 p-16"><Story /></div>],
 };
 
 export const AllowMultiple: Story = {

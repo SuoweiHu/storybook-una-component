@@ -38,7 +38,7 @@ const accordionTrigger = cva(
             { theme: 'light', isOpen: true, className: 'border-black bg-black text-white' },
             { theme: 'dark', isOpen: false, className: 'border-white bg-black text-white' },
             { theme: 'dark', isOpen: true, className: 'border-white bg-white text-black' },
-            { theme: 'grey', isOpen: false, className: 'border-black bg-anu-grey-100 text-black' },
+            { theme: 'grey', isOpen: false, className: 'border-black bg-anu-neutral-100 text-black' },
             { theme: 'grey', isOpen: true, className: 'border-black bg-black text-white' },
         ],
         defaultVariants: {
@@ -51,9 +51,9 @@ const accordionTrigger = cva(
 const accordionIcon = cva('shrink-0', {
     variants: {
         theme: {
-            light: 'text-anu-primary-800',
-            dark: 'text-anu-primary-800',
-            grey: 'text-anu-primary-900',
+            light: 'text-anu-gold-700',
+            dark: 'text-anu-gold-700',
+            grey: 'text-anu-gold-700',
         },
     },
     defaultVariants: {

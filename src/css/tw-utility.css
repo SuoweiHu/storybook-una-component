@@ -2,6 +2,6 @@
 
 /* Diagonal hatch, used to show the space an element's padding or margin takes up (Foundation/Spacing and Sizing). */
 @utility pattern-hatch {
-    background-color: var(--color-anu-grey-100);
-    background-image: repeating-linear-gradient(45deg, var(--color-anu-grey-400) 0 1px, transparent 1px 8px);
+    background-color: var(--color-anu-neutral-100);
+    background-image: repeating-linear-gradient(45deg, var(--color-anu-neutral-400) 0 1px, transparent 1px 8px);
 }

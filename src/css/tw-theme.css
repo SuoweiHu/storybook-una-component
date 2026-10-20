@@ -5,60 +5,67 @@
 
     /* ████████████████████████████████████ */
     /* Color */
-    /* anu-primary (gold) */
-    --color-anu-primary-100-a50:      #FFFBF4;
-    --color-anu-primary-100:          #FFF7E9;
-    --color-anu-primary-200:          #FCF0D7;
-    --color-anu-primary-300:          #FAE4B8;
-    --color-anu-primary-400:          #F7D490;
-    --color-anu-primary-500:          #E8B557;
-    --color-anu-primary-600:          #E2A22D;
-    --color-anu-primary-650:          #D19010;
-    --color-anu-primary-700:          #BE830E;
-    --color-anu-primary-800:          #A36A00;
-    --color-anu-primary-900:          #945F00;
-    --color-anu-primary-1000:         #7A4D00;
-    /* anu-secondary (copper) */
-    --color-anu-secondary-100-a50:    #FEF3ED80;
-    --color-anu-secondary-100:        #FEF3ED;
-    --color-anu-secondary-200:        #FCE5D7;
-    --color-anu-secondary-300:        #FAD0B8;
-    --color-anu-secondary-400:        #F7B690;
-    --color-anu-secondary-500:        #F3955F;
-    --color-anu-secondary-600:        #EF6F25;
-    --color-anu-secondary-650:        #D15610;
-    --color-anu-secondary-700:        #BE4F00;
-    --color-anu-secondary-800:        #6F2E08;
-    --color-anu-secondary-900:        #3F1A05;
-    /* anu-tertiary (purple)*/                   /* OR jacaranda */
-    --color-anu-tertiary-100-a50:     #EDEEF450; /* OR #EEF2F050 */
-    --color-anu-tertiary-100:         #EDEEF4;   /* OR #EEF2F0   */
-    --color-anu-tertiary-200:         #DBDDE9;   /* OR #DEE6E2   */
-    --color-anu-tertiary-300:         #B8BCD3;   /* OR #CDD9D4   */
-    --color-anu-tertiary-400:         #969BBC;   /* OR #ADC0B8   */
-    --color-anu-tertiary-500:         #767CA6;   /* OR #8DA89C   */
-    --color-anu-tertiary-600:         #666C9B;   /* OR #7E9C8F   */
-    --color-anu-tertiary-650:         #575D90;   /* OR #5F8575   */
-    --color-anu-tertiary-700:         #3E436A;   /* OR #446155   */
-    --color-anu-tertiary-800:         #272A45;   /* OR #2C4037   */
-    --color-anu-tertiary-900:         #121424;   /* OR #15211C   */
-    /* anu-gray / anu-white / anu-black */
-    --color-anu-white:                var(--color-anu-grey-0);
-    --color-anu-grey-0:               #FFFFFF;
-    --color-anu-grey-100-a50:         #FBFBFB;
-    --color-anu-grey-100:             #F6F6F6;
-    --color-anu-grey-200:             #E2E2E2;
-    --color-anu-grey-300:             #CCCCCC;
-    --color-anu-grey-400:             #AFAFAF;
-    --color-anu-grey-500:             #8C8C8C;
-    --color-anu-grey-600:             #636363;
-    --color-anu-grey-650:             #525252;
-    --color-anu-grey-700:             #333333;
-    --color-anu-grey-800:             #252525;
-    --color-anu-grey-900:             #131313;
-    --color-anu-grey-1000:            #000000;
-    --color-anu-black:                var(--color-anu-grey-1000);
-
+    /* Values in OKLCH, from the "Color NEW" variables in the UNA Figma file (hex source kept in each comment) */
+    /* gold */
+    --color-anu-gold-50:        oklch(98.07% 0.0227 95.96); /* #fdf9e8 */
+    --color-anu-gold-100:       oklch(95.53% 0.0567 96.42); /* #fbf1c6 */
+    --color-anu-gold-200:       oklch(91.50% 0.1044 95.48); /* #f8e391 */
+    --color-anu-gold-300:       oklch(86.78% 0.1474 93.56); /* #f4d152 */
+    --color-anu-gold-400:       oklch(81.55% 0.1605 87.82); /* #eebb20 */
+    --color-anu-gold-500:       oklch(75.42% 0.1511 84.84); /* #dba614 */
+    --color-anu-gold-600:       oklch(65.32% 0.1340 76.24); /* #be830e */
+    --color-anu-gold-700:       oklch(54.36% 0.1130 69.78); /* #99620f */
+    --color-anu-gold-800:       oklch(47.35% 0.0962 65.45); /* #804f14 */
+    --color-anu-gold-900:       oklch(42.57% 0.0814 64.48); /* #6d4417 */
+    --color-anu-gold-950:       oklch(28.82% 0.0555 62.99); /* #3e2409 */
+    /* copper */
+    --color-anu-copper-50:      oklch(97.86% 0.0203 81.78); /* #fff7e9 */
+    --color-anu-copper-100:     oklch(93.61% 0.0512 80.53); /* #fce7c4 */
+    --color-anu-copper-200:     oklch(86.92% 0.1008 79.96); /* #f7cd86 */
+    --color-anu-copper-300:     oklch(79.93% 0.1430 73.72); /* #f4ae45 */
+    --color-anu-copper-400:     oklch(74.32% 0.1619 63.89); /* #f1921b */
+    --color-anu-copper-500:     oklch(65.46% 0.1610 52.82); /* #da6f13 */
+    --color-anu-copper-600:     oklch(56.50% 0.1579 44.22); /* #be4f0e */
+    --color-anu-copper-700:     oklch(50.51% 0.1568 37.67); /* #ab3910 */
+    --color-anu-copper-800:     oklch(41.31% 0.1250 35.74); /* #812a12 */
+    --color-anu-copper-900:     oklch(36.23% 0.1054 34.68); /* #6a2312 */
+    --color-anu-copper-950:     oklch(24.58% 0.0720 34.72); /* #3c1006 */
+    /* slate */
+    --color-anu-slate-50:       oklch(96.24% 0.0094 279.69); /* #f1f2f9 */
+    --color-anu-slate-100:      oklch(92.71% 0.0135 281.55); /* #e5e6f0 */
+    --color-anu-slate-200:      oklch(86.34% 0.0266 276.35); /* #cdd1e4 */
+    --color-anu-slate-300:      oklch(81.29% 0.0346 265.19); /* #b7c2d9 */
+    --color-anu-slate-400:      oklch(66.53% 0.0626 271.93); /* #8692bb */
+    --color-anu-slate-500:      oklch(57.25% 0.0827 275.30); /* #6a74a9 */
+    --color-anu-slate-600:      oklch(49.56% 0.0817 277.85); /* #575d90 */
+    --color-anu-slate-700:      oklch(43.94% 0.0674 280.02); /* #4b4e77 */
+    --color-anu-slate-800:      oklch(40.84% 0.0602 280.93); /* #44466a */
+    --color-anu-slate-900:      oklch(36.80% 0.0396 280.40); /* #3b3d54 */
+    --color-anu-slate-950:      oklch(27.85% 0.0276 281.47); /* #262736 */
+    /* sage */
+    --color-anu-sage-50:        oklch(97.63% 0.0041 157.18); /* #f5f8f6 */
+    --color-anu-sage-100:       oklch(92.28% 0.0117 162.03); /* #dfe8e3 */
+    --color-anu-sage-200:       oklch(84.35% 0.0247 163.03); /* #bed1c7 */
+    --color-anu-sage-300:       oklch(73.99% 0.0392 163.67); /* #95b3a4 */
+    --color-anu-sage-400:       oklch(62.91% 0.0451 166.80); /* #6f9283 */
+    --color-anu-sage-500:       oklch(53.86% 0.0455 165.68); /* #557768 */
+    --color-anu-sage-600:       oklch(46.58% 0.0395 167.14); /* #446155 */
+    --color-anu-sage-700:       oklch(40.00% 0.0294 169.40); /* #384d45 */
+    --color-anu-sage-800:       oklch(35.43% 0.0251 167.75); /* #2f4039 */
+    --color-anu-sage-900:       oklch(32.32% 0.0195 169.65); /* #2a3732 */
+    --color-anu-sage-950:       oklch(22.50% 0.0143 172.58); /* #151e1b */
+    /* neutral */
+    --color-anu-neutral-50:     oklch(98.51% 0 0); /* #fafafa */
+    --color-anu-neutral-100:    oklch(97.02% 0 0); /* #f5f5f5 */
+    --color-anu-neutral-200:    oklch(92.19% 0 0); /* #e5e5e5 */
+    --color-anu-neutral-300:    oklch(86.99% 0 0); /* #d4d4d4 */
+    --color-anu-neutral-400:    oklch(70.90% 0 0); /* #a1a1a1 */
+    --color-anu-neutral-500:    oklch(55.55% 0 0); /* #737373 */
+    --color-anu-neutral-600:    oklch(43.86% 0 0); /* #525252 */
+    --color-anu-neutral-700:    oklch(37.15% 0 0); /* #404040 */
+    --color-anu-neutral-800:    oklch(26.86% 0 0); /* #262626 */
+    --color-anu-neutral-900:    oklch(20.46% 0 0); /* #171717 */
+    --color-anu-neutral-950:    oklch(14.48% 0 0); /* #0a0a0a */
 
     /* ████████████████████████████████████ */
     /* Shadow */
@@ -69,6 +76,7 @@
     --shadow-lg:  0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     --shadow-xl:  0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
     --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
     /* ████████████████████████████████████ */
     /* Border radius */
     --radius-xs:  0.125rem;

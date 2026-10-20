@@ -33,14 +33,14 @@ const linkListHeading = cva('mb-4 text-xl/6 font-semibold', {
 });
 
 const linkListLink = cva(
-    'group flex items-center gap-2.5 border-b border-anu-grey-200 p-2.5 text-base/4.5 font-normal hover:font-medium hover:underline hover:underline-offset-4 focus-visible:font-medium focus-visible:underline focus-visible:underline-offset-4 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-current',
+    'group flex items-center gap-2.5 border-b border-anu-neutral-200 p-2.5 text-base/4.5 font-normal hover:font-medium hover:underline hover:underline-offset-4 focus-visible:font-medium focus-visible:underline focus-visible:underline-offset-4 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-current',
     {
         variants: {
             background: {
-                white: 'text-blue-700 hover:bg-anu-primary-100 focus-visible:bg-anu-primary-100',
+                white: 'text-blue-700 hover:bg-anu-gold-50 focus-visible:bg-anu-gold-50',
                 tint: 'text-blue-700 hover:bg-white focus-visible:bg-white',
-                grey: 'text-anu-primary-1000 hover:bg-white focus-visible:bg-white',
-                black: 'text-anu-primary-700 hover:bg-anu-grey-700 hover:text-anu-primary-650 focus-visible:bg-anu-grey-700 focus-visible:text-anu-primary-650',
+                grey: 'text-anu-gold-800 hover:bg-white focus-visible:bg-white',
+                black: 'text-anu-gold-600 hover:bg-anu-neutral-700 hover:text-anu-gold-600 focus-visible:bg-anu-neutral-700 focus-visible:text-anu-gold-600',
             },
         },
         defaultVariants: {
@@ -62,7 +62,7 @@ const linkListGrid = cva('grid gap-x-6 gap-y-0', {
     },
 });
 
-const linkListColumn = cva('border-anu-grey-200 md:border-t', {
+const linkListColumn = cva('border-anu-neutral-200 md:border-t', {
     variants: {
         isFirst: {
             true: 'border-t',

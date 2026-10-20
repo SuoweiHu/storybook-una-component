@@ -4,16 +4,16 @@ import themeCss from '../css/tw-theme.css?raw';
 <Meta title="Foundation/Color" />
 
 {/* Every swatch is read from the @theme block in tw-theme.css, so this page stays in step with the tokens.
-    Aliases such as anu-white (var(--color-anu-grey-0)) are resolved to the colour they point to.
+    A token whose value is var(--color-anu-…) is shown as an alias and resolved to the colour it points to.
     Swatches paint with the value read from the file rather than a class or var(--color-…): the token list is only
     known at runtime, and Tailwind only emits the theme variables that some class uses. */}
 
 export const groupLabels = {
-  'black-white': 'Black & White',
-  primary: 'Primary',
-  secondary: 'Secondary',
-  tertiary: 'Tertiary',
-  grey: 'Grey',
+  gold: 'Gold',
+  copper: 'Copper',
+  slate: 'Slate',
+  sage: 'Sage',
+  neutral: 'Neutral',
 };
 
 export const colorGroups = (() => {
@@ -23,8 +23,7 @@ export const colorGroups = (() => {
   const groups = new Map();
   for (const { name, value } of tokens) {
     const alias = value.match(/^var\(--color-(anu-[a-z0-9-]+)\)$/)?.[1];
-    const word = name.split('-')[1];
-    const group = word === 'black' || word === 'white' ? 'black-white' : word;
+    const group = name.split('-')[1];
     if (!groups.has(group)) groups.set(group, []);
     groups.get(group).push({ name, alias, value: alias ? byName.get(alias) : value });
   }
@@ -33,22 +32,22 @@ export const colorGroups = (() => {
 
 <Unstyled>
   <h1 className="sr-only">Color</h1>
-  <section className="@container flex flex-col gap-4 rounded-sm bg-anu-grey-100 p-4 text-anu-grey-700 md:p-20">
+  <section className="@container flex flex-col gap-4 rounded-sm bg-anu-neutral-100 p-4 text-anu-neutral-700 md:p-20">
     <h2 className="text-4xl leading-12 font-bold tracking-tight">Color Tokens</h2>
     <p className="text-xl font-semibold">
-      ANU colours from <code className="font-sans">tw-theme.css</code>. Use them with any colour utility, e.g. <code className="font-sans">bg-anu-primary-500</code> or <code className="font-sans">text-anu-grey-700</code>.
+      ANU colours from <code className="font-sans">tw-theme.css</code>. Use them with any colour utility, e.g. <code className="font-sans">bg-anu-gold-400</code> or <code className="font-sans">text-anu-neutral-700</code>.
     </p>
     {colorGroups.map(({ group, label, colors }) => (
       <div key={group} className="flex flex-col gap-3 pt-4">
         <h3 className="text-xl font-semibold">{label}</h3>
         <ul className="grid grid-cols-2 gap-1 @md:grid-cols-3 @3xl:grid-cols-6">
           {colors.map(({ name, alias, value }) => (
-            <li key={name} className="flex flex-col gap-3 border border-anu-grey-200 bg-anu-white p-3 text-sm">
-              <div className="h-16 overflow-hidden rounded-lg border border-anu-grey-200 pattern-hatch">
+            <li key={name} className="flex flex-col gap-3 border border-anu-neutral-200 bg-white p-3 text-sm">
+              <div className="h-16 overflow-hidden rounded-lg border border-anu-neutral-200 pattern-hatch">
                 <div className="size-full" style={{ backgroundColor: value }} />
               </div>
               <div className="flex flex-col items-start gap-1">
-                <code className="rounded-lg bg-anu-grey-100 px-2 py-1 font-sans wrap-break-word">{name}</code>
+                <code className="rounded-lg bg-anu-neutral-100 px-2 py-1 font-sans wrap-break-word">{name}</code>
                 <code className="px-2 font-sans">{value}</code>
                 {alias && <span className="px-2">Alias of <code className="font-sans">{alias}</code></span>}
               </div>

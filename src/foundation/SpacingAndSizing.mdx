@@ -69,13 +69,13 @@ export const margins = [
 ];
 
 export const Token = ({ children }) => (
-  <code className="rounded-lg bg-anu-grey-100 px-2 py-1 font-sans whitespace-nowrap">{children}</code>
+  <code className="rounded-lg bg-anu-neutral-100 px-2 py-1 font-sans whitespace-nowrap">{children}</code>
 );
 
 export const Value = ({ children }) => <code className="font-sans @md:whitespace-nowrap">{children}</code>;
 
 export const Section = ({ title, description, children }) => (
-  <section className="@container flex flex-col gap-4 rounded-sm bg-anu-grey-100 p-4 md:p-20">
+  <section className="@container flex flex-col gap-4 rounded-sm bg-anu-neutral-100 p-4 md:p-20">
     <h2 className="text-4xl leading-12 font-bold tracking-tight">{title}</h2>
     <p className="text-xl font-semibold">{description}</p>
     <div className="overflow-x-auto">{children}</div>
@@ -86,17 +86,17 @@ export const TokenTable = ({ valueLabel, rows, renderSample }) => (
   <table className="w-full border-separate border-spacing-1 text-sm @3xl:w-167">
     <thead>
       <tr>
-        <th scope="col" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold @3xl:w-41">Token name</th>
-        <th scope="col" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">{valueLabel}</th>
+        <th scope="col" className="border border-anu-neutral-200 bg-white px-4 py-2 text-left font-semibold @3xl:w-41">Token name</th>
+        <th scope="col" className="border border-anu-neutral-200 bg-white px-4 py-2 text-left font-semibold">{valueLabel}</th>
       </tr>
     </thead>
     <tbody>
       {rows.map((row) => (
         <tr key={row.token}>
-          <th scope="row" className="border border-anu-grey-200 bg-anu-white p-3 text-left align-middle font-medium @md:p-4">
+          <th scope="row" className="border border-anu-neutral-200 bg-white p-3 text-left align-middle font-medium @md:p-4">
             <Token>{row.token}</Token>
           </th>
-          <td className="border border-anu-grey-200 bg-anu-white p-3 align-middle @md:p-4">
+          <td className="border border-anu-neutral-200 bg-white p-3 align-middle @md:p-4">
             <div className="flex items-center gap-2">
               {renderSample(row)}
               <Value>{row.value}</Value>
@@ -110,12 +110,12 @@ export const TokenTable = ({ valueLabel, rows, renderSample }) => (
 
 <Unstyled>
   <h1 className="sr-only">Spacing and Sizing</h1>
-  <div className="flex flex-col gap-6 text-anu-grey-700">
+  <div className="flex flex-col gap-6 text-anu-neutral-700">
     <Section title="Width Tokens" description="Utilities for setting the width of an element.">
       <TokenTable
         valueLabel="Width Values"
         rows={widths}
-        renderSample={(row) => <div className={`h-7 shrink-0 rounded-xs bg-anu-primary-500 ${row.className}`} />}
+        renderSample={(row) => <div className={`h-7 shrink-0 rounded-xs bg-anu-gold-400 ${row.className}`} />}
       />
     </Section>
 
@@ -123,19 +123,19 @@ export const TokenTable = ({ valueLabel, rows, renderSample }) => (
       <table className="border-separate border-spacing-1 text-sm">
         <tbody>
           <tr>
-            <th scope="row" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">Name</th>
+            <th scope="row" className="border border-anu-neutral-200 bg-white px-4 py-2 text-left font-semibold">Name</th>
             {heights.map((row) => (
-              <td key={row.token} className="h-21 min-w-21 border border-anu-grey-200 bg-anu-white p-4 text-center align-middle">
+              <td key={row.token} className="h-21 min-w-21 border border-anu-neutral-200 bg-white p-4 text-center align-middle">
                 <Token>{row.token}</Token>
               </td>
             ))}
           </tr>
           <tr>
-            <th scope="row" className="border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">Height Value</th>
+            <th scope="row" className="border border-anu-neutral-200 bg-white px-4 py-2 text-left font-semibold">Height Value</th>
             {heights.map((row) => (
-              <td key={row.token} className="h-37.5 border border-anu-grey-200 bg-anu-white p-4 align-top">
+              <td key={row.token} className="h-37.5 border border-anu-neutral-200 bg-white p-4 align-top">
                 <div className="flex flex-col items-center gap-2">
-                  <div className={`w-8.5 shrink-0 rounded-xs bg-anu-primary-500 ${row.className}`} />
+                  <div className={`w-8.5 shrink-0 rounded-xs bg-anu-gold-400 ${row.className}`} />
                   <Value>{row.value}</Value>
                 </div>
               </td>
@@ -149,7 +149,7 @@ export const TokenTable = ({ valueLabel, rows, renderSample }) => (
       <TokenTable
         valueLabel="Width & Height Values"
         rows={sizes}
-        renderSample={(row) => <div className={`shrink-0 rounded-xs bg-anu-primary-500 ${row.className}`} />}
+        renderSample={(row) => <div className={`shrink-0 rounded-xs bg-anu-gold-400 ${row.className}`} />}
       />
     </Section>
 
@@ -159,7 +159,7 @@ export const TokenTable = ({ valueLabel, rows, renderSample }) => (
         rows={paddings}
         renderSample={(row) => (
           <div className={`shrink-0 pattern-hatch ${row.className}`}>
-            <div className="size-12.5 rounded-xs bg-anu-primary-500" />
+            <div className="size-12.5 rounded-xs bg-anu-gold-400" />
           </div>
         )}
       />
@@ -171,8 +171,8 @@ export const TokenTable = ({ valueLabel, rows, renderSample }) => (
         rows={margins}
         renderSample={(row) => (
           <div className="flex shrink-0 pattern-hatch">
-            <div className={`size-12.5 rounded-xs bg-anu-primary-500 ${row.first}`} />
-            <div className={`size-12.5 rounded-xs bg-anu-primary-500 ${row.second}`} />
+            <div className={`size-12.5 rounded-xs bg-anu-gold-400 ${row.first}`} />
+            <div className={`size-12.5 rounded-xs bg-anu-gold-400 ${row.second}`} />
           </div>
         )}
       />

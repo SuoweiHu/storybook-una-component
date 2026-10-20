@@ -34,27 +34,27 @@ export const border_width_options = [
 ];
 
 <Unstyled>
-    <div className="flex flex-col gap-6 text-anu-grey-700 w-full border-b-red-200">
-    <section className="@container flex flex-col gap-4 rounded-sm bg-anu-grey-100 p-4 md:p-20">
+    <div className="flex flex-col gap-6 text-anu-neutral-700 w-full border-b-red-200">
+    <section className="@container flex flex-col gap-4 rounded-sm bg-anu-neutral-100 p-4 md:p-20">
       <h2 className="text-4xl leading-12 font-bold tracking-tight">Border Radius Tokens</h2>
       <p className="text-xl font-semibold">Utilities for controlling the border radius of an element.</p>
       <div className="overflow-x-auto">
         <table className="w-full border-separate border-spacing-1 text-sm @3xl:w-152">
           <thead>
             <tr>
-              <th scope="col" className="w-1/2 border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">Token name</th>
-              <th scope="col" className="w-1/2 border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">Value</th>
+              <th scope="col" className="w-1/2 border border-anu-neutral-200 bg-white px-4 py-2 text-left font-semibold">Token name</th>
+              <th scope="col" className="w-1/2 border border-anu-neutral-200 bg-white px-4 py-2 text-left font-semibold">Value</th>
             </tr>
           </thead>
           <tbody>
             {border_radius_options.map((radius) => (
               <tr key={radius.token}>
-                <th scope="row" className="border border-anu-grey-200 bg-anu-white p-3 text-left align-middle font-medium @md:p-4">
-                    <code className="rounded-lg bg-anu-grey-100 px-2 py-1 font-sans whitespace-nowrap">{radius.token}</code>
+                <th scope="row" className="border border-anu-neutral-200 bg-white p-3 text-left align-middle font-medium @md:p-4">
+                    <code className="rounded-lg bg-anu-neutral-100 px-2 py-1 font-sans whitespace-nowrap">{radius.token}</code>
                 </th>
-                <td className="border border-anu-grey-200 bg-anu-white p-3 align-middle @md:p-4">
+                <td className="border border-anu-neutral-200 bg-white p-3 align-middle @md:p-4">
                   <div className="flex flex-col gap-4 @md:flex-row @md:items-center">
-                    <div className={`size-22 shrink-0 bg-anu-primary-200 ${radius.className}`} />
+                    <div className={`size-22 shrink-0 bg-anu-gold-100 ${radius.className}`} />
                     <code className="font-sans">{radius.value}</code>
                   </div>
                 </td>
@@ -64,33 +64,33 @@ export const border_width_options = [
         </table>
       </div>
     </section>
-    <section className="@container flex flex-col gap-4 rounded-sm bg-anu-grey-100 p-4 md:p-20">
+    <section className="@container flex flex-col gap-4 rounded-sm bg-anu-neutral-100 p-4 md:p-20">
       <h2 className="text-4xl leading-12 font-bold tracking-tight">Border Width Tokens</h2>
       <p className="text-xl font-semibold">Utilities for controlling the width of an element's borders.</p>
       <div className="overflow-x-auto">
         <table className="w-full border-separate border-spacing-1 text-sm @3xl:w-152">
           <thead>
             <tr>
-              <th scope="col" className="w-1/2 border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">Token name</th>
-              <th scope="col" className="w-1/2 border border-anu-grey-200 bg-anu-white px-4 py-2 text-left font-semibold">Value</th>
+              <th scope="col" className="w-1/2 border border-anu-neutral-200 bg-white px-4 py-2 text-left font-semibold">Token name</th>
+              <th scope="col" className="w-1/2 border border-anu-neutral-200 bg-white px-4 py-2 text-left font-semibold">Value</th>
             </tr>
           </thead>
           <tbody>
             {border_width_options.map((width) => (
               <tr key={width.value}>
-                <th scope="row" className="h-16 border border-anu-grey-200 bg-anu-white p-3 text-left align-middle font-medium @md:p-4">
+                <th scope="row" className="h-16 border border-anu-neutral-200 bg-white p-3 text-left align-middle font-medium @md:p-4">
                   <span className="flex flex-wrap items-center gap-2">
                     {width.tokens.map((token, index) => (
                       <span key={token} className="contents">
                         {index > 0 && <span>or</span>}
-                        <code className="rounded-lg bg-anu-grey-100 px-2 py-1 font-sans whitespace-nowrap">{token}</code>
+                        <code className="rounded-lg bg-anu-neutral-100 px-2 py-1 font-sans whitespace-nowrap">{token}</code>
                       </span>
                     ))}
                   </span>
                 </th>
-                <td className="h-16 border border-anu-grey-200 bg-anu-white p-3 align-middle @md:p-4">
+                <td className="h-16 border border-anu-neutral-200 bg-white p-3 align-middle @md:p-4">
                   <div className="flex items-center gap-2">
-                    <div className={`h-8 w-16 shrink-0 rounded-sm border-anu-tertiary-650 bg-anu-tertiary-100 ${width.className}`} />
+                    <div className={`h-8 w-16 shrink-0 rounded-sm border-anu-slate-600 bg-anu-slate-50 ${width.className}`} />
                     <code className="font-sans whitespace-nowrap">{width.value}</code>
                   </div>
                 </td>

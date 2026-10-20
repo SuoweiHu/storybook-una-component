@@ -4,8 +4,8 @@ import { Table } from './Table';
 
 const backgroundClasses = {
   white: 'bg-white',
-  tint: 'bg-anu-primary-200',
-  grey: 'bg-anu-grey-100',
+  tint: 'bg-anu-gold-100',
+  grey: 'bg-anu-neutral-100',
   black: 'bg-black',
 } as const;
 

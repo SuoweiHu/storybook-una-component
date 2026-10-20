@@ -188,7 +188,7 @@ Tailwind is wired in through the Vite plugin (`@tailwindcss/vite` in `vite.confi
 
 - **`src/css/tw-global.css`** is the entry point. Its first line loads [Public Sans](https://fonts.google.com/specimen/Public+Sans) from Google Fonts (variable, weights 100–900, roman and italic). That `@import url(...)` has to stay above everything else, because browsers ignore `@import` after other rules. It then declares the cascade layers (`theme, base, components, utilities`) and imports Tailwind's theme, the ANU theme, preflight, Tailwind's utilities and the custom utilities.
 - **`src/css/tw-theme.css`** extends Tailwind's theme with an `@theme { … }` block of ANU tokens.
-- **`src/css/tw-utility.css`** holds every custom `@utility`. They use the ANU tokens rather than defining colour values. So far it has one: `pattern-hatch`, a diagonal hatch on `anu-grey-100` that shows the space padding or margin takes up.
+- **`src/css/tw-utility.css`** holds every custom `@utility`. They use the ANU tokens rather than defining colour values. So far it has one: `pattern-hatch`, a diagonal hatch on `anu-neutral-100` that shows the space padding or margin takes up.
 
 `Carousel` also imports Swiper's own stylesheets (`swiper/css` and `swiper/css/effect-fade`). They handle the slide track and fade stacking; all visual styling is still Tailwind.
 
@@ -196,15 +196,16 @@ Storybook loads `tw-global.css` globally in `.storybook/preview.tsx`, and each c
 
 ### ANU design tokens
 
-Defined in `src/css/tw-theme.css` (every colour is shown in Foundation/Color in Storybook), and usable as normal Tailwind utilities (`bg-anu-primary-700`, `text-anu-grey-600`, …), alongside Tailwind's default radius, border-width and shadow scales (`rounded-lg`, `border-2`, `shadow-md`):
+Defined in `src/css/tw-theme.css` (every colour is shown in Foundation/Color in Storybook), and usable as normal Tailwind utilities (`bg-anu-gold-600`, `text-anu-neutral-500`, …), alongside Tailwind's default radius, border-width and shadow scales (`rounded-lg`, `border-2`, `shadow-md`):
 
 | Token group | Scale | Example utilities |
 |---|---|---|
-| `anu-primary` (gold) | 100–1000 (+ `100-a50`, `650`) | `bg-anu-primary-700`, `text-anu-primary-800` |
-| `anu-secondary` | 100–900 (+ `100-a50`, `650`) | `bg-anu-secondary-600` |
-| `anu-grey` | 0–1000 (+ `100-a50`, `650`) | `bg-anu-grey-100`, `border-anu-grey-400` |
-| `anu-white`, `anu-black` | Aliases of `anu-grey-0` and `anu-grey-1000` | `bg-anu-white`, `text-anu-black` |
-| `anu-tertiary` | 100–900 (+ `100-a50`, `650`) | `text-anu-tertiary-700` |
+| `anu-gold` | 50–950, OKLCH, from the "Color NEW" variables in the UNA Figma file | `bg-anu-gold-600`, `text-anu-gold-700` |
+| `anu-copper` | 50–950 | `bg-anu-copper-500` |
+| `anu-slate` | 50–950 | `text-anu-slate-800` |
+| `anu-sage` | 50–950 | `bg-anu-sage-100` |
+| `anu-neutral` | 50–950 | `bg-anu-neutral-100`, `border-anu-neutral-400` |
+| White and black | Tailwind defaults, no ANU token | `bg-white`, `text-black` |
 | Shadows | Tailwind defaults: `none`, `2xs`–`2xl` (see Foundation/Shadow in Storybook) | `shadow-md` |
 | Radii | Tailwind defaults: `none`, `xs`–`4xl`, `full` (see Foundation/Border in Storybook) | `rounded-lg` (8px), `rounded-2xl` (16px), `rounded-full` (pill) |
 | Font | `--font-sans`: Public Sans, falling back to the system sans. Sizes are Tailwind's default `text-xs`–`text-9xl` (see Foundation/Font in Storybook) | `font-sans` (the page default via preflight, so no class is needed), `text-lg` |
@@ -506,7 +507,7 @@ Start Storybook (`npm run storybook`) before using these tools.
 1. Create `src/component/MyComponent.tsx`:
    - Import `../css/tw-global.css`.
    - Define styles with `cva()` and derive prop types with `VariantProps` (see [CVA](#class-variance-authority-cva)).
-   - Use ANU tokens (`anu-primary-*`, `anu-grey-*`, …) rather than raw colours. Arbitrary values and colour values in class names fail the linter (see [Tailwind class linting](#tailwind-class-linting-oxlint-tailwindcss)).
+   - Use ANU tokens (`anu-gold-*`, `anu-neutral-*`, …) rather than raw colours. Arbitrary values and colour values in class names fail the linter (see [Tailwind class linting](#tailwind-class-linting-oxlint-tailwindcss)).
    - Use semantic HTML and correct ARIA. Every story is checked against WCAG AA.
    - Export it as a named export.
 2. Create `src/component/MyComponent.stories.tsx`:

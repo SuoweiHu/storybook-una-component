@@ -33,7 +33,7 @@ type CarouselProps = {
     showAutoplayButton?: boolean;
 };
 
-const focusStyle = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-anu-primary-800';
+const focusStyle = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-anu-gold-700';
 
 const carouselRoot = cva('flex w-full gap-3', {
     variants: {
@@ -77,8 +77,8 @@ const indicatorDot = cva(`cursor-pointer rounded-full transition-all duration-30
             side: '',
         },
         isActive: {
-            true: 'bg-anu-primary-700',
-            false: 'size-2.5 bg-anu-grey-200',
+            true: 'bg-anu-gold-600',
+            false: 'size-2.5 bg-anu-neutral-200',
         },
     },
     compoundVariants: [
@@ -91,11 +91,11 @@ const indicatorDot = cva(`cursor-pointer rounded-full transition-all duration-30
     },
 });
 
-const navButton = cva(`flex cursor-pointer items-center ${focusStyle} disabled:cursor-default disabled:text-anu-grey-600`, {
+const navButton = cva(`flex cursor-pointer items-center ${focusStyle} disabled:cursor-default disabled:text-anu-neutral-500`, {
     variants: {
         controls: {
-            bottom: 'gap-2 text-anu-primary-1000',
-            side: 'size-8 justify-center rounded-full border border-anu-primary-800 text-anu-primary-800 disabled:border-anu-grey-500 disabled:bg-anu-grey-100',
+            bottom: 'gap-2 text-anu-gold-800',
+            side: 'size-8 justify-center rounded-full border border-anu-gold-700 text-anu-gold-700 disabled:border-anu-neutral-400 disabled:bg-anu-neutral-100',
         },
     },
     defaultVariants: {
@@ -137,7 +137,7 @@ const get_slideContent = (slide: CarouselSlide) => {
     return (
         <>
             {slide.href ? (
-                <a href={slide.href} className="block size-full focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-anu-primary-800">
+                <a href={slide.href} className="block size-full focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-anu-gold-700">
                     {image}
                 </a>
             ) : (
@@ -217,7 +217,7 @@ export const Carousel: React.FC<CarouselProps> = ({
                         type="button"
                         aria-label={isAutoplaying ? 'Pause automatic slide show' : 'Play automatic slide show'}
                         onClick={() => (isAutoplaying ? swiper?.autoplay.stop() : swiper?.autoplay.start())}
-                        className="absolute bottom-5 left-5 z-10 cursor-pointer rounded-full text-anu-primary-700 transition-transform duration-200 hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-reduce:transition-none"
+                        className="absolute bottom-5 left-5 z-10 cursor-pointer rounded-full text-anu-gold-600 transition-transform duration-200 hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-reduce:transition-none"
                     >
                         {get_autoplayIcon(isAutoplaying)}
                     </button>
