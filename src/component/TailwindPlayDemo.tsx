@@ -7,8 +7,8 @@ import '../css/tw-global.css';
 export const TailwindPlayDemo: React.FC = ({
 }) => {
     return (
-        <div className="flex bg-gray-100 w-full justify-center py-4 dark:bg-white/10 h-screen">
-            <div className="col-start-3 row-start-3 flex max-w-lg flex-col bg-gray-100 p-2 dark:bg-white/10">
+        <div className="flex bg-gray-100 w-full justify-center py-4 dark:bg-gray-900 h-screen">
+            <div className="col-start-3 row-start-3 flex max-w-lg flex-col bg-gray-100 p-2 dark:bg-gray-900">
                 <div className="rounded-xl bg-white p-10 text-sm/7 text-gray-700 dark:bg-gray-950 dark:text-gray-300">
                     <img src="https://play.tailwindcss.com/img/logo.svg" className="mb-11.5 h-6 dark:hidden" alt="Tailwind Play" />
                     <img src="https://play.tailwindcss.com/img/logo-dark.svg" className="mb-11.5 h-6 not-dark:hidden" alt="Tailwind Play" />
