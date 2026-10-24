@@ -1,0 +1,179 @@
+import React, { useId, useState } from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import '../css/tw-global.css';
+
+type AccordionItem = {
+    title: string;
+    content: React.ReactNode;
+};
+
+type AccordionProps = {
+    items: AccordionItem[];
+    // 'light' sits on white or cream backgrounds, 'dark' on black, 'grey' on grey.
+    theme?: NonNullable<VariantProps<typeof accordionTrigger>['theme']>;
+    // Indexes of the items that start expanded.
+    defaultOpen?: number[];
+    // When false, opening an item closes the others.
+    allowMultiple?: boolean;
+};
+
+type AccordionTheme = NonNullable<AccordionProps['theme']>;
+
+const accordionTrigger = cva(
+    'flex min-h-25 w-full cursor-pointer items-center justify-between gap-6 border-2 p-7 text-left text-3xl/10 font-semibold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-4',
+    {
+        variants: {
+            theme: {
+                light: 'focus-visible:outline-black',
+                dark: 'focus-visible:outline-white',
+                grey: 'focus-visible:outline-black',
+            },
+            isOpen: {
+                true: '',
+                false: '',
+            },
+        },
+        compoundVariants: [
+            { theme: 'light', isOpen: false, className: 'border-black bg-white text-black' },
+            { theme: 'light', isOpen: true, className: 'border-black bg-black text-white' },
+            { theme: 'dark', isOpen: false, className: 'border-white bg-black text-white' },
+            { theme: 'dark', isOpen: true, className: 'border-white bg-white text-black' },
+            { theme: 'grey', isOpen: false, className: 'border-black bg-anu-neutral-100 text-black' },
+            { theme: 'grey', isOpen: true, className: 'border-black bg-black text-white' },
+        ],
+        defaultVariants: {
+            theme: 'light',
+            isOpen: false,
+        },
+    }
+);
+
+const accordionIcon = cva('shrink-0', {
+    variants: {
+        theme: {
+            light: 'text-anu-gold-700',
+            dark: 'text-anu-gold-700',
+            grey: 'text-anu-gold-700',
+        },
+    },
+    defaultVariants: {
+        theme: 'light',
+    },
+});
+
+const accordionIconBar = cva(
+    'origin-center transition-transform duration-300 ease-in-out transform-fill motion-reduce:transition-none',
+    {
+        variants: {
+            isOpen: {
+                true: 'scale-y-0',
+                false: 'scale-y-100',
+            },
+        },
+        defaultVariants: {
+            isOpen: false,
+        },
+    }
+);
+
+const accordionPanel = cva('overflow-hidden transition-all duration-500 ease-in-out motion-reduce:transition-none', {
+    variants: {
+        isOpen: {
+            true: 'visible max-h-screen opacity-100',
+            false: 'invisible max-h-0 opacity-0',
+        },
+    },
+    defaultVariants: {
+        isOpen: false,
+    },
+});
+
+const accordionContent = cva('px-7.5 pt-8 pb-2 text-base/6.5 font-normal', {
+    variants: {
+        theme: {
+            light: 'text-black',
+            dark: 'text-white',
+            grey: 'text-black',
+        },
+    },
+    defaultVariants: {
+        theme: 'light',
+    },
+});
+
+const get_accordionIcon = (isOpen: boolean, theme: AccordionTheme) => (
+    <svg
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        width="21"
+        height="21"
+        viewBox="0 0 21 21"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="3"
+        className={accordionIcon({ theme })}
+    >
+        <line x1="11.58" y1="0" x2="11.58" y2="21" className={accordionIconBar({ isOpen })} />
+        <line x1="21" y1="10.74" x2="0" y2="10.74" />
+    </svg>
+);
+
+export const Accordion: React.FC<AccordionProps> = ({
+    items,
+    theme = 'light',
+    defaultOpen = [],
+    allowMultiple = false,
+}) => {
+    const id = useId();
+    const [openItems, setOpenItems] = useState<number[]>(
+        allowMultiple ? defaultOpen : defaultOpen.slice(0, 1)
+    );
+
+    const toggleItem = (index: number) => {
+        setOpenItems((current) => {
+            if (current.includes(index)) {
+                return current.filter((i) => i !== index);
+            }
+            return allowMultiple ? [...current, index] : [index];
+        });
+    };
+
+    return (
+        <div className="flex w-full flex-col gap-6">
+            {items.map((item, index) => {
+                const isOpen = openItems.includes(index);
+                const buttonId = `${id}-button-${index}`;
+                const panelId = `${id}-panel-${index}`;
+
+                return (
+                    <div key={buttonId}>
+                        <h3>
+                            <button
+                                type="button"
+                                id={buttonId}
+                                aria-expanded={isOpen}
+                                aria-controls={panelId}
+                                onClick={() => toggleItem(index)}
+                                className={accordionTrigger({ theme, isOpen })}
+                            >
+                                <span>{item.title}</span>
+                                {get_accordionIcon(isOpen, theme)}
+                            </button>
+                        </h3>
+
+                        <div
+                            role="region"
+                            id={panelId}
+                            aria-labelledby={buttonId}
+                            className={accordionPanel({ isOpen })}
+                        >
+                            <div className={accordionContent({ theme })}>
+                                {item.content}
+                            </div>
+                        </div>
+                    </div>
+                );
+            })}
+        </div>
+    );
+};

@@ -3,7 +3,7 @@ import { expect } from 'storybook/test';
 import { TailwindPlayDemo } from './TailwindPlayDemo';
 
 const meta = {
-  title: 'UNA Batch-1/TailwindPlayDemo',
+  title: 'Reference Component/TailwindPlayDemo',
   component: TailwindPlayDemo,
   parameters: {
     layout: 'fullscreen',
