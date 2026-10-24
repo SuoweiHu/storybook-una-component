@@ -41,17 +41,17 @@ Every component has Storybook stories covering its variants and states. Those st
 | Styling | [Tailwind CSS](https://tailwindcss.com) + `@tailwindcss/vite` | 4.3 | Utility-first CSS, with ANU tokens defined in `@theme` |
 | Typography | [Public Sans](https://fonts.google.com/specimen/Public+Sans) via Google Fonts | Variable (100–900) | Default sans font (`--font-sans`) for every component |
 | Variants | [class-variance-authority](https://cva.style) (CVA) | 0.7 | Typed variant → class-name mapping for components |
-| Carousel engine | [Swiper](https://swiperjs.com) | 14 | Slide/fade transitions, autoplay, keyboard and a11y for `Carousel` |
-| Workshop / docs | [Storybook](https://storybook.js.org) (`@storybook/react-vite`) | 10.6 | Component explorer, autodocs, MDX docs |
-| Storybook addons | `addon-docs`, `addon-a11y`, `addon-vitest`, `addon-mcp`, `@chromatic-com/storybook` | 10.6 (`@chromatic-com/storybook`: 5) | Docs, accessibility, testing, AI integration, Chromatic |
+| Carousel engine | [Swiper](https://swiperjs.com) | 14 | Still installed, but used only by the prototypes in `src/reference-component/`; no library component depends on it |
+| Workshop / docs | [Storybook](https://storybook.js.org) (`@storybook/react-vite`) | 10.6 | Component explorer, Docs pages, MDX docs |
+| Storybook addons | `addon-docs`, `addon-a11y`, `addon-vitest`, `addon-mcp`, `addon-themes`, `@chromatic-com/storybook` | 10.6 (`@chromatic-com/storybook`: 5) | Docs, accessibility, testing, AI integration, light/dark theme switcher, Chromatic |
 | Testing | [Vitest](https://vitest.dev) browser mode + [Playwright](https://playwright.dev) (Chromium) | 4.1 / 1.63 | Runs every story as a test in a headless browser |
 | Accessibility | [axe-core](https://github.com/dequelabs/axe-core) via `@storybook/addon-a11y` | — | WCAG 2.0/2.1 A and AA checks on every story |
 | Coverage | `@vitest/coverage-v8` | 4.1 | Code coverage for the story tests |
 | Linting | [oxlint](https://oxc.rs/docs/guide/usage/linter) + [oxlint-tailwindcss](https://oxlint-tailwindcss.pages.dev) | 1.8x / 1.16 | Fast Rust-based linter (React, TypeScript, oxc rules), plus Tailwind class checks against the ANU theme |
-| Git hooks | [Husky](https://typicode.github.io/husky) | 9 | Runs the linter, commitlint, the story tests and Chromatic from git hooks |
+| Git hooks | [Husky](https://typicode.github.io/husky) | 9 | Runs the linter, commitlint and the story tests from git hooks |
 | Commit convention | [commitlint](https://commitlint.js.org) + `config-conventional` | 21 | Enforces [Conventional Commits](https://www.conventionalcommits.org) |
 | Visual testing | [Chromatic](https://www.chromatic.com) | 18 | Publishes Storybook and runs visual regression snapshots |
-| CI | GitHub Actions | — | Chromatic and Storybook tests on demand (both run locally on push instead) |
+| CI | GitHub Actions | — | Chromatic and Storybook tests on demand (manual trigger only) |
 
 The project is an ES module package (`"type": "module"`), uses **npm** (`package-lock.json`) and is developed on **Node.js 24**.
 
@@ -97,7 +97,7 @@ npx playwright install chromium
 | `npm run build-storybook` | `storybook build` | Builds a static Storybook into `storybook-static/` |
 | `npm run test-storybook` | `vitest --project=storybook` | Runs every story as a browser test (watch mode; add `-- --run` for a single run) |
 | `npm run lint` | `oxlint` | Lints the project with oxlint, including the Tailwind class rules (also runs in the pre-commit hook) |
-| `npm run chromatic` | `npx chromatic --project-token=…` | Publishes Storybook to Chromatic and runs visual tests; also runs in the pre-push hook (see [Chromatic](#visual-regression-testing-chromatic) about the token) |
+| `npm run chromatic` | `npx chromatic --project-token=…` | Publishes Storybook to Chromatic and runs visual tests, on demand (see [Chromatic](#visual-regression-testing-chromatic) about the token) |
 | `prepare` | `husky` | Installs git hooks; runs automatically after `npm install` |
 
 There is no separate `typecheck` script; run TypeScript directly:
@@ -112,33 +112,30 @@ npx tsc --noEmit -p tsconfig.app.json
 
 ```
 .
-├── .agents/skills/oxlint-tailwindcss/
-│   └── SKILL.md               # Agent skill for oxlint-tailwindcss (see AI tooling)
+├── .agents/skills/            # Installed agent skills (see AI tooling)
+│   ├── context7-cli/ · context7-mcp/
+│   ├── oxlint-tailwindcss/
+│   └── tailwind-design-system/
 ├── .claude/
 │   ├── launch.json            # Dev-server config for Claude Code's preview tools
-│   └── skills/                # Symlink to the skill in .agents/skills/
+│   └── skills/                # Symlinks to skills in .agents/skills/
 ├── .github/workflows/
 │   ├── chromatic.yml          # Chromatic (manual trigger only)
 │   └── test-storybook.yml     # Storybook tests (manual trigger only)
 ├── .husky/
 │   ├── pre-commit             # Runs oxlint before each commit
 │   ├── commit-msg             # Runs commitlint on each commit message
-│   └── pre-push               # Runs the Storybook tests, then publishes to Chromatic, before each push
+│   └── pre-push               # Runs the Storybook tests before each push (the Chromatic step is commented out)
 ├── .storybook/
 │   ├── main.ts                # Story globs, addons, framework, static dirs
-│   └── preview.tsx            # Global CSS, autodocs, a11y rules, story sorting
+│   └── preview.tsx            # Global CSS, light/dark theme switcher, a11y rules, story sorting
 ├── src/
 │   ├── anu-icons/             # ANU brand SVG icons (social, small use, hero)
 │   ├── assets/                # Images used in stories; served as Storybook static files
-│   ├── component/             # Components, their stories and MDX docs
-│   │   ├── Accordion.tsx / Accordion.stories.tsx
-│   │   ├── Carousel.tsx  / Carousel.stories.tsx
-│   │   ├── Icon.tsx      / Icon.stories.tsx / Icon.mdx / IconGallery.mdx
-│   │   ├── icons.ts           # Icon registry built from src/anu-icons
-│   │   ├── LinkList.tsx  / LinkList.stories.tsx
-│   │   ├── Table.tsx     / Table.stories.tsx
-│   │   ├── TailwindPlayDemo.tsx / TailwindPlayDemo.stories.tsx
-│   │   └── Tile.tsx      / Tile.stories.tsx
+│   ├── component/             # Library components and their stories (Storybook: Component/…)
+│   │   ├── Link.tsx      / Link.stories.tsx
+│   │   └── LinkIcon.tsx  / LinkIcon.stories.tsx
+│   ├── reference-component/   # Earlier prototypes kept for reference only; not part of the library (Storybook: Reference Component/…)
 │   ├── foundation/            # MDX docs pages for design foundations
 │   │   ├── Border.mdx         # Border radius and width scales (Storybook: Foundation/Border)
 │   │   ├── Color.mdx          # ANU colour tokens, read from tw-theme.css (Storybook: Foundation/Color)
@@ -148,12 +145,12 @@ npx tsc --noEmit -p tsconfig.app.json
 │   └── css/
 │       ├── tw-global.css      # Tailwind entry: Public Sans import, layers, theme, preflight, utilities
 │       ├── tw-theme.css       # ANU design tokens (font, colours)
-│       └── tw-utility.css     # Custom @utility rules (pattern-hatch, grid-frame, pattern-stripes)
+│       └── tw-utility.css     # Custom @utility rules (currently pattern-hatch)
 ├── .mcp.json                  # Storybook MCP server for AI assistants
 ├── .oxlintrc.json             # oxlint + oxlint-tailwindcss configuration
 ├── chromatic.config.json      # Chromatic project settings
 ├── CLAUDE.md                  # Project rules for Claude Code (see AI tooling)
-├── COMPONENTS.md              # Component reference: props, usage, icon library
+├── COMPONENTS.md              # Component reference: props and usage
 ├── commitlint.config.js       # Commit message rules
 ├── package.json               # Dependencies and npm scripts
 ├── skills-lock.json           # Source and hash of installed agent skills
@@ -168,15 +165,14 @@ npx tsc --noEmit -p tsconfig.app.json
 
 | Component | What it is |
 |---|---|
-| `Accordion` | Expandable sections with light, dark and grey themes |
-| `Carousel` | Swiper-based image carousel with slide/fade effects, autoplay and two control layouts |
-| `Icon` | ANU brand icons (social, small use, hero) in black, white and gold |
-| `LinkList` | A list of arrow links, optionally in columns, with a heading and illustration |
-| `Table` | Data table with row/column headers, striping, borders and merged cells |
-| `TailwindPlayDemo` | Port of the Tailwind Play default example, in light and dark themes |
-| `Tile` | Card-style link in headline, overlay and overlap variants |
+| `Link` | Inline text link for light and dark backgrounds |
+| `LinkIcon` | Decorative external, download and lock icons to sit beside link text |
 
-Props, usage examples and the icon library are documented in **[COMPONENTS.md](COMPONENTS.md)**. Live docs with controls for every prop are in Storybook.
+Props and usage examples are documented in **[COMPONENTS.md](COMPONENTS.md)**. Live docs with controls for every prop are in Storybook under **Component**.
+
+Every component is built to be ported to a Drupal Single Directory Component (Twig + plain CSS), so React is the prototyping and documentation layer only. The rules that follow from that (CVA variants, typed props, `data-*` state, no arbitrary values) are in `CLAUDE.md`.
+
+`src/reference-component/` holds earlier prototypes (shown in Storybook under **Reference Component**). They are kept for reference only, are not part of the library and are not documented in `COMPONENTS.md`.
 
 ---
 
@@ -186,11 +182,9 @@ Props, usage examples and the icon library are documented in **[COMPONENTS.md](C
 
 Tailwind is wired in through the Vite plugin (`@tailwindcss/vite` in `vite.config.ts`); there is no `tailwind.config.js`. Configuration lives in CSS:
 
-- **`src/css/tw-global.css`** is the entry point. Its first line loads [Public Sans](https://fonts.google.com/specimen/Public+Sans) from Google Fonts (variable, weights 100–900, roman and italic). That `@import url(...)` has to stay above everything else, because browsers ignore `@import` after other rules. It then declares the cascade layers (`theme, base, components, utilities`) and imports Tailwind's theme, the ANU theme, preflight, Tailwind's utilities and the custom utilities.
+- **`src/css/tw-global.css`** is the entry point. Its first line loads [Public Sans](https://fonts.google.com/specimen/Public+Sans) from Google Fonts (variable, weights 100–900, roman and italic). That `@import url(...)` has to stay above everything else, because browsers ignore `@import` after other rules. It then declares the cascade layers (`theme, base, components, utilities`) and imports Tailwind's theme, the ANU theme, preflight, Tailwind's utilities and the custom utilities. Its last line redefines the `dark:` variant to key off a `data-theme="dark"` attribute (`@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *))`) instead of the OS colour scheme, which is what the Storybook theme switcher toggles.
 - **`src/css/tw-theme.css`** extends Tailwind's theme with an `@theme { … }` block of ANU tokens.
 - **`src/css/tw-utility.css`** holds every custom `@utility`. They use the ANU tokens rather than defining colour values. So far it has one: `pattern-hatch`, a diagonal hatch on `anu-neutral-100` that shows the space padding or margin takes up.
-
-`Carousel` also imports Swiper's own stylesheets (`swiper/css` and `swiper/css/effect-fade`). They handle the slide track and fade stacking; all visual styling is still Tailwind.
 
 Storybook loads `tw-global.css` globally in `.storybook/preview.tsx`, and each component imports it too, so components are styled when used outside Storybook.
 
@@ -216,47 +210,39 @@ Spacing uses Tailwind's default scale (`--spacing: 0.25rem`, so `p-4` = 16px); s
 
 ### Class Variance Authority (CVA)
 
-Every component describes its variant styles with [CVA](https://cva.style) instead of lookup objects or template-string ternaries. A `cva()` call takes base classes plus a map of variants, and returns a function that builds the class string for a given set of props:
+Every component describes its variant styles with [CVA](https://cva.style) instead of lookup objects or template-string ternaries. A `cva()` call takes base classes plus a map of variants, and returns a function that builds the class string for a given set of props. The variant map is what will be consumed by Twig's `html_cva()` when a component moves to Drupal, so keep every visual variant in it:
 
 ```tsx
+import React, { type AnchorHTMLAttributes } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-const accordionTrigger = cva(
-    'flex w-full items-center justify-between border-2 p-7 …', // base classes
+export const linkVariants = cva(
+    'rounded-xs text-base/4.5 font-normal underline focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-offset-2', // base classes
     {
         variants: {
-            theme: {
-                light: 'focus-visible:outline-black',
-                dark: 'focus-visible:outline-white',
-                grey: 'focus-visible:outline-black',
+            background: {
+                light: 'text-blue-600 visited:text-anu-slate-600 hover:bg-blue-50 focus-visible:outline-blue-600 active:bg-blue-100 active:text-blue-700',
+                dark: 'text-white visited:text-anu-slate-200 hover:bg-anu-neutral-600 focus-visible:outline-white active:bg-anu-neutral-500 active:text-white',
             },
-            isOpen: { true: '', false: '' },
         },
-        // Classes that depend on a combination of variants
-        compoundVariants: [
-            { theme: 'light', isOpen: false, className: 'border-black bg-white text-black' },
-            { theme: 'light', isOpen: true, className: 'border-black bg-black text-white' },
-            // …
-        ],
-        defaultVariants: { theme: 'light', isOpen: false },
+        defaultVariants: { background: 'light' },
     }
 );
 
-// Prop types are derived from the cva definition, so they can't drift apart
-type AccordionProps = {
-    theme?: NonNullable<VariantProps<typeof accordionTrigger>['theme']>;
-};
+// The props interface extends the native element's attributes and the CVA variant props
+export interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement>, VariantProps<typeof linkVariants> {}
 
-<button className={accordionTrigger({ theme, isOpen })} />
+export const Link: React.FC<LinkProps> = ({ background, children, href }) => (
+    <a className={linkVariants({ background })} href={href}>{children}</a>
+);
 ```
 
 Conventions used across the library:
 
-- `cva` definitions are module-level `camelCase` consts named after the element they style (`tableRow`, `navButton`, `tileTitle`).
-- Prop unions that map to classes are typed with `NonNullable<VariantProps<typeof x>['key']>`.
-- Boolean states (`isOpen`, `isActive`, `isFirst`, `striped`, `bordered`) are `true` / `false` variants.
+- `cva` definitions are exported module-level `camelCase` consts named `<component>Variants` (`linkVariants`).
+- Each component has a typed `<Name>Props` interface that extends the native element's attributes and `VariantProps<typeof <name>Variants>`, so consumers get `aria-*`, `data-*` and event props in the type.
+- Interactive states come from native pseudo-classes (`hover:`, `active:`, `visited:`, `focus-visible:`) or `data-*` attributes styled with Tailwind data variants, not from `useState`.
 - Styles that depend on two props at once use `compoundVariants`. Give each entry's classes under the `className` key.
-- Where a component accepts a `className` prop (currently only `Icon`), it is passed through as `x({ className })`.
 - Static, single-use class strings with no variation can stay inline.
 
 ---
@@ -273,7 +259,8 @@ Configured in `.storybook/`:
   - `features.componentsManifest: true` powers the AI/MCP integration
 - **`preview.tsx`**
   - Loads the global Tailwind CSS
-  - Enables **autodocs** for every component (`tags: ['autodocs']`)
+  - Adds a **light/dark theme switcher** to the toolbar (`withThemeByDataAttribute` from `@storybook/addon-themes`), which sets `data-theme="light"` or `data-theme="dark"` on the preview and drives the `dark:` variant
+  - Leaves global autodocs **off** (the `tags: ['autodocs']` line is commented out); a story file opts in with `tags: ['autodocs']` on its meta if it wants a generated Docs page
   - Auto-detects colour/date controls
   - Sorts stories alphabetically, except the Foundation pages, which come first in a fixed order: Font, Color, Spacing and Sizing, Border, Shadow
   - Configures the **a11y** addon (see [Testing](#testing))
@@ -282,45 +269,51 @@ Addons:
 
 | Addon | What it adds |
 |---|---|
-| `@storybook/addon-docs` | Autodocs pages and MDX docs (`Icon.mdx`, `IconGallery.mdx`) |
+| `@storybook/addon-docs` | Docs pages and MDX docs (the Foundation pages in `src/foundation/`) |
 | `@storybook/addon-a11y` | Accessibility panel and axe checks on each story |
+| `@storybook/addon-themes` | Light/dark toolbar switcher that sets `data-theme` on the preview |
 | `@storybook/addon-vitest` | Run story tests from the Storybook UI and the CLI |
 | `@storybook/addon-mcp` | MCP server at `/mcp` so AI assistants can read docs, preview and test stories |
 | `@chromatic-com/storybook` | Chromatic visual tests inside Storybook |
 
 ### Writing stories
 
-Stories use CSF 3 with types from the framework package and test helpers from `storybook/test`:
+Stories use CSF 3 with types from the framework package, live under the `Component/` title, and are driven entirely by args so every control works:
 
 ```tsx
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, waitFor } from 'storybook/test';
-import { Carousel } from './Carousel';
+import { Link } from './Link';
 
 const meta = {
-  title: 'Reference Component/Carousel',
-  component: Carousel,
-  tags: ['autodocs'],
-  args: { slides, label: 'Student stories' },
-} satisfies Meta<typeof Carousel>;
+    title: 'Component/Link',
+    component: Link,
+    parameters: { layout: 'centered' },
+    argTypes: {
+        background: { name: 'Background', control: { type: 'radio' }, options: ['light', 'dark'] },
+        children: { name: 'Link text', control: 'text' },
+        href: { name: 'Link URL', control: 'text' },
+    },
+    args: { children: 'ANU Reporter newsletter', href: 'https://example.org', background: 'light' },
+    // Wrapper that emulates the light/dark page background the link sits on
+    decorators: [
+        (Story, { args }) => (
+            <div className={args.background === 'dark' ? 'bg-anu-neutral-950 p-4' : 'bg-white p-4'}>
+                <Story />
+            </div>
+        ),
+    ],
+} satisfies Meta<typeof Link>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const FadeEffect: Story = {
-  args: { effect: 'fade' },
-  play: async ({ canvas, userEvent }) => {
-    await userEvent.click(canvas.getByRole('button', { name: 'Next' }));
-    await waitFor(() =>
-      expect(canvas.getByRole('button', { name: /^Go to slide 2:/ })).toHaveAttribute('aria-current', 'true')
-    );
-  },
-};
+export const Light: Story = { args: { background: 'light' } };
+export const Dark: Story = { args: { background: 'dark' } };
 ```
 
-Story files use 2-space indentation, and component files use 4. Autodocs is on globally. A component with its own hand-written MDX docs page sets `tags: ['!autodocs']` on its meta instead, as `Icon` does with `Icon.mdx`.
+Component and story files use 4-space indentation. Each story renders **one** component instance; variant grids and side-by-side showcases belong in a `<Name>.mdx` docs page that composes the stories.
 
-Cover each meaningful variant and state with its own story. Add a `play` function wherever there is interaction to verify, querying by role and label.
+Cover each CVA variant and state with its own story, including edge cases (empty, long or overflowing content, missing optional props, different backgrounds). Add a `play` function wherever there is interaction to verify, querying by role and label, and use `storybook/test` (`expect`, `userEvent`, `waitFor`) for the assertions.
 
 ---
 
@@ -341,6 +334,8 @@ npm run test-storybook -- --run --coverage   # with V8 coverage
 ```
 
 You can also run tests from the Storybook UI with the test widget in the sidebar.
+
+Hover, pressed and visited styles (as on `Link`) come from CSS pseudo-classes. `userEvent` from `storybook/test` dispatches synthetic DOM events, which don't switch `:hover` or `:active` on, and browsers hide `:visited` colours from scripts, so those colours are checked visually in the canvas and by Chromatic rather than asserted in a `play` function. Focus is real: `userEvent.tab()` moves focus, so focus styles can be asserted with `getComputedStyle()`. The `Link` and `LinkIcon` stories currently have no `play` functions; they are covered by the render and axe checks.
 
 ---
 
@@ -397,7 +392,7 @@ npx tsc --noEmit -p tsconfig.app.json
 |---|---|---|
 | `pre-commit` | `npm run lint` | Runs oxlint (including the Tailwind rules); any lint error blocks the commit |
 | `commit-msg` | `npx --no -- commitlint --edit "$1"` | Rejects commit messages that don't follow Conventional Commits |
-| `pre-push` | `npm run test-storybook -- --run`, then `npm run chromatic -- --exit-zero-on-changes` | Runs the full story test suite (interactions + a11y), then publishes to Chromatic. A test failure or a Chromatic build error blocks the push; visual changes don't |
+| `pre-push` | `npm run test-storybook -- --run` | Runs the full story test suite (interactions + a11y); a failure blocks the push. The Chromatic step (`npm run chromatic -- --exit-zero-on-changes`) is present in the hook but commented out, so pushes no longer publish to Chromatic |
 
 To bypass a hook once, in an emergency only:
 
@@ -424,9 +419,9 @@ Commit messages must follow [Conventional Commits](https://www.conventionalcommi
 Examples:
 
 ```
-feat(carousel): add fade effect option
-fix(table): correct striped row border on black background
-docs(icon): add icon gallery
+feat(link): link component and associated stories
+feat(link-icon): link-icon component and its associated stories
+docs(link): document the background prop
 build: set up class-variance-authority (cva)
 ```
 
@@ -450,12 +445,12 @@ Rules worth knowing:
 - The subject must not be empty and must not end with a full stop.
 - The subject must not be in sentence case, start case, Pascal case or all caps. In practice, start it with a lowercase letter.
 - The header (first line) can be at most 100 characters, and so can each line of the body and footer.
-- By convention, use the component name as the scope where it applies (`accordion`, `carousel`, `icon`, `linklist`, `table`, `tile`). commitlint doesn't enforce scopes.
+- By convention, use the kebab-case component name as the scope where it applies (`link`, `link-icon`). commitlint doesn't enforce scopes.
 
 Check a message without committing:
 
 ```bash
-echo "feat(tile): add compact variant" | npx commitlint
+echo "feat(link): add external variant" | npx commitlint
 ```
 
 ---
@@ -465,13 +460,9 @@ echo "feat(tile): add compact variant" | npx commitlint
 [Chromatic](https://www.chromatic.com) publishes Storybook and snapshots every story, flagging visual changes for review.
 
 - `chromatic.config.json` sets `onlyChanged: true` (TurboSnap: only stories affected by a change are snapshotted) and `zip: true`.
-- **Every `git push` publishes to Chromatic** from the Husky `pre-push` hook, after the Storybook tests pass. It runs `npm run chromatic -- --exit-zero-on-changes`:
-  - **Visual changes don't block the push.** Review and accept or reject them in Chromatic.
-  - **Build errors do block it**, such as a story that fails to render.
-  - It waits for the snapshots to finish, so pushes take longer.
-  - It builds your local working tree, so commit or stash unrelated changes before pushing.
-- `npm run chromatic` also publishes from your machine on demand.
-- The **Chromatic** GitHub workflow no longer runs on push. It can still be triggered by hand from the **Actions** tab, using the `CHROMATIC_PROJECT_TOKEN` repository secret.
+- Chromatic is run **on demand**: `npm run chromatic` publishes your local working tree from your machine, so commit or stash unrelated changes first.
+- The Husky `pre-push` hook used to publish after the tests passed (`npm run chromatic -- --exit-zero-on-changes`). That line is still in `.husky/pre-push` but commented out, so pushes no longer publish. Uncomment it to bring the behaviour back: visual changes then don't block a push, but build errors (a story that fails to render) do.
+- The **Chromatic** GitHub workflow doesn't run on push either. It can be triggered by hand from the **Actions** tab, using the `CHROMATIC_PROJECT_TOKEN` repository secret.
 
 > **Note:** the `chromatic` script currently has the project token hard-coded in `package.json`. Prefer removing it from the script and setting the `CHROMATIC_PROJECT_TOKEN` environment variable instead, which the Chromatic CLI reads automatically. Rotate the token in Chromatic if the repository is public.
 
@@ -484,7 +475,7 @@ echo "feat(tile): add compact variant" | npx commitlint
 | `chromatic.yml` | Manual only (`workflow_dispatch`) | Installs with `npm ci` on Node 24.20.0 and runs `chromaui/action` |
 | `test-storybook.yml` | Manual only (`workflow_dispatch`) | Runs `npm run test-storybook` on Node 22.12.0 in the official Playwright Docker image (`v1.63.0-noble`) |
 
-Both workflows are switched off on push because the same steps run locally in the Husky `pre-push` hook. To run them in CI, trigger them from the repository's **Actions** tab.
+Both workflows are switched off on push: the Storybook tests run locally in the Husky `pre-push` hook, and Chromatic is run on demand with `npm run chromatic`. To run either in CI, trigger it from the repository's **Actions** tab.
 
 ---
 
@@ -492,11 +483,11 @@ Both workflows are switched off on push because the same steps run locally in th
 
 The project is set up for AI coding assistants such as Claude Code:
 
-- **`CLAUDE.md`** holds the project rules Claude Code loads in every session. It covers CVA variants, typed props, `data-*` state for the Drupal/Twig migration, no arbitrary values, mobile-first and container queries, focus states, OKLCH colours, Public Sans, Heroicons, story coverage and the checks to run before finishing (accessibility tests, lint and types, doc updates). It also requires confirming twice before any `@theme` token change.
+- **`CLAUDE.md`** holds the project rules Claude Code loads in every session. It covers CVA variants, typed props, `data-*` state for the Drupal/Twig migration, no arbitrary values, mobile-first and container queries, focus states, OKLCH colours, Public Sans, story coverage and the checks to run before finishing (accessibility tests, lint and types, doc updates). It also requires confirming twice before any `@theme` token change.
 - **`@storybook/addon-mcp`** exposes an [MCP](https://modelcontextprotocol.io) server at `http://localhost:6006/mcp` while Storybook is running. Assistants can list component docs and props, preview stories and run story tests through it.
 - **`.mcp.json`** registers that server for MCP-aware tools in this repo.
 - **`.claude/launch.json`** tells Claude Code how to start Storybook (`npm run storybook -- --no-open` on port 6006).
-- **oxlint-tailwindcss skill** (`.agents/skills/oxlint-tailwindcss/SKILL.md`) teaches AI assistants how to set up the plugin and fix its `tailwindcss(...)` diagnostics. It was installed with `npx skills add sergioazoc/oxlint-tailwindcss --skill oxlint-tailwindcss`. Claude Code picks it up through the `.claude/skills/` symlink, and `skills-lock.json` records its source.
+- **Agent skills** in `.agents/skills/`, installed with `npx skills add …` and recorded in `skills-lock.json`: `oxlint-tailwindcss` (set up the plugin and fix its `tailwindcss(...)` diagnostics), `tailwind-design-system`, `context7-cli` and `context7-mcp`. Claude Code picks up `oxlint-tailwindcss` and `tailwind-design-system` through symlinks in `.claude/skills/`.
 
 Start Storybook (`npm run storybook`) before using these tools.
 
@@ -506,15 +497,16 @@ Start Storybook (`npm run storybook`) before using these tools.
 
 1. Create `src/component/MyComponent.tsx`:
    - Import `../css/tw-global.css`.
-   - Define styles with `cva()` and derive prop types with `VariantProps` (see [CVA](#class-variance-authority-cva)).
+   - Define styles with `cva()`, export the variant map as `myComponentVariants`, and declare a `MyComponentProps` interface that extends the native element's attributes and `VariantProps` (see [CVA](#class-variance-authority-cva)).
+   - Keep UI state in native pseudo-classes or `data-*` attributes rather than `useState`, so it ports to a Drupal behaviour.
    - Use ANU tokens (`anu-gold-*`, `anu-neutral-*`, …) rather than raw colours. Arbitrary values and colour values in class names fail the linter (see [Tailwind class linting](#tailwind-class-linting-oxlint-tailwindcss)).
-   - Use semantic HTML and correct ARIA. Every story is checked against WCAG AA.
+   - Use semantic HTML and correct ARIA, with a visible `focus-visible:outline-*` style on anything focusable. Every story is checked against WCAG AA.
    - Export it as a named export.
-2. Create `src/component/MyComponent.stories.tsx`:
-   - Add a story per meaningful variant and state.
+2. Create `src/component/MyComponent.stories.tsx` under the `Component/MyComponent` title:
+   - Add a story per CVA variant and state, each rendering one arg-driven instance.
    - Add `play` functions for interactions.
 3. Document its props and usage in [COMPONENTS.md](COMPONENTS.md), and add it to the components table above.
-4. Run `npm run storybook` and check the component and its autodocs page.
+4. Run `npm run storybook` and check the component's stories in both themes using the toolbar switcher.
 5. Run `npm run lint`, `npx tsc --noEmit -p tsconfig.app.json` and `npm run test-storybook -- --run`.
 6. Commit with a conventional message, e.g. `feat(my-component): add my component`.
 

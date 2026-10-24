@@ -1,147 +1,50 @@
 # Una Components
 
-All components live in `src/component/`, are named exports, and import `../css/tw-global.css` so they are styled wherever they are rendered. All text uses Public Sans, the theme's default sans font, so components don't set a font family of their own. Full live documentation, with controls for every prop, is in Storybook under each component's **Docs** page. For setup, styling conventions and tooling, see the [README](README.md).
+All components live in `src/component/`, are named exports, and import `../css/tw-global.css` so they are styled wherever they are rendered. All text uses Public Sans, the theme's default sans font, so components don't set a font family of their own. Full live documentation, with controls for every prop, is in Storybook under **Component**. For setup, styling conventions and tooling, see the [README](README.md).
+
+Every component is written to port to a Drupal Single Directory Component (Twig + plain CSS), so variants are CVA maps, props are typed interfaces and state lives in native pseudo-classes or `data-*` attributes rather than React state.
+
+The earlier prototypes in `src/reference-component/` (shown in Storybook under **Reference Component**) are kept for reference only. They are not part of the library and are not documented here.
 
 ## Contents
 
-- [Accordion](#accordion)
-- [Carousel](#carousel)
-- [Icon](#icon)
-  - [Icon library](#icon-library)
-- [LinkList](#linklist)
-- [Table](#table)
-- [TailwindPlayDemo](#tailwindplaydemo)
-- [Tile](#tile)
+- [Link](#link)
+- [LinkIcon](#linkicon)
 
 ---
 
-## Accordion
+## Link
 
-Expandable sections with accessible button/region pairs (`aria-expanded`, `aria-controls`, `aria-labelledby`).
-
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `items` | `{ title: string; content: ReactNode }[]` | — | Sections to render |
-| `theme` | `'light' \| 'dark' \| 'grey'` | `'light'` | `light` for white/cream backgrounds, `dark` for black, `grey` for grey |
-| `defaultOpen` | `number[]` | `[]` | Indexes of items expanded on first render (only the first is used unless `allowMultiple` is `true`) |
-| `allowMultiple` | `boolean` | `false` | When `false`, opening one item closes the others |
-
-```tsx
-<Accordion
-    theme="grey"
-    items={[
-        { title: 'Eligibility', content: <p>…</p> },
-        { title: 'How to apply', content: <p>…</p> },
-    ]}
-/>
-```
-
-## Carousel
-
-An image carousel built on Swiper, with indicator dots, previous/next controls, keyboard support and an optional play/pause button.
+An inline text link, underlined by default. Hover and pressed add a background tint, focus swaps the underline for a 2px outline, and visited links change colour. Every state comes from native pseudo-classes (`:hover`, `:active`, `:focus-visible`, `:visited`), so there is no state to manage.
 
 | Prop | Type | Default | Description |
 |---|---|---|---|
-| `slides` | `{ image: string; alt: string; href?: string }[]` | — | Slides; `href` makes the slide a link |
-| `label` | `string` | — | Accessible name for the carousel |
-| `controls` | `'bottom' \| 'side'` | `'bottom'` | `bottom`: dots + Previous/Next links below. `side`: round up/down buttons + vertical dots beside |
-| `effect` | `'slide' \| 'fade'` | `'slide'` | `slide` moves the track; `fade` cross-fades slides in place |
-| `speed` | `number` | `300` | Transition duration in milliseconds |
-| `autoplay` | `boolean` | `false` | Start advancing automatically |
-| `autoplayDelay` | `number` | `5000` | Milliseconds each slide is shown during autoplay |
-| `showAutoplayButton` | `boolean` | `true` | Show the play/pause button over the slides (hidden when there is only one slide) |
-
-```tsx
-<Carousel label="Student stories" slides={slides} effect="fade" speed={800} autoplay />
-```
-
-Autoplay pauses while the pointer is over the slides. Manual navigation keeps it running; only the play/pause button stops it.
-
-## Icon
-
-Renders an ANU brand icon from `src/anu-icons`. See [Icon library](#icon-library) below.
-
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `name` | `IconName` | — | e.g. `'linkedin'`, `'sui-042'`, `'hi003-01'` |
-| `variant` | `'black' \| 'white' \| 'gold'` | `'black'` | Artwork colour; use `white` on dark backgrounds |
-| `size` | `number` | `24` | Width and height in pixels |
-| `label` | `string` | — | Accessible name. Omit for decorative icons (rendered with `alt=""` and `aria-hidden`) |
-| `className` | `string` | `''` | Extra classes |
-
-### Icon library
-
-`src/anu-icons/` holds the ANU icon library (about 2,700 SVGs) in three families, each in black, white and gold:
-
-| Family | Folder | Names |
-|---|---|---|
-| Social | `Social icons/` | `facebook`, `instagram`, `linkedin`, `phone`, `tiktok`, `twitter`, `wechat`, `youku`, `youtube` |
-| Small use | `Small use icons/Sui001-2/` | `sui-001` … `sui-140` |
-| Hero | `Hero icons/HiNNN (topics)/`, e.g. `Hi003 (e-learning, students)/` | Set code + number, e.g. `hi003-01`, `hi001-2-001` (14 themed sets) |
-
-`src/component/icons.ts` builds the registry at build time with Vite's `import.meta.glob(…, { query: '?no-inline' })`, so every icon stays a separate file instead of being inlined into the bundle. It also normalises the source folders' inconsistent naming (mixed colour codes, nesting and zero-padding) into the clean names above, and exports:
-
-- the lists `iconVariants`, `iconNames`, `socialIconNames`, `utilityIconNames`, `heroIconSets` and `heroIconNames`
-- `getIconUrl(name, variant = 'black')`, which returns the icon's URL, or `undefined` for an unknown name
-- the matching types (`IconName`, `IconVariant`, `SocialIconName`, `UtilityIconName`, `HeroIconName`, `HeroIconSet`)
-
-Browse every icon in Storybook under **Icon → Gallery**.
-
-```tsx
-<Icon name="linkedin" variant="gold" size={32} label="ANU on LinkedIn" />
-<Icon name="hi003-01" size={96} />
-```
-
-## LinkList
-
-A list of links with arrow icons, optionally split into columns, with an optional heading and illustration.
-
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `links` | `{ label: string; href: string }[]` | — | Links to show |
-| `heading` | `string` | — | Optional `<h2>` above the list |
-| `icon` | `string` | — | Optional decorative image URL above the heading |
-| `columns` | `1 \| 2 \| 3` | `1` | Columns on `md` screens and up (filled top to bottom) |
-| `background` | `'white' \| 'tint' \| 'grey' \| 'black'` | `'white'` | The background the list sits on |
-
-## Table
-
-A responsive data table (scrolls horizontally on small screens) supporting column headers, row headers, merged cells, sub-headings and links in cells.
-
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `columns` | `string[]` | `[]` | Header row; leave empty for row-headers-only tables |
-| `rows` | `{ header?: string; cells: TableCellData[] }[]` | — | Body rows; `header` renders a row header cell |
-| `caption` | `string` | — | Visually hidden caption for screen readers |
-| `background` | `'white' \| 'tint' \| 'grey' \| 'black'` | `'white'` | The background the table sits on |
-| `variant` | `'default' \| 'striped'` | `'default'` | Striped alternates row colours |
-| `bordered` | `boolean` | `false` | Borders on every cell; use whenever cells are merged |
-
-A cell is either a string or `{ text?, subtext?, links?, colSpan?, rowSpan? }`. When `subtext` is set, `text` renders as a sub-heading.
-
-## TailwindPlayDemo
-
-A port of the default example on [Tailwind Play](https://play.tailwindcss.com): a card inside a framed grid with striped gutters, rebuilt with ANU tokens. The logo loads from `play.tailwindcss.com` by absolute URL. The frame layout and stripes come from the `grid-frame` and `pattern-stripes` utilities in `tw-utility.css`.
-
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `theme` | `'light' \| 'dark'` | `'light'` | Colour scheme; also swaps the logo |
-| `intro` | `string` | Play's intro text | Paragraph above the feature list |
-| `features` | `{ text: string; code?: string }[]` | Play's four features | Check-marked list; `code` is shown after the text. An empty array hides the list |
-| `outro` | `string` | Play's closing text | Paragraph below the feature list |
-| `ctaPrompt` | `string` | `'Want to dig deeper into Tailwind?'` | Line above the link |
-| `ctaLabel` | `string` | `'Read the docs'` | Link text |
-| `ctaHref` | `string` | `'https://tailwindcss.com/docs'` | Link target |
-
-Any other `<div>` attribute (`aria-*`, `data-*`, `className`, …) is passed to the root.
-
-## Tile
-
-A card-style link.
-
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `title` | `string` | — | Link text |
+| `background` | `'light' \| 'dark'` | `'light'` | The background the link sits on: `light` for white and light backgrounds (blue text, slate when visited), `dark` for dark ones (white text, light slate when visited) |
 | `href` | `string` | — | Link target |
-| `variant` | `'headline' \| 'overlay' \| 'overlap'` | `'headline'` | `headline`: text-only grey card. `overlay`: title centred over the image. `overlap`: title in a dark box over the image |
-| `image` | `string` | — | Image URL for `overlay` / `overlap` (decorative; the title names the link) |
+| `children` | `ReactNode` | — | Link text |
+
+`LinkProps` extends `AnchorHTMLAttributes<HTMLAnchorElement>` and the CVA variant props, but the component currently forwards only `href` and `children` to the `<a>`; other anchor attributes (`target`, `aria-*`, `data-*`, `className`, …) are accepted by the type and ignored at render time. `linkVariants` (the CVA map) is exported too.
+
+```tsx
+<Link href="/news/anu-reporter">ANU Reporter newsletter</Link>
+<Link background="dark" href="/news/anu-reporter">ANU Reporter newsletter</Link>
+```
+
+Stories: **Component → Link → Light / Dark**. The story decorator wraps the link in a white or `anu-neutral-950` box to match the `background` arg.
+
+## LinkIcon
+
+A small decorative icon to place beside link text: `external` (opens in a new window), `download` (file download) or `lock` (restricted access). It renders a 16×16 inline SVG whose paths are drawn in `currentColor`, so it inherits the text colour of whatever it sits inside (normally the link). It is `aria-hidden` and `focusable="false"` because the link text is what carries the meaning.
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `icon` | `'download' \| 'external' \| 'lock'` | — | Which icon to draw (required) |
+
+`LinkIcon` takes no other props and has no variants.
+
+```tsx
+<Link href="https://example.org">External site <LinkIcon icon="external" /></Link>
+<span className="text-white"><LinkIcon icon="lock" /></span>
+```
+
+Stories: **Component → LinkIcon → External / Download / Lock**. The story decorator supplies the text colour (`text-blue-600` by default, or the **Icon color** control) that the SVG inherits.
